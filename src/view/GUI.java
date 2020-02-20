@@ -22,12 +22,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public class GUI {
 
-	
-	JFrame frame;
-	JPanel panel;
-	GridBagConstraints gbc;
-	Graphics g;
-
+	private JFrame frame;
+	private JPanel panel;
+	private GridBagConstraints gbc;
 
 	private BufferedImage image;
 	private Canvas canvas;
@@ -39,6 +36,21 @@ public class GUI {
 		initFrame();
 		initCanvas();
 		initGame();
+
+		panel = new JPanel();
+
+		try {
+			image = ImageIO.read(new File("assets\\rocket.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		JLabel picLabel = new JLabel(new ImageIcon(image));
+
+		Image dimg = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+
+		picLabel = new JLabel(new ImageIcon(dimg));
+
 	}
 
 	public void initFrame() {
@@ -57,54 +69,13 @@ public class GUI {
 		gbc.gridy = 0;
 
 		frame = new JFrame();
-		canvas = new Canvas();
-
 		dimension = new Dimension(width, height);
-
 		frame.setTitle("SpaceShots");
 		frame.setSize(dimension);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
-
-		panel = new JPanel();
-		
-		try {
-			image = ImageIO.read(new File("assets\\rocket.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		JLabel picLabel = new JLabel(new ImageIcon(image));
-		//frame.add(picLabel);
-		
-		Image dimg = image.getScaledInstance(30, 30,
-		        Image.SCALE_SMOOTH);
-		
-		canvas.setBackground(Color.black);
-		
-		ImageIcon imageIcon = new ImageIcon(dimg);
-		picLabel = new JLabel(new ImageIcon(dimg));
-		
-		
-		panel.add(new JLabel("hello"));
-		
-		panel.add(canvas);
-		//canvas.setBackground(Color.black);
-		frame.add(canvas);
-		
-		panel.setBackground(Color.black);
-
-		
-		canvas.setSize(800, 600);
-		
-		
-		panel.add(canvas);
-		panel.add(picLabel);
-		frame.add(panel);
-		
-		frame.add(picLabel);
 
 		frame.setVisible(true);
 
