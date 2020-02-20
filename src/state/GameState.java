@@ -1,28 +1,36 @@
 package state;
 
-import java.awt.Color;
 import java.awt.Graphics;
+
+import model.Player;
 
 public class GameState extends State {
 
 	// Game objects, player etc.
 
-	private int x = 0, y = 0;
+	private Player player;
 
 	public GameState() {
 		super();
+		init();
+	}
+
+	private void init() {
+		player = new Player();
 	}
 
 	@Override
 	public void update() {
-		x++;
-		y++;
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.white);
-		g.drawRect(x, y, 20, 20);
+		player.render(g);
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 }

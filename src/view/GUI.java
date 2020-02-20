@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -16,7 +15,6 @@ public class GUI {
 
 	private JFrame frame;
 	private GridBagConstraints gbc;
-	private BufferedImage image;
 	private Canvas canvas;
 	private Dimension dimension;
 	private int width = 800, height = 600;
@@ -78,6 +76,10 @@ public class GUI {
 
 	public int getHeight() {
 		return this.height;
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 
 	public Canvas getCanvas() {
