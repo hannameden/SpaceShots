@@ -3,19 +3,12 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -26,7 +19,6 @@ public class GUI {
 	private JPanel panel;
 	private GridBagConstraints gbc;
 
-	private BufferedImage image;
 	private Canvas canvas;
 	private Dimension dimension;
 	private int width = 800, height = 600;
@@ -37,19 +29,6 @@ public class GUI {
 		initCanvas();
 		initGame();
 
-		panel = new JPanel();
-
-		try {
-			image = ImageIO.read(new File("assets\\rocket.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		JLabel picLabel = new JLabel(new ImageIcon(image));
-
-		Image dimg = image.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-
-		picLabel = new JLabel(new ImageIcon(dimg));
 
 	}
 
@@ -102,6 +81,10 @@ public class GUI {
 
 	public int getHeight() {
 		return this.height;
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 
 	public Canvas getCanvas() {

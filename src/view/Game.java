@@ -3,6 +3,7 @@ package view;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import controller.PlayerInputController;
 import state.GameState;
 import state.State;
 
@@ -16,7 +17,15 @@ public class Game implements Runnable {
 
 	public Game(GUI gui) {
 		this.gui = gui;
-		State.setState(new GameState());
+
+		GameState gameState = new GameState();
+
+		State.setState(gameState);
+
+		PlayerInputController playerInputController = new PlayerInputController(gameState.getPlayer());
+
+		this.gui.getFrame().addKeyListener(playerInputController);
+		this.gui.getCanvas().addKeyListener(playerInputController);
 	}
 
 	@Override
