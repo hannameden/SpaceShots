@@ -31,6 +31,7 @@ public class GUI {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
+		
 		frame = new JFrame();
 
 		frame.setTitle("SpaceShots");
