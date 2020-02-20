@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,20 +21,28 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class GUI {
+
 	
 	JFrame frame;
 	JPanel panel;
 	GridBagConstraints gbc;
 	Graphics g;
-	Canvas canvas;
+
+
 	private BufferedImage image;
+	private Canvas canvas;
+	private Dimension dimension;
+	private int width = 800, height = 600;
+	private Game game;
 
 	public GUI() {
 		initFrame();
+		initCanvas();
+		initGame();
 	}
-	
+
 	public void initFrame() {
-		
+
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -46,13 +55,14 @@ public class GUI {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		
-		
+
 		frame = new JFrame();
 		canvas = new Canvas();
 
+		dimension = new Dimension(width, height);
+
 		frame.setTitle("SpaceShots");
-		frame.setSize(800, 600);
+		frame.setSize(dimension);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,11 +105,35 @@ public class GUI {
 		frame.add(panel);
 		
 		frame.add(picLabel);
-		
-		 
-		
-		
+
 		frame.setVisible(true);
-		
+
+	}
+
+	private void initCanvas() {
+		canvas = new Canvas();
+		canvas.setPreferredSize(dimension);
+		canvas.setMinimumSize(dimension);
+		canvas.setMaximumSize(dimension);
+		canvas.setFocusable(false);
+		canvas.setBackground(Color.BLACK);
+		frame.getContentPane().add(canvas);
+	}
+
+	private void initGame() {
+		game = new Game(this);
+		game.start();
+	}
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+	public Canvas getCanvas() {
+		return this.canvas;
 	}
 }
