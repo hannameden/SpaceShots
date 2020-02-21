@@ -3,14 +3,13 @@ package state;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 
 import model.Player;
 
 public class GameState extends State {
+	
+	private static GameState instance = null;
 
 	// Game objects, player etc.
 
@@ -19,19 +18,20 @@ public class GameState extends State {
 	private int x = 0, y = 0;
 	private Player player;
 
-	public GameState() {
+	private GameState() {
 		super();
 		init();
 	}
 
+	public static GameState getInstance() {
+
+		if (instance == null)
+			instance = new GameState();
+		return instance;
+	}
 	private void init() {
 		player = new Player();
-		try {
-			image = ImageIO.read(new File("assets\\rocket.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+	
 	}
 
 	@Override
@@ -43,10 +43,6 @@ public class GameState extends State {
 	public void render(Graphics g) {
 
 		g.setColor(Color.white);	
-
-		g.drawImage(image, x, y, 20, 20 ,null);
-      
-
 		player.render(g);
 	}
 
