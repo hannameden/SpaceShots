@@ -14,12 +14,17 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
+	private GameState gameState;
 
 	public Game(GUI gui) {
 		this.gui = gui;
+		//gui = GUI.getInstance();
+		System.out.println("this is fine game");
 
-		GameState gameState = GameState.getInstance();
+		gameState = GameState.getInstance();
 
+		gameState.init();
+		System.out.println("game 2");
 		State.setState(gameState);
 
 		PlayerInputController playerInputController = new PlayerInputController(gameState.getPlayer());
@@ -91,7 +96,7 @@ public class Game implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-
+	
 	public synchronized void stop() {
 		if (!running)
 			return;
@@ -102,5 +107,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
+	public void stopGame() {
+		running = false;
+	}
 }

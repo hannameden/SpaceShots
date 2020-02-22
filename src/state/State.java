@@ -12,6 +12,7 @@ public abstract class State {
 
 	public static void setState(State state) {
 		currentState = state;
+		System.out.println("current state: " + currentState);
 	}
 
 	public abstract void update();

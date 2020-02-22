@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-
 import model.Player;
+import view.GUI;
+import view.Game;
 
 public class GameState extends State {
 	
-	private static GameState instance = null;
+	private GUI gui;
+	private Game game;
+	
+	private static GameState instance;
 
 	// Game objects, player etc.
 
@@ -19,18 +23,27 @@ public class GameState extends State {
 	private Player player;
 
 	private GameState() {
-		super();
-		init();
+		System.out.println("construktor game state ");
+		//super();
+		//init();
 	}
 
 	public static GameState getInstance() {
 
-		if (instance == null)
+		System.out.println("instance gamestate");
+		if (instance == null) {
 			instance = new GameState();
+			System.out.println("ny instance game");
+		}
+			
 		return instance;
 	}
-	private void init() {
+	
+	public void init() {
+	
 		player = new Player();
+		//game = new Game();
+//		game.start();
 	
 	}
 
@@ -49,6 +62,11 @@ public class GameState extends State {
 	public Player getPlayer() {
 		return player;
 
+	}
+	public void stopGame() {
+		System.out.println("innan stop");
+		game.stopGame();
+		System.out.println("efter stop");
 	}
 
 }

@@ -13,11 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import state.MenuState;
-import state.State;
 
 public class GUI {
 
+	private static GUI instance;
 	private JFrame frame;
 	private JPanel panel;
 	private GridBagConstraints gbc;
@@ -27,13 +26,22 @@ public class GUI {
 	private int width = 800, height = 600;
 	private Game game;
 
-	public GUI() {
+	private GUI() {
 		initFrame();
 		initCanvas();
-	//	initGame();
+		initGame();
 
-		State.setState(MenuState.getInstance());
+		System.out.println("GUI 1 ");
+		//State.setState(MenuState.getInstance());
+		System.out.println("GUI 2");
+		
 
+	}
+	public static GUI getInstance() {
+
+		if (instance == null)
+			instance = new GUI();
+		return instance;
 	}
 
 	public void initFrame() {
@@ -93,5 +101,8 @@ public class GUI {
 
 	public Canvas getCanvas() {
 		return this.canvas;
+	}
+	public GUI getGUI() {
+		return this;
 	}
 }
