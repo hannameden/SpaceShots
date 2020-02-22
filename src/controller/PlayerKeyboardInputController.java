@@ -5,11 +5,11 @@ import java.awt.event.KeyListener;
 
 import model.Player;
 
-public class PlayerInputController implements KeyListener {
+public class PlayerKeyboardInputController implements KeyListener {
 
 	private Player player;
 
-	public PlayerInputController(Player player) {
+	public PlayerKeyboardInputController(Player player) {
 		this.player = player;
 	}
 

@@ -3,7 +3,8 @@ package view;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-import controller.PlayerInputController;
+import controller.PlayerKeyboardInputController;
+import controller.PlayerMouseInputController;
 import state.GameState;
 import state.State;
 
@@ -17,15 +18,21 @@ public class Game implements Runnable {
 
 	public Game(GUI gui) {
 		this.gui = gui;
-
 		GameState gameState = new GameState();
-
 		State.setState(gameState);
+		initInputListeners(gameState);
+	}
 
-		PlayerInputController playerInputController = new PlayerInputController(gameState.getPlayer());
-
-		this.gui.getFrame().addKeyListener(playerInputController);
-		this.gui.getCanvas().addKeyListener(playerInputController);
+	private void initInputListeners(GameState gameState) {
+		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(
+				gameState.getPlayer());
+		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(gameState.getPlayer());
+		this.gui.getFrame().addKeyListener(playerKeyboardInputController);
+		this.gui.getCanvas().addKeyListener(playerKeyboardInputController);
+		this.gui.getFrame().addMouseListener(playerMourseInputController);
+		this.gui.getCanvas().addMouseListener(playerMourseInputController);
+		this.gui.getFrame().addMouseMotionListener(playerMourseInputController);
+		this.gui.getCanvas().addMouseMotionListener(playerMourseInputController);
 	}
 
 	@Override
