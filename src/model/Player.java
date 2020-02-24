@@ -15,7 +15,6 @@ public class Player {
 	private double angle = 0f;
 	private Dimension size;
 	private Point playerCenter;
-	private GUI gui;
 
 	/*
 	 * Middle element in xpoints and ypoints represents the front of the spaceship.
@@ -24,7 +23,6 @@ public class Player {
 	private int[] ypoints = new int[3];
 
 	public Player(GUI gui) {
-		this.gui = gui;
 
 		/*
 		 * xpoints[0] = screenWidth / 2; xpoints[1] = screenWidth / 2 + 25; xpoints[2] =
@@ -44,9 +42,6 @@ public class Player {
 
 		size = getTriangleSize();
 		playerCenter = new Point(gui.getWidth() / 2 + size.width + size.width / 2, gui.getHeight() / 2 + size.height);
-
-		System.out.println(playerCenter.x);
-		System.out.println(playerCenter.y);
 
 	}
 
