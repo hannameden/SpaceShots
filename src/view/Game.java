@@ -18,7 +18,7 @@ public class Game implements Runnable {
 
 	public Game(GUI gui) {
 		this.gui = gui;
-		GameState gameState = new GameState();
+		GameState gameState = new GameState(gui);
 		State.setState(gameState);
 		initInputListeners(gameState);
 	}

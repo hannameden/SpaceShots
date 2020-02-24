@@ -50,7 +50,7 @@ public class PlayerMouseInputController implements MouseInputListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		player.setPoint(e);
+		player.transform(e);
 	}
 
 }

@@ -5,75 +5,105 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Polygon;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 
+import view.GUI;
+
 public class Player {
 
-	private int width = 20, height = 20, x = 0, y = 0;
-	private Polygon polygon;
 	private double angle = 0f;
-	private Point point;
+	private Dimension size;
+	private Point playerCenter;
+	private GUI gui;
 
-	private int[] xpoints = { 0, 100, 50 }, ypoints = { 0, 0, 100 };
+	/*
+	 * Middle element in xpoints and ypoints represents the front of the spaceship.
+	 */
+	private int[] xpoints = new int[3];
+	private int[] ypoints = new int[3];
 
-	public Player() {
-		point = new Point();
-		polygon = new Polygon(xpoints, ypoints, 3);
+	public Player(GUI gui) {
+		this.gui = gui;
+
+		/*
+		 * xpoints[0] = screenWidth / 2; xpoints[1] = screenWidth / 2 + 25; xpoints[2] =
+		 * screenWidth / 2 + 50;
+		 * 
+		 * ypoints[0] = screenHeight / 2 + 50; ypoints[1] = screenHeight / 2; ypoints[2]
+		 * = screenHeight / 2 + 50;
+		 */
+
+		xpoints[0] = 0;
+		xpoints[1] = 25;
+		xpoints[2] = 50;
+
+		ypoints[0] = 50;
+		ypoints[1] = 0;
+		ypoints[2] = 50;
+
+		size = getTriangleSize();
+		playerCenter = new Point(gui.getWidth() / 2 + size.width + size.width / 2, gui.getHeight() / 2 + size.height);
+
+		System.out.println(playerCenter.x);
+		System.out.println(playerCenter.y);
+
 	}
 
 	public void moveUp() {
-		y -= 10;
+
 	}
 
 	public void moveDown() {
-		y += 10;
+
 	}
 
 	public void moveRight() {
-		x += 10;
+
 	}
 
 	public void moveLeft() {
-		x -= 10;
+
+	}
+
+	public void update() {
+
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.white);
 		Graphics2D g2d = (Graphics2D) g.create();
 		AffineTransform at = new AffineTransform();
-		Dimension size = getTriangleSize();
-		int x = point.x - (size.width / 2);
-		int y = point.y - (size.height / 2);
+
+		int x = playerCenter.x - (size.width / 2);
+		int y = playerCenter.y - (size.height / 2);
 		at.translate(x, y);
-		at.rotate(Math.toRadians(angle), point.x - x, point.y - y);
+		at.rotate(Math.toRadians(angle), playerCenter.x - x, playerCenter.y - y);
+
+		g2d.setColor(Color.WHITE);
 		g2d.setTransform(at);
-		g2d.drawPolygon(polygon);
+		g2d.drawPolygon(xpoints, ypoints, 3);
 		// Guide
-		g2d.setColor(Color.RED);
+		g2d.setColor(Color.GREEN);
 		g2d.drawLine(size.width / 2, 0, size.width / 2, size.height / 2);
 		g2d.dispose();
 	}
 
-	public void adjustFront(MouseEvent e) {
-		polygon.xpoints[0] = e.getX();
-	}
-
-	protected Dimension getTriangleSize() {
+	private Dimension getTriangleSize() {
 		int maxX = 0;
 		int maxY = 0;
 		for (int index = 0; index < xpoints.length; index++) {
-			maxX = Math.max(maxX, xpoints[index]);
+			if (xpoints[index] > maxX)
+				maxX = xpoints[index];
 		}
 		for (int index = 0; index < ypoints.length; index++) {
-			maxY = Math.max(maxY, ypoints[index]);
+			if (ypoints[index] > maxY)
+				maxY = ypoints[index];
 		}
 		return new Dimension(maxX, maxY);
 	}
 
-	public void setPoint(MouseEvent e) {
-		point = e.getPoint();
+	public void transform(MouseEvent e) {
+		angle = -Math.toDegrees(Math.atan2(e.getPoint().x - playerCenter.x, e.getPoint().y - playerCenter.y)) + 180;
 	}
 
 }

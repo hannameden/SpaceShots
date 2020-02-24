@@ -3,6 +3,7 @@ package state;
 import java.awt.Graphics;
 
 import model.Player;
+import view.GUI;
 
 public class GameState extends State {
 
@@ -10,13 +11,9 @@ public class GameState extends State {
 
 	private Player player;
 
-	public GameState() {
+	public GameState(GUI gui) {
 		super();
-		init();
-	}
-
-	private void init() {
-		player = new Player();
+		player = new Player(gui);
 	}
 
 	@Override
