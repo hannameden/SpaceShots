@@ -13,7 +13,7 @@ public class GameState extends State {
 	private GUI gui;
 	private Game game;
 	
-	private static GameState instance;
+	private static GameState instance = null;
 
 	// Game objects, player etc.
 
@@ -23,13 +23,14 @@ public class GameState extends State {
 	private Player player;
 
 	private GameState() {
-		super();
+		//super();
 		init();
 	}
 
 	public static GameState getInstance() {
 
 		System.out.println("instance gamestate");
+		
 		if (instance == null) {
 			instance = new GameState();
 			System.out.println("ny instance game");
@@ -40,10 +41,9 @@ public class GameState extends State {
 	
 	public void init() {
 	
-	
-		//gui = new GUI();
+		gui = new GUI();
 		player = new Player();
-	//	game = new Game(gui);
+		//game = new Game(gui);
 	//	game.start();
 	
 	}

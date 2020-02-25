@@ -14,18 +14,18 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
-	private GameState gameState;
+	private GameState gameState = null;
 
 	public Game(GUI gui) {
 		this.gui = gui;
 		//gui = GUI.getInstance();
 		System.out.println("this is fine game");
 
-		gameState = GameState.getInstance();
+		gameState = gameState.getInstance();
 
-		gameState.init();
+	
 		System.out.println("game 2");
-		State.setState(gameState);
+		//State.setState(gameState);
 
 		PlayerInputController playerInputController = new PlayerInputController(gameState.getPlayer());
 

@@ -27,7 +27,7 @@ public class GUI {
 	public GUI() {
 		initFrame();
 		initCanvas();
-	//	initGame();
+		initGame();
 
 		System.out.println("GUI 1 ");
 		//State.setState(MenuState.getInstance());
@@ -82,7 +82,7 @@ public class GUI {
 
 	private void initGame() {
 		game = new Game(this);
-		game.start();
+	//	game.start();
 	}
 
 	public int getWidth() {
