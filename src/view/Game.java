@@ -33,7 +33,7 @@ public class Game implements Runnable {
 
 		player = new Player();
 
-		 playerInputController = new PlayerInputController(player);
+		playerInputController = new PlayerInputController(player);
 
 		gui.getFrame().addKeyListener(playerInputController);
 		gui.getCanvas().addKeyListener(playerInputController);
