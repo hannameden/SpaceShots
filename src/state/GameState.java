@@ -23,7 +23,7 @@ public class GameState extends State {
 	private Player player;
 
 	private GameState() {
-		//super();
+		super();
 		init();
 	}
 
@@ -43,7 +43,7 @@ public class GameState extends State {
 	
 		gui = new GUI();
 		player = new Player();
-		//game = new Game(gui);
+		game = new Game(gui);
 	//	game.start();
 	
 	}

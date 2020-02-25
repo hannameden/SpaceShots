@@ -27,11 +27,11 @@ public class GUI {
 	public GUI() {
 		initFrame();
 		initCanvas();
-		initGame();
+		//initGame();
 
-		System.out.println("GUI 1 ");
+		System.out.println("GUI  ");
 		//State.setState(MenuState.getInstance());
-		System.out.println("GUI 2");
+		
 		
 
 	}

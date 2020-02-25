@@ -18,10 +18,10 @@ public class Game implements Runnable {
 
 	public Game(GUI gui) {
 		this.gui = gui;
-		//gui = GUI.getInstance();
+		
 		System.out.println("this is fine game");
 
-		gameState = gameState.getInstance();
+		gameState = GameState.getInstance();
 
 	
 		System.out.println("game 2");
