@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import state.MenuState;
 
@@ -13,6 +14,7 @@ public class Menu {
 
 	private Canvas canvas;
 	private JFrame frame;
+	private JPanel panel;
 	private JButton startBtn, highscoreBtn, exitBtn;
 
 	public Menu(GUI gui) {
@@ -22,6 +24,7 @@ public class Menu {
 	private void init(GUI gui) {
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
+		panel = new JPanel();
 
 		startBtn = new JButton("Start game");
 		startBtn.addActionListener(new ActionListener() {
@@ -55,10 +58,11 @@ public class Menu {
 		});
 
 		canvas.setVisible(false);
-		frame.add(startBtn);
-		frame.add(highscoreBtn);
-		frame.add(exitBtn);
-
+		panel.add(startBtn);
+		panel.add(highscoreBtn);
+		panel.add(exitBtn);
+		frame.add(panel);
 		frame.setVisible(true);
 	}
+
 }

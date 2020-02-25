@@ -24,7 +24,7 @@ public class MenuState extends State {
 	}
 
 	public void startGame() {
-		GameState.getInstance(gui).startGame();
+		State.setState(GameState.getInstance(gui));
 	}
 
 	public void stopGame() {

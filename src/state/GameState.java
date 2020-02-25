@@ -10,12 +10,14 @@ public class GameState extends State {
 
 	private Game game;
 	private Player player;
+	private GUI gui;
 
 	private static GameState instance;
 
 	private GameState(GUI gui) {
 		player = new Player(gui);
 		game = new Game(gui, player);
+		this.gui = gui;
 		startGame();
 	}
 
@@ -40,6 +42,7 @@ public class GameState extends State {
 	}
 
 	public void startGame() {
+		gui.getCanvas().setVisible(true);
 		game.start();
 	}
 
