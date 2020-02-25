@@ -12,10 +12,10 @@ public class MenuState extends State {
 	private Menu menu;
 	private GUI gui;
 	private static MenuState instance = null;
-	
+
 	private MenuState() {
 		init();
-		
+
 	}
 
 	public static MenuState getInstance() {
@@ -24,27 +24,28 @@ public class MenuState extends State {
 			instance = new MenuState();
 		return instance;
 	}
+
 	public void init() {
-		gui = GUI.getInstance();
+		//gui = new GUI();
 		menu = new Menu();
 	}
-	
+
 	public void startGame() {
 		State.setState(GameState.getInstance());
 	}
+
 	public void stopGame() {
 		GameState.getInstance().stopGame();
 	}
-	
+
 	@Override
 	public void update() {
-		
-		
+
 	}
 
 	@Override
 	public void render(Graphics g) {
-	
+
 	}
 
 }

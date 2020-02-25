@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import state.GameState;
 import state.MenuState;
 
 public class Menu {
@@ -17,11 +18,12 @@ public class Menu {
 	private JButton startBtn, highscoreBtn, exitBtn;
 
 	public Menu() {
-		gui = GUI.getInstance();
+		
 		init();
 	}
 
 	public void init() {
+		gui = new GUI();
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
 
@@ -51,8 +53,8 @@ public class Menu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MenuState.getInstance().stopGame();
+				GameState.getInstance().stopGame();
 				frame.dispose();
-
 			}
 		});
 		
@@ -62,7 +64,5 @@ public class Menu {
 		frame.add(exitBtn);
 
 		frame.setVisible(true);
-
 	}
-
 }

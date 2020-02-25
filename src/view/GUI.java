@@ -13,10 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
 public class GUI {
 
-	private static GUI instance;
 	private JFrame frame;
 	private JPanel panel;
 	private GridBagConstraints gbc;
@@ -26,10 +24,10 @@ public class GUI {
 	private int width = 800, height = 600;
 	private Game game;
 
-	private GUI() {
+	public GUI() {
 		initFrame();
 		initCanvas();
-		initGame();
+	//	initGame();
 
 		System.out.println("GUI 1 ");
 		//State.setState(MenuState.getInstance());
@@ -37,13 +35,6 @@ public class GUI {
 		
 
 	}
-	public static GUI getInstance() {
-
-		if (instance == null)
-			instance = new GUI();
-		return instance;
-	}
-
 	public void initFrame() {
 
 		try {
@@ -81,6 +72,13 @@ public class GUI {
 		canvas.setBackground(Color.BLACK);
 		frame.getContentPane().add(canvas);
 	}
+	/**
+	 * Main skapar GUI, GUI håller i ett state, och menu kanske bör vara en panel? som kan kastas vid state change. 
+	 * 
+	 * Nullcheck på canvas? visibility annars nullcheck
+	 * 
+	 * 
+	 */
 
 	private void initGame() {
 		game = new Game(this);

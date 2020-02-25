@@ -23,9 +23,8 @@ public class GameState extends State {
 	private Player player;
 
 	private GameState() {
-		System.out.println("construktor game state ");
-		//super();
-		//init();
+		super();
+		init();
 	}
 
 	public static GameState getInstance() {
@@ -41,9 +40,11 @@ public class GameState extends State {
 	
 	public void init() {
 	
+	
+		//gui = new GUI();
 		player = new Player();
-		//game = new Game();
-//		game.start();
+	//	game = new Game(gui);
+	//	game.start();
 	
 	}
 

@@ -71,6 +71,7 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
+		gui.getCanvas().setVisible(true);
 		bs = gui.getCanvas().getBufferStrategy();
 		if (bs == null) {
 			gui.getCanvas().createBufferStrategy(3);
@@ -80,7 +81,6 @@ public class Game implements Runnable {
 		// Clear screen
 		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 		// Draw
-
 		if (State.getState() != null)
 			State.getState().render(g);
 
