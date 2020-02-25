@@ -4,16 +4,25 @@ import java.awt.Graphics;
 
 import model.Player;
 import view.GUI;
+import view.Game;
 
 public class GameState extends State {
 
-	// Game objects, player etc.
-
+	private Game game;
 	private Player player;
 
-	public GameState(GUI gui) {
-		super();
+	private static GameState instance;
+
+	private GameState(GUI gui) {
 		player = new Player(gui);
+		game = new Game(gui, player);
+		startGame();
+	}
+
+	public static GameState getInstance(GUI gui) {
+		if (instance == null)
+			instance = new GameState(gui);
+		return instance;
 	}
 
 	@Override
@@ -28,6 +37,10 @@ public class GameState extends State {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public void startGame() {
+		game.start();
 	}
 
 }

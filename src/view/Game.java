@@ -5,7 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import controller.PlayerKeyboardInputController;
 import controller.PlayerMouseInputController;
-import state.GameState;
+import model.Player;
 import state.State;
 
 public class Game implements Runnable {
@@ -16,17 +16,14 @@ public class Game implements Runnable {
 	private Graphics g;
 	private GUI gui;
 
-	public Game(GUI gui) {
+	public Game(GUI gui, Player player) {
 		this.gui = gui;
-		GameState gameState = new GameState(gui);
-		State.setState(gameState);
-		initInputListeners(gameState);
+		initInputListeners(player);
 	}
 
-	private void initInputListeners(GameState gameState) {
-		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(
-				gameState.getPlayer());
-		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(gameState.getPlayer());
+	private void initInputListeners(Player player) {
+		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
+		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
 		this.gui.getFrame().addKeyListener(playerKeyboardInputController);
 		this.gui.getCanvas().addKeyListener(playerKeyboardInputController);
 		this.gui.getFrame().addMouseListener(playerMourseInputController);
