@@ -8,8 +8,9 @@ import view.GUI;
 public class Main {
 
 	public static void main(String[] args) {
-		State.setState(GameState.getInstance());
+		//State.setState(GameState.getInstance());
 
+		new Mediator();
 		//new GUI();
 	}
 	

@@ -7,23 +7,27 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import controller.Mediator;
 import state.GameState;
 import state.MenuState;
 
 public class Menu {
 
 	private GUI gui;
+	private Mediator mediator;
 	private Canvas canvas;
 	private JFrame frame;
 	private JButton startBtn, highscoreBtn, exitBtn;
 
-	public Menu() {
-		
+	public Menu(Mediator mediator, GUI gui) {
+		super();
+		this.mediator = mediator;
+		this.gui = gui;
 		init();
 	}
 
 	public void init() {
-		gui = new GUI();
+	
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
 
@@ -32,8 +36,9 @@ public class Menu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuState.getInstance().startGame();
+				//MenuState.getInstance().startGame();
 
+				mediator.startGame();
 			}
 		});
 		

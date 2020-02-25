@@ -27,7 +27,7 @@ public class MenuState extends State {
 
 	public void init() {
 		//gui = new GUI();
-		menu = new Menu();
+	//	menu = new Menu();
 	}
 
 	public void startGame() {

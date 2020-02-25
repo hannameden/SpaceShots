@@ -81,7 +81,7 @@ public class GUI {
 	 */
 
 	private void initGame() {
-		game = new Game(this);
+	//	game = new Game(this);
 	//	game.start();
 	}
 

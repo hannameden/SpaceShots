@@ -1,11 +1,13 @@
 package view;
 
+import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import controller.Mediator;
 import controller.PlayerInputController;
-import state.GameState;
-import state.State;
+import model.Player;
 
 public class Game implements Runnable {
 
@@ -14,28 +16,33 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
-	private GameState gameState = null;
+	private Player player;
+	private Mediator mediator;
+	private Canvas canvas;
+	private PlayerInputController playerInputController;
 
-	public Game(GUI gui) {
+	public Game( GUI gui) {
+		this.mediator = mediator;
 		this.gui = gui;
-		
+
 		System.out.println("this is fine game");
 
-		gameState = GameState.getInstance();
+//		gameState = GameState.getInstance();
 
-	
-		System.out.println("game 2");
-		//State.setState(gameState);
+		// State.setState(gameState);
 
-		PlayerInputController playerInputController = new PlayerInputController(gameState.getPlayer());
+		player = new Player();
 
-		this.gui.getFrame().addKeyListener(playerInputController);
-		this.gui.getCanvas().addKeyListener(playerInputController);
+		 playerInputController = new PlayerInputController(player);
+
+		gui.getFrame().addKeyListener(playerInputController);
+		gui.getCanvas().addKeyListener(playerInputController);
 	}
 
 	@Override
 	public void run() {
 
+		System.out.println("run game");
 		int fps = 60;
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
@@ -66,13 +73,15 @@ public class Game implements Runnable {
 
 	private void update() {
 
-		if (State.getState() != null)
-			State.getState().update();
+	//	if (State.getState() != null)
+	//		State.getState().update();
 	}
 
 	private void render() {
-		gui.getCanvas().setVisible(true);
-		bs = gui.getCanvas().getBufferStrategy();
+		canvas = gui.getCanvas();
+		canvas.setVisible(true);
+		bs = canvas.getBufferStrategy();
+		
 		if (bs == null) {
 			gui.getCanvas().createBufferStrategy(3);
 			return;
@@ -81,9 +90,11 @@ public class Game implements Runnable {
 		// Clear screen
 		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 		// Draw
-		if (State.getState() != null)
-			State.getState().render(g);
+//		if (State.getState() != null)
+	//		State.getState().render(g);
 
+		g.setColor(Color.white);
+		player.render(g);
 		// End Drawing
 		bs.show();
 		g.dispose();
@@ -96,7 +107,7 @@ public class Game implements Runnable {
 		thread = new Thread(this);
 		thread.start();
 	}
-	
+
 	public synchronized void stop() {
 		if (!running)
 			return;
@@ -107,6 +118,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
 	public void stopGame() {
 		running = false;
 	}
