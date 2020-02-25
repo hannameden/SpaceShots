@@ -52,8 +52,8 @@ public class Menu {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MenuState.getInstance(gui).stopGame();
-				// GameState.getInstance(gui).stopGame();
 				frame.dispose();
+				System.exit(0);
 			}
 		});
 
