@@ -1,15 +1,19 @@
 package view;
 
 import java.awt.Canvas;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import controller.Mediator;
-import state.GameState;
-import state.MenuState;
 
 public class Menu {
 
@@ -17,6 +21,8 @@ public class Menu {
 	private Mediator mediator;
 	private Canvas canvas;
 	private JFrame frame;
+	private Image background;
+	private Graphics g;
 	private JButton startBtn, highscoreBtn, exitBtn;
 
 	public Menu(Mediator mediator, GUI gui) {
@@ -30,8 +36,12 @@ public class Menu {
 	
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
-
+		
 		startBtn = new JButton("Start game");
+		startBtn.setOpaque(false);
+		startBtn.setContentAreaFilled(false);
+		startBtn.setBorderPainted(true);
+		
 		startBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -57,8 +67,7 @@ public class Menu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuState.getInstance().stopGame();
-				GameState.getInstance().stopGame();
+				
 				frame.dispose();
 			}
 		});

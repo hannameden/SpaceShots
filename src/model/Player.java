@@ -39,6 +39,7 @@ public class Player {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		//g.setColor(Color.white);
 		g.drawImage(image, x, y, 20, 20 ,null);
 	}

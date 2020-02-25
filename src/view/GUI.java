@@ -3,11 +3,16 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -16,7 +21,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class GUI {
 
 	private JFrame frame;
+	private Image background;
 	private JPanel panel;
+	private BufferStrategy bs;
+	private Graphics g;
 	private GridBagConstraints gbc;
 
 	private Canvas canvas;
@@ -24,14 +32,16 @@ public class GUI {
 	private int width = 800, height = 600;
 	private Game game;
 
+	
 	public GUI() {
 		initFrame();
 		initCanvas();
+	
+		initBackground();
 		//initGame();
 
 		System.out.println("GUI  ");
 		//State.setState(MenuState.getInstance());
-		
 		
 
 	}
@@ -69,8 +79,11 @@ public class GUI {
 		canvas.setMinimumSize(dimension);
 		canvas.setMaximumSize(dimension);
 		canvas.setFocusable(false);
-		canvas.setBackground(Color.BLACK);
+		//canvas.setBackground(Color.BLACK);
+		
 		frame.getContentPane().add(canvas);
+		
+		
 	}
 	/**
 	 * Main skapar GUI, GUI håller i ett state, och menu kanske bör vara en panel? som kan kastas vid state change. 
@@ -80,6 +93,36 @@ public class GUI {
 	 * 
 	 */
 
+	private void initBackground(){
+		
+		canvas.setVisible(true);
+		bs = canvas.getBufferStrategy();
+		
+		if (bs == null) {
+			this.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
+		// Clear screen
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		// Draw
+//		if (State.getState() != null)
+	//		State.getState().render(g);
+
+		try {
+			background = ImageIO.read(new File("assets\\space.jfif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+		
+		g.setColor(Color.white);
+		//player.render(g);
+		// End Drawing
+		bs.show();
+		g.dispose();
+	}
 	private void initGame() {
 	//	game = new Game(this);
 	//	game.start();

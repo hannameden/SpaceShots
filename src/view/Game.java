@@ -3,7 +3,12 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import controller.Mediator;
 import controller.PlayerInputController;
@@ -19,9 +24,10 @@ public class Game implements Runnable {
 	private Player player;
 	private Mediator mediator;
 	private Canvas canvas;
+	private Image background;
 	private PlayerInputController playerInputController;
 
-	public Game( GUI gui) {
+	public Game(GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
 
@@ -93,6 +99,14 @@ public class Game implements Runnable {
 //		if (State.getState() != null)
 	//		State.getState().render(g);
 
+		try {
+			background = ImageIO.read(new File("assets\\space.jfif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
+		
 		g.setColor(Color.white);
 		player.render(g);
 		// End Drawing
