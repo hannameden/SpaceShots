@@ -56,8 +56,6 @@ public class Menu {
 			}
 		});
 		
-		
-		
 		canvas.setVisible(false);
 		frame.add(startBtn);
 		frame.add(highscoreBtn);
