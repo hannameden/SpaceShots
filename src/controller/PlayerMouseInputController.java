@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 
 import model.Player;
@@ -22,12 +23,13 @@ public class PlayerMouseInputController implements MouseInputListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		if (SwingUtilities.isRightMouseButton(e))
+			player.accelerate();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		player.stopAccelerating();
 	}
 
 	@Override

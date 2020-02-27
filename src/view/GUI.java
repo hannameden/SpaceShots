@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import state.MenuState;
+import state.GameState;
 import state.State;
 
 public class GUI {
@@ -25,7 +25,8 @@ public class GUI {
 	public GUI() {
 		initFrame();
 		initCanvas();
-		setState(MenuState.getInstance(this));
+		// setState(MenuState.getInstance(this));
+		setState(GameState.getInstance(this));
 	}
 
 	public void initFrame() {

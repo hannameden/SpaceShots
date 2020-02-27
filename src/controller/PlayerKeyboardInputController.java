@@ -21,14 +21,17 @@ public class PlayerKeyboardInputController implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
-			player.moveLeft();
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D)
-			player.moveRight();
-		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S)
-			player.moveDown();
-		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W)
-			player.moveUp();
+
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+			player.shoot();
+
+		/*
+		 * if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
+		 * player.moveLeft(); if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode()
+		 * == KeyEvent.VK_D) player.moveRight(); if (e.getKeyCode() == KeyEvent.VK_DOWN
+		 * || e.getKeyCode() == KeyEvent.VK_S) player.moveDown(); if (e.getKeyCode() ==
+		 * KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) player.moveUp();
+		 */
 	}
 
 	@Override

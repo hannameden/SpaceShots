@@ -2,6 +2,7 @@ package state;
 
 import java.awt.Graphics;
 
+import model.Entity;
 import model.Player;
 import view.GUI;
 import view.Game;
@@ -29,12 +30,12 @@ public class GameState extends State {
 
 	@Override
 	public void update() {
-
+		Entity.getEntities().forEach(e -> e.update());
 	}
 
 	@Override
 	public void render(Graphics g) {
-		player.render(g);
+		Entity.getEntities().forEach(e -> e.render(g));
 	}
 
 	public Player getPlayer() {

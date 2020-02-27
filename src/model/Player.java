@@ -10,11 +10,12 @@ import java.awt.geom.AffineTransform;
 
 import view.GUI;
 
-public class Player {
+public class Player extends Entity {
 
 	private double angle = 0f;
 	private Dimension size;
 	private Point playerCenter;
+	private int startX, startY;
 
 	/*
 	 * Middle element in xpoints and ypoints represents the front of the spaceship.
@@ -23,14 +24,6 @@ public class Player {
 	private int[] ypoints = new int[3];
 
 	public Player(GUI gui) {
-
-		/*
-		 * xpoints[0] = screenWidth / 2; xpoints[1] = screenWidth / 2 + 25; xpoints[2] =
-		 * screenWidth / 2 + 50;
-		 * 
-		 * ypoints[0] = screenHeight / 2 + 50; ypoints[1] = screenHeight / 2; ypoints[2]
-		 * = screenHeight / 2 + 50;
-		 */
 
 		xpoints[0] = 0;
 		xpoints[1] = 25;
@@ -41,24 +34,25 @@ public class Player {
 		ypoints[2] = 50;
 
 		size = getTriangleSize();
-		playerCenter = new Point(gui.getWidth() / 2 + size.width + size.width / 2, gui.getHeight() / 2 + size.height);
+		startX = gui.getWidth() / 2 + size.width + size.width / 2;
+		startY = gui.getHeight() / 2 + size.height;
+		playerCenter = new Point(startX, startY);
 
 	}
 
-	public void moveUp() {
+	public void accelerate() {
+		// TODO: Travel in the direction of the front of the spaceship
 
 	}
 
-	public void moveDown() {
+	public void stopAccelerating() {
+		// TODO: Decrease acceleration until it´s velocity vector is 0
 
 	}
 
-	public void moveRight() {
-
-	}
-
-	public void moveLeft() {
-
+	public void shoot() {
+		// TODO: set X and Y to the front of the Spaceship and the correct angle.
+		new Bullet(playerCenter.x, playerCenter.y, (int) angle);
 	}
 
 	public void update() {
@@ -78,8 +72,6 @@ public class Player {
 		g2d.setTransform(at);
 		g2d.drawPolygon(xpoints, ypoints, 3);
 		// Guide
-		g2d.setColor(Color.GREEN);
-		g2d.drawLine(size.width / 2, 0, size.width / 2, size.height / 2);
 		g2d.dispose();
 	}
 
