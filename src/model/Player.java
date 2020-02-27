@@ -15,7 +15,6 @@ public class Player extends Entity {
 	private Point playerFront;
 	private int radius = 20;
 	private int diameter = radius * 2;
-	private GUI gui;
 
 	/*
 	 * Middle element in xpoints and ypoints represents the front of the spaceship.
@@ -45,21 +44,21 @@ public class Player extends Entity {
 	}
 
 	public void accelerate() {
-		if (speed++ > maxSpeed) {
+		if (speed++ > maxSpeed)
 			speed = maxSpeed;
-		} else if (speed <= maxSpeed)
+		else if (speed <= maxSpeed)
 			speed++;
 	}
 
 	public void stopAccelerating() {
-		if (speed-- < 0) {
+		if (speed-- < 0)
 			speed = 0;
-		} else if (speed >= 0)
+		else if (speed >= 0)
 			speed--;
 	}
 
 	public void shoot() {
-		new Bullet(playerFront.x, playerFront.y, (int) shootDirection);
+		new Bullet(playerFront.x, playerFront.y, (int) shootDirection, gui);
 	}
 
 	public void update() {
@@ -80,19 +79,17 @@ public class Player extends Entity {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > gui.getWidth()) {
+		if (x > gui.getWidth())
 			x = -diameter;
-		} else if (x + diameter < 0) {
+		else if (x + diameter < 0)
 			x = gui.getWidth();
-		}
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > gui.getHeight()) {
+		if (y > gui.getHeight())
 			y = -diameter;
-		} else if (y + diameter < 0) {
+		else if (y + diameter < 0)
 			y = gui.getHeight();
-		}
 	}
 
 	public void setMovementDirection(MouseEvent e) {
