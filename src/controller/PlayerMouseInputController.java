@@ -23,7 +23,7 @@ public class PlayerMouseInputController implements MouseInputListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (SwingUtilities.isRightMouseButton(e))
+		if (SwingUtilities.isLeftMouseButton(e))
 			player.accelerate();
 	}
 

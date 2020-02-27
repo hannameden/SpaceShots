@@ -10,11 +10,14 @@ public class Bullet extends Entity {
 		this.y = y;
 		this.width = 10;
 		this.height = 10;
+		this.direction = direction;
+		speed = 5;
 	}
 
 	@Override
 	public void update() {
-		x++;
+		x += (int) (speed * Math.sin(Math.toRadians(direction)));
+		y += (int) -(speed * Math.cos(Math.toRadians(direction)));
 	}
 
 	@Override

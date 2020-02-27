@@ -16,6 +16,7 @@ public class Player extends Entity {
 	private Dimension size;
 	private Point playerCenter;
 	private int startX, startY;
+	private Point spaceShipFront;
 
 	/*
 	 * Middle element in xpoints and ypoints represents the front of the spaceship.
@@ -34,24 +35,25 @@ public class Player extends Entity {
 		ypoints[2] = 50;
 
 		size = getTriangleSize();
-		startX = gui.getWidth() / 2 + size.width + size.width / 2;
-		startY = gui.getHeight() / 2 + size.height;
-		playerCenter = new Point(startX, startY);
+
+		// final Point2D.Double centroid = new Point2D.Double((p1.getX() + p2.getX() +
+		// p3.getX()) / 3.0, (p1.getY() + p2.getY() + p3.getY()) / 3.0);
+		playerCenter = new Point((xpoints[0] + xpoints[1] + xpoints[2]) / 3,
+				(ypoints[0] + ypoints[1] + ypoints[2]) / 3);
 
 	}
 
 	public void accelerate() {
 		// TODO: Travel in the direction of the front of the spaceship
+		speed++;
 
 	}
 
 	public void stopAccelerating() {
-		// TODO: Decrease acceleration until it´s velocity vector is 0
-
+		speed--;
 	}
 
 	public void shoot() {
-		// TODO: set X and Y to the front of the Spaceship and the correct angle.
 		new Bullet(playerCenter.x, playerCenter.y, (int) angle);
 	}
 
@@ -71,21 +73,20 @@ public class Player extends Entity {
 		g2d.setColor(Color.WHITE);
 		g2d.setTransform(at);
 		g2d.drawPolygon(xpoints, ypoints, 3);
-		// Guide
-		g2d.dispose();
+
 	}
 
 	private Dimension getTriangleSize() {
 		int maxX = 0;
 		int maxY = 0;
-		for (int index = 0; index < xpoints.length; index++) {
+		for (int index = 0; index < xpoints.length; index++)
 			if (xpoints[index] > maxX)
 				maxX = xpoints[index];
-		}
-		for (int index = 0; index < ypoints.length; index++) {
+
+		for (int index = 0; index < ypoints.length; index++)
 			if (ypoints[index] > maxY)
 				maxY = ypoints[index];
-		}
+
 		return new Dimension(maxX, maxY);
 	}
 
