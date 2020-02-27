@@ -25,6 +25,8 @@ public abstract class Entity {
 
 	public abstract void render(Graphics g);
 
+	public abstract void checkEdgeCollision(Entity e);
+
 	public static void removeEntity(Entity e) {
 		entities.remove(e);
 	}

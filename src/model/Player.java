@@ -15,6 +15,7 @@ public class Player extends Entity {
 	private Point playerFront;
 	private int radius = 20;
 	private int diameter = radius * 2;
+	private GUI gui;
 
 	/*
 	 * Middle element in xpoints and ypoints represents the front of the spaceship.
@@ -23,6 +24,8 @@ public class Player extends Entity {
 	private int[] ypoints = new int[3];
 
 	public Player(GUI gui) {
+
+		this.gui = gui;
 
 		xpoints[0] = 0;
 		xpoints[1] = 25;
@@ -62,12 +65,34 @@ public class Player extends Entity {
 	public void update() {
 		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
 		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+		checkEdgeCollision(this);
 	}
 
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);
 		g2d.drawOval(x, y, diameter, diameter);
+	}
+
+	public void checkEdgeCollision(Entity e) {
+		checkEdgeCollisionX();
+		checkEdgeCollisionY();
+	}
+
+	private void checkEdgeCollisionX() {
+		if (x > gui.getWidth()) {
+			x = -diameter;
+		} else if (x + diameter < 0) {
+			x = gui.getWidth();
+		}
+	}
+
+	private void checkEdgeCollisionY() {
+		if (y > gui.getHeight()) {
+			y = -diameter;
+		} else if (y + diameter < 0) {
+			y = gui.getHeight();
+		}
 	}
 
 	public void setMovementDirection(MouseEvent e) {
