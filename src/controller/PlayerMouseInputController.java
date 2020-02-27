@@ -17,19 +17,22 @@ public class PlayerMouseInputController implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (SwingUtilities.isLeftMouseButton(e))
-			player.accelerate();
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		player.stopAccelerating();
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			player.setMovementDirection(e);
+			player.accelerate();
+		} else if (SwingUtilities.isRightMouseButton(e)) {
+			player.stopAccelerating();
+		}
 	}
 
 	@Override
@@ -52,7 +55,7 @@ public class PlayerMouseInputController implements MouseInputListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		player.transform(e);
+		player.setShootingDirection(e);
 	}
 
 }

@@ -9,10 +9,11 @@ public abstract class Entity {
 
 	protected int x;
 	protected int y;
-	protected int speed = 0;
 	protected int width;
 	protected int height;
-	protected int direction;
+	protected double maxSpeed = 3;
+	protected double speed = 0;
+	protected double movementDirection = 0f;
 	protected Rectangle2D bounds;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
 
