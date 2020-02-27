@@ -12,8 +12,10 @@ public class Mediator {
 	
 	public Mediator() {
 	
-		init();
-		
+		//init();
+		gui = new GUI();
+	//	startGame();
+		//new GUI();
 	}
 	public void init() {
 		
@@ -21,7 +23,7 @@ public class Mediator {
 		menu = new Menu(this, gui);
 	}
 	public void startGame() {
-		game = new Game( gui);
+		game = new Game(this, gui);
 		game.start();
 	}
 }

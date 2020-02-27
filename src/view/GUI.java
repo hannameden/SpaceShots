@@ -8,17 +8,21 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class GUI {
+public class GUI extends JPanel {
 
 	private JFrame frame;
 	private Image background;
@@ -31,20 +35,24 @@ public class GUI {
 	private Dimension dimension;
 	private int width = 800, height = 600;
 	private Game game;
+	Image image = Toolkit.getDefaultToolkit().getImage("assets\\space.jfif");
 
-	
 	public GUI() {
+
+		/*
+		 * try { frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new
+		 * File("assets\\space.jfif"))))); } catch (IOException e) {
+		 * e.printStackTrace(); } frame.setBounds(0, 0, width, height);
+		 * frame.setSize(width, height); frame.pack(); frame.setVisible(true);
+		 */
+
 		initFrame();
 		initCanvas();
-	
-		initBackground();
-		//initGame();
 
-		System.out.println("GUI  ");
-		//State.setState(MenuState.getInstance());
-		
-
+		// initBackground();
+		// initGame();
 	}
+
 	public void initFrame() {
 
 		try {
@@ -69,6 +77,14 @@ public class GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 
+		ImagePanel panel = new ImagePanel(new ImageIcon("assets\\space.jfif").getImage());
+
+
+		JButton btn = new JButton("klick");
+		panel.add(btn);
+		
+		frame.getContentPane().add(panel);
+
 		frame.setVisible(true);
 
 	}
@@ -79,25 +95,27 @@ public class GUI {
 		canvas.setMinimumSize(dimension);
 		canvas.setMaximumSize(dimension);
 		canvas.setFocusable(false);
-		//canvas.setBackground(Color.BLACK);
-		
-		frame.getContentPane().add(canvas);
-		
-		
+		// canvas.setBackground(Color.BLACK);
+			
+	//	frame.getContentPane().add(canvas);
+
 	}
+
 	/**
-	 * Main skapar GUI, GUI håller i ett state, och menu kanske bör vara en panel? som kan kastas vid state change. 
+	 * Main skapar GUI, GUI håller i ett state, och menu kanske bör vara en panel?
+	 * som kan kastas vid state change.
 	 * 
 	 * Nullcheck på canvas? visibility annars nullcheck
 	 * 
 	 * 
 	 */
 
-	private void initBackground(){
-		
-		canvas.setVisible(true);
+	private void initBackground() {
+
+		System.out.println("init back");
+		// canvas.setVisible(true);
 		bs = canvas.getBufferStrategy();
-		
+
 		if (bs == null) {
 			this.getCanvas().createBufferStrategy(3);
 			return;
@@ -107,25 +125,28 @@ public class GUI {
 		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		// Draw
 //		if (State.getState() != null)
-	//		State.getState().render(g);
+		// State.getState().render(g);
 
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
-		
+
 		g.setColor(Color.white);
-		//player.render(g);
+		// player.render(g);
 		// End Drawing
 		bs.show();
+
 		g.dispose();
+
 	}
+
 	private void initGame() {
-	//	game = new Game(this);
-	//	game.start();
+		// game = new Game(this);
+		// game.start();
 	}
 
 	public int getWidth() {
@@ -143,7 +164,35 @@ public class GUI {
 	public Canvas getCanvas() {
 		return this.canvas;
 	}
+
 	public GUI getGUI() {
 		return this;
+	}
+}
+
+class ImagePanel extends JPanel {
+
+	private int width = 800, height = 600;
+
+	private Image img;
+
+	public ImagePanel(String img) {
+		this(new ImageIcon(img).getImage());
+	}
+
+	public ImagePanel(Image img) {
+		this.img = img;
+		Dimension size = new Dimension(width, height);
+		setPreferredSize(size);
+		setMinimumSize(size);
+		setMaximumSize(size);
+		setSize(size);
+
+		setSize(size);
+		setLayout(null);
+	}
+
+	public void paintComponent(Graphics g) {
+		g.drawImage(img, 0, 0, null);
 	}
 }

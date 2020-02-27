@@ -27,7 +27,7 @@ public class Game implements Runnable {
 	private Image background;
 	private PlayerInputController playerInputController;
 
-	public Game(GUI gui) {
+	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
 
@@ -43,6 +43,8 @@ public class Game implements Runnable {
 
 		gui.getFrame().addKeyListener(playerInputController);
 		gui.getCanvas().addKeyListener(playerInputController);
+		
+		initBackground();
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class Game implements Runnable {
 
 	private void render() {
 		canvas = gui.getCanvas();
-		canvas.setVisible(true);
+		//canvas.setVisible(true);
 		bs = canvas.getBufferStrategy();
 		
 		if (bs == null) {
@@ -98,6 +100,35 @@ public class Game implements Runnable {
 		// Draw
 //		if (State.getState() != null)
 	//		State.getState().render(g);
+/*
+		try {
+			background = ImageIO.read(new File("assets\\space.jfif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
+		*/
+	//	g.setColor(Color.white);
+		player.render(g);
+		// End Drawing
+		bs.show();
+	//	g.dispose();
+		
+
+	}
+
+	public void initBackground() {
+		
+		canvas = gui.getCanvas();
+		//canvas.setVisible(true);
+		bs = canvas.getBufferStrategy();
+		
+		if (bs == null) {
+			gui.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
 
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
@@ -106,14 +137,9 @@ public class Game implements Runnable {
 		}
 		
 		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
-		
-		g.setColor(Color.white);
-		player.render(g);
-		// End Drawing
 		bs.show();
-		g.dispose();
+		
 	}
-
 	public synchronized void start() {
 		if (running)
 			return;
