@@ -3,6 +3,7 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,16 +22,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
-public class GUI extends JPanel {
+public class GUI extends JFrame {
 
 	private JFrame frame;
 	private Image background;
-	private JPanel panel;
+	private JPanel panel, contentPane;
+	private JLabel backgroundLabel, title;
+	private JButton btnStart, btnHighscore, btnExit;
+
 	private BufferStrategy bs;
 	private Graphics g;
 	private GridBagConstraints gbc;
 
+	private ImagePanel imagePanel;
 	private Canvas canvas;
 	private Dimension dimension;
 	private int width = 800, height = 600;
@@ -39,6 +45,10 @@ public class GUI extends JPanel {
 
 	public GUI() {
 
+		initFrameWithBackground();
+
+		frame.setVisible(true);
+
 		/*
 		 * try { frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new
 		 * File("assets\\space.jfif"))))); } catch (IOException e) {
@@ -46,8 +56,8 @@ public class GUI extends JPanel {
 		 * frame.setSize(width, height); frame.pack(); frame.setVisible(true);
 		 */
 
-		initFrame();
-		initCanvas();
+		// initFrame();
+		// initCanvas();
 
 		// initBackground();
 		// initGame();
@@ -77,15 +87,80 @@ public class GUI extends JPanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 
-		ImagePanel panel = new ImagePanel(new ImageIcon("assets\\space.jfif").getImage());
-
-
 		JButton btn = new JButton("klick");
-		panel.add(btn);
-		
-		frame.getContentPane().add(panel);
+		imagePanel.add(btn);
+
+		imagePanel = new ImagePanel(new ImageIcon("assets\\space.jfif").getImage());
+
+		frame.setContentPane(imagePanel);
+
+		// frame.getContentPane().add(panel);
 
 		frame.setVisible(true);
+
+	}
+
+	private void initFrameWithBackground() {
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
+		frame = new JFrame();
+		dimension = new Dimension(width, height);
+		frame.setTitle("SpaceShots");
+		frame.setSize(dimension);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// setBounds(100, 100, 988, 678);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		panel = new JPanel();
+		panel.setBounds(0, 0, 800, 600);
+		contentPane.add(panel);
+		panel.setLayout(null);
+
+		title = new JLabel("SPACE SHOOTER");
+		title.setFont(new Font("Monospaced", 1, 58));
+		title.setForeground(Color.white);
+		title.setBounds(150, 50, 500, 200);
+		panel.add(title);
+
+		btnStart = new JButton("Start");
+		btnStart.setBounds(322, 300, 89, 23);
+		panel.add(btnStart);
+
+		btnHighscore = new JButton("Highscore");
+		btnHighscore.setBounds(322, 350, 89, 23);
+		panel.add(btnHighscore);
+
+		btnExit = new JButton("Exit");
+		btnExit.setBounds(322, 400, 89, 23);
+		panel.add(btnExit);
+
+		try {
+			backgroundLabel = new JLabel(new ImageIcon(ImageIO.read(new File("assets\\space.jfif"))));
+			backgroundLabel.setBounds(0, 0, 800, 600);
+			panel.add(backgroundLabel);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(521, 11, 441, 361);
+		// contentPane.add(panel_1);
+
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(10, 383, 952, 246);
+		// contentPane.add(panel_2);
 
 	}
 
@@ -95,9 +170,9 @@ public class GUI extends JPanel {
 		canvas.setMinimumSize(dimension);
 		canvas.setMaximumSize(dimension);
 		canvas.setFocusable(false);
-		// canvas.setBackground(Color.BLACK);
-			
-	//	frame.getContentPane().add(canvas);
+		canvas.setBackground(Color.BLACK);
+
+		// frame.getContentPane().add(canvas);
 
 	}
 
