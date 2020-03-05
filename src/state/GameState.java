@@ -45,6 +45,7 @@ public class GameState extends State {
 	public void startGame() {
 		gui.getCanvas().setVisible(true);
 		game.start();
+		Entity.spawnAsteroids();
 	}
 
 }

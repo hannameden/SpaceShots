@@ -79,10 +79,8 @@ public class Game implements Runnable {
 		// Clear screen
 		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 		// Draw
-
 		if (State.getState() != null)
 			State.getState().render(g);
-
 		// End Drawing
 		bs.show();
 		g.dispose();

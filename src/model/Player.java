@@ -13,31 +13,12 @@ public class Player extends Entity {
 	private double shootDirection = 0f;
 
 	private Point playerFront;
-	private int radius = 20;
-	private int diameter = radius * 2;
-
-	/*
-	 * Middle element in xpoints and ypoints represents the front of the spaceship.
-	 */
-	private int[] xpoints = new int[3];
-	private int[] ypoints = new int[3];
 
 	public Player(GUI gui) {
-
 		this.gui = gui;
-
-		xpoints[0] = 0;
-		xpoints[1] = 25;
-		xpoints[2] = 50;
-
-		ypoints[0] = 50;
-		ypoints[1] = 0;
-		ypoints[2] = 50;
-
-		// final Point2D.Double centroid = new Point2D.Double((p1.getX() + p2.getX() +
-		// p3.getX()) / 3.0, (p1.getY() + p2.getY() + p3.getY()) / 3.0);
+		radius = 20;
+		diameter = radius * 2;
 		playerFront = new Point();
-
 		x = gui.getWidth() / 2 - diameter;
 		y = gui.getHeight() / 2 - diameter;
 
@@ -64,16 +45,16 @@ public class Player extends Entity {
 	public void update() {
 		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
 		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision(this);
+		checkEdgeCollision();
 	}
 
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(Color.GREEN);
 		g2d.drawOval(x, y, diameter, diameter);
 	}
 
-	public void checkEdgeCollision(Entity e) {
+	public void checkEdgeCollision() {
 		checkEdgeCollisionX();
 		checkEdgeCollisionY();
 	}
@@ -112,6 +93,17 @@ public class Player extends Entity {
 
 	public double getAngle(MouseEvent e) {
 		return -Math.toDegrees(Math.atan2(e.getPoint().x - x, e.getPoint().y - y)) + 180;
+	}
+
+	@Override
+	public void checkEntityCollisions() {
+		// TODO Check asteroid collisions
+
+	}
+
+	@Override
+	public boolean intersects(Entity e) {
+		return false;
 	}
 
 }
