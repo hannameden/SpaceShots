@@ -102,6 +102,7 @@ public class Asteroid extends Entity {
 
 	@Override
 	public void checkEntityCollisions() {
+
 		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(e -> {
 			if (this.intersects(e)) {
 				System.out.println("Asteroid collided with Player :)");
