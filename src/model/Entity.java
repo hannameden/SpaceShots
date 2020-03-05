@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.TimerTask;
@@ -57,9 +56,9 @@ public abstract class Entity {
 	}
 
 	protected boolean intersects(Entity e) {
-		Point center = new Point(this.x + radius, this.y + radius);
-		Point entityCenter = new Point(e.x + radius, e.y + radius);
-		return center.distance(entityCenter) < radius;
+		double dx = this.x - e.x;
+		double dy = this.y - e.y;
+		return radius > e.radius ? Math.sqrt(dx * dx + dy * dy) < radius : Math.sqrt(dx * dx + dy * dy) < e.radius;
 	}
 
 }
