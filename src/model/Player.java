@@ -37,7 +37,8 @@ public class Player {
 		try {
 			image = ImageIO.read(new File("assets\\rocket.png"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("oupsie");
+			//e.printStackTrace();
 		}
 		
 		//g.setColor(Color.white);

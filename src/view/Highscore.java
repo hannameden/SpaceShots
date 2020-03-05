@@ -17,6 +17,6 @@ public class Highscore {
 		init();
 	}
 	public void init() {
-		
+		frame = gui.getFrame();
 	}
 }

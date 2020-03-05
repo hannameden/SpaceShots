@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +26,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
+import controller.Mediator;
+
 public class GUI extends JFrame {
 
 	private JFrame frame;
@@ -36,6 +40,7 @@ public class GUI extends JFrame {
 	private Graphics g;
 	private GridBagConstraints gbc;
 
+	private Mediator mediator;
 	private ImagePanel imagePanel;
 	private Canvas canvas;
 	private Dimension dimension;
@@ -43,10 +48,13 @@ public class GUI extends JFrame {
 	private Game game;
 	Image image = Toolkit.getDefaultToolkit().getImage("assets\\space.jfif");
 
-	public GUI() {
+	public GUI(Mediator mediator) {
 
-		initFrameWithBackground();
-
+		this.mediator = mediator;
+		// initNoMenu();
+		// mediator.startGame();
+		// initFrame();
+		initMenu();
 		frame.setVisible(true);
 
 		/*
@@ -87,9 +95,6 @@ public class GUI extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 
-		JButton btn = new JButton("klick");
-		imagePanel.add(btn);
-
 		imagePanel = new ImagePanel(new ImageIcon("assets\\space.jfif").getImage());
 
 		frame.setContentPane(imagePanel);
@@ -100,7 +105,42 @@ public class GUI extends JFrame {
 
 	}
 
-	private void initFrameWithBackground() {
+	private void initNoMenu() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
+		frame = new JFrame();
+		dimension = new Dimension(width, height);
+		frame.setTitle("SpaceShots");
+		frame.setSize(dimension);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// setBounds(100, 100, 988, 678);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		panel = new JPanel();
+		panel.setBounds(0, 0, 800, 600);
+		contentPane.add(panel);
+		panel.setLayout(null);
+
+		title = new JLabel("SPACE SHOOTER");
+		title.setFont(new Font("Monospaced", 1, 58));
+		title.setForeground(Color.white);
+		title.setBounds(150, 50, 500, 200);
+		panel.add(title);
+
+	}
+
+	private void initMenu() {
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -134,17 +174,61 @@ public class GUI extends JFrame {
 		title.setBounds(150, 50, 500, 200);
 		panel.add(title);
 
-		btnStart = new JButton("Start");
-		btnStart.setBounds(322, 300, 89, 23);
+		btnStart = new JButton("Start game");
+//		btnStart.setOpaque(true);
+//		btnStart.setContentAreaFilled(false);
+//		btnStart.setBorderPainted(true);
+//		btnStart.setBackground(Color.white);
+//		
+		btnStart.setBounds(322, 300, 90, 25);
+
+		btnStart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				mediator.startGame();
+			}
+		});
+
 		panel.add(btnStart);
 
-		btnHighscore = new JButton("Highscore");
-		btnHighscore.setBounds(322, 350, 89, 23);
+		btnHighscore = new JButton("High Score");
+		btnHighscore.setBounds(322, 350, 90, 25);
+		btnHighscore.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.startHighscore();
+
+			}
+		});
 		panel.add(btnHighscore);
 
 		btnExit = new JButton("Exit");
-		btnExit.setBounds(322, 400, 89, 23);
+		btnExit.setBounds(322, 400, 90, 25);
+		btnExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				frame.dispose();
+				mediator.stop();
+			}
+		});
 		panel.add(btnExit);
+
+//		btnStart = new JButton("Start");
+//		btnStart.setBounds(322, 300, 89, 23);
+//		panel.add(btnStart);
+//
+//		btnHighscore = new JButton("Highscore");
+//		btnHighscore.setBounds(322, 350, 89, 23);
+//		panel.add(btnHighscore);
+//
+//		btnExit = new JButton("Exit");
+//		btnExit.setBounds(322, 400, 89, 23);
+//		panel.add(btnExit);
 
 		try {
 			backgroundLabel = new JLabel(new ImageIcon(ImageIO.read(new File("assets\\space.jfif"))));
@@ -164,7 +248,7 @@ public class GUI extends JFrame {
 
 	}
 
-	private void initCanvas() {
+	public void initCanvas() {
 		canvas = new Canvas();
 		canvas.setPreferredSize(dimension);
 		canvas.setMinimumSize(dimension);
@@ -172,7 +256,7 @@ public class GUI extends JFrame {
 		canvas.setFocusable(false);
 		canvas.setBackground(Color.BLACK);
 
-		// frame.getContentPane().add(canvas);
+		frame.getContentPane().add(canvas);
 
 	}
 
@@ -238,6 +322,10 @@ public class GUI extends JFrame {
 
 	public Canvas getCanvas() {
 		return this.canvas;
+	}
+
+	public JPanel getPanel() {
+		return panel;
 	}
 
 	public GUI getGUI() {

@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import controller.Mediator;
 import controller.PlayerInputController;
@@ -22,6 +23,7 @@ public class Game implements Runnable {
 	private Graphics g;
 	private GUI gui;
 	private Player player;
+	private JPanel panel2;
 	private Mediator mediator;
 	private Canvas canvas;
 	private Image background;
@@ -33,6 +35,16 @@ public class Game implements Runnable {
 
 		System.out.println("this is fine game");
 
+	
+		JPanel panel = gui.getPanel();
+		gui.remove(panel);
+		gui.removeAll();
+		panel2 = new JPanel();
+		gui.getFrame().setContentPane(panel2);
+		
+		gui.initCanvas();
+		initBackground();	
+		
 //		gameState = GameState.getInstance();
 
 		// State.setState(gameState);
@@ -42,9 +54,9 @@ public class Game implements Runnable {
 		playerInputController = new PlayerInputController(player);
 
 		gui.getFrame().addKeyListener(playerInputController);
+
 		gui.getCanvas().addKeyListener(playerInputController);
-		
-		initBackground();
+	
 	}
 
 	@Override
@@ -81,15 +93,16 @@ public class Game implements Runnable {
 
 	private void update() {
 
-	//	if (State.getState() != null)
-	//		State.getState().update();
+		// if (State.getState() != null)
+		// State.getState().update();
 	}
 
 	private void render() {
 		canvas = gui.getCanvas();
-		//canvas.setVisible(true);
-		bs = canvas.getBufferStrategy();
+		canvas.setVisible(true);
 		
+		bs = canvas.getBufferStrategy();
+
 		if (bs == null) {
 			gui.getCanvas().createBufferStrategy(3);
 			return;
@@ -99,47 +112,51 @@ public class Game implements Runnable {
 		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 		// Draw
 //		if (State.getState() != null)
-	//		State.getState().render(g);
-/*
+		// State.getState().render(g);
+
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
-		*/
-	//	g.setColor(Color.white);
+
+		g.setColor(Color.white);
 		player.render(g);
 		// End Drawing
 		bs.show();
-	//	g.dispose();
-		
+		g.dispose();
 
 	}
 
 	public void initBackground() {
-		
 		canvas = gui.getCanvas();
-		//canvas.setVisible(true);
+		canvas.setVisible(true);
+		canvas.setBounds(0,0, gui.getWidth(), gui.getHeight());
 		bs = canvas.getBufferStrategy();
-		
+		System.out.println("hola 22");
+
 		if (bs == null) {
-			gui.getCanvas().createBufferStrategy(3);
-			return;
+			canvas.createBufferStrategy(3);
+			bs = canvas.getBufferStrategy();
 		}
+		
 		g = bs.getDrawGraphics();
+		System.out.println("bg 2");
+		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
 		bs.show();
-		
+
 	}
+
 	public synchronized void start() {
 		if (running)
 			return;
@@ -160,6 +177,8 @@ public class Game implements Runnable {
 	}
 
 	public void stopGame() {
-		running = false;
+		if (running)
+			running = false;
+		thread.stop();
 	}
 }

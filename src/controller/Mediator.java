@@ -2,6 +2,7 @@ package controller;
 
 import view.GUI;
 import view.Game;
+import view.Highscore;
 import view.Menu;
 
 public class Mediator {
@@ -9,21 +10,39 @@ public class Mediator {
 	private GUI gui;
 	private Game game;
 	private Menu menu;
-	
+	private Highscore highscore;
+
 	public Mediator() {
-	
-		//init();
-		gui = new GUI();
-	//	startGame();
-		//new GUI();
-	}
-	public void init() {
+
+		 init();
 		
-		gui = new GUI();
-		menu = new Menu(this, gui);
+		// startGame();
+		// new GUI();
 	}
+
+	public void init() {
+
+		gui = new GUI(this);
+	}
+
+	public void initButtons() {
+
+		menu = new Menu(this, gui);
+		menu.initButtons();
+	}
+
 	public void startGame() {
 		game = new Game(this, gui);
 		game.start();
+	}
+
+	public void stop() {
+		// game.stop();
+		if (game != null)
+			game.stopGame();
+		
+	}
+	public void startHighscore() {
+		highscore = new Highscore(this, gui);
 	}
 }
