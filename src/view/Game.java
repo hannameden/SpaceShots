@@ -12,8 +12,12 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import controller.Mediator;
-import controller.PlayerInputController;
 import model.Player;
+
+import controller.PlayerKeyboardInputController;
+import controller.PlayerMouseInputController;
+
+
 
 public class Game implements Runnable {
 
@@ -22,17 +26,16 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
+
 	private Player player;
 	private JPanel panel2;
 	private Mediator mediator;
 	private Canvas canvas;
 	private Image background;
-	private PlayerInputController playerInputController;
 
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
-		this.gui = gui;
-
+		
 		System.out.println("this is fine game");
 
 	
@@ -49,14 +52,22 @@ public class Game implements Runnable {
 
 		// State.setState(gameState);
 
-		player = new Player();
+		player = new Player(gui);
+		initInputListeners(player);
+		
 
-		playerInputController = new PlayerInputController(player);
+	}
 
-		gui.getFrame().addKeyListener(playerInputController);
+	private void initInputListeners(Player player) {
+		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
+		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
+		this.gui.getFrame().addKeyListener(playerKeyboardInputController);
+		this.gui.getCanvas().addKeyListener(playerKeyboardInputController);
+		this.gui.getFrame().addMouseListener(playerMourseInputController);
+		this.gui.getCanvas().addMouseListener(playerMourseInputController);
+		this.gui.getFrame().addMouseMotionListener(playerMourseInputController);
+		this.gui.getCanvas().addMouseMotionListener(playerMourseInputController);
 
-		gui.getCanvas().addKeyListener(playerInputController);
-	
 	}
 
 	@Override
@@ -111,6 +122,7 @@ public class Game implements Runnable {
 		// Clear screen
 		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
 		// Draw
+
 //		if (State.getState() != null)
 		// State.getState().render(g);
 
@@ -124,6 +136,7 @@ public class Game implements Runnable {
 
 		g.setColor(Color.white);
 		player.render(g);
+
 		// End Drawing
 		bs.show();
 		g.dispose();

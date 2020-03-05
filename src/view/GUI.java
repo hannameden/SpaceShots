@@ -26,9 +26,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
+
 import controller.Mediator;
 
 public class GUI extends JFrame {
+
 
 	private JFrame frame;
 	private Image background;
@@ -45,6 +47,7 @@ public class GUI extends JFrame {
 	private Canvas canvas;
 	private Dimension dimension;
 	private int width = 800, height = 600;
+
 	private Game game;
 	Image image = Toolkit.getDefaultToolkit().getImage("assets\\space.jfif");
 
@@ -69,6 +72,7 @@ public class GUI extends JFrame {
 
 		// initBackground();
 		// initGame();
+
 	}
 
 	public void initFrame() {
@@ -303,9 +307,11 @@ public class GUI extends JFrame {
 
 	}
 
+
 	private void initGame() {
 		// game = new Game(this);
 		// game.start();
+
 	}
 
 	public int getWidth() {
