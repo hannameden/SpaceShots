@@ -28,25 +28,34 @@ public class Game implements Runnable {
 	private GUI gui;
 
 	private Player player;
-	private JPanel panel2;
+	private JPanel panel;
 	private Mediator mediator;
 	private Canvas canvas;
 	private Image background;
 
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
+		this.gui = gui;
+				
 		
 		System.out.println("this is fine game");
-
-	
-		JPanel panel = gui.getPanel();
-		gui.remove(panel);
-		gui.removeAll();
-		panel2 = new JPanel();
-		gui.getFrame().setContentPane(panel2);
 		
+		panel = gui.clearFrame();
 		gui.initCanvas();
+		
+		
+//	
+//		JPanel panel = gui.getPanel();
+//		gui.remove(panel);
+//		gui.removeAll();
+//		panel2 = new JPanel();
+//		gui.getFrame().setContentPane(panel2);
+
+		canvas = gui.getCanvas();
 		initBackground();	
+	
+		
+		
 		
 //		gameState = GameState.getInstance();
 
@@ -109,7 +118,7 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
-		canvas = gui.getCanvas();
+	//	canvas = gui.getCanvas();
 		canvas.setVisible(true);
 		
 		bs = canvas.getBufferStrategy();
@@ -144,9 +153,10 @@ public class Game implements Runnable {
 	}
 
 	public void initBackground() {
-		canvas = gui.getCanvas();
-		canvas.setVisible(true);
-		canvas.setBounds(0,0, gui.getWidth(), gui.getHeight());
+		
+	//	canvas = gui.getCanvas();
+//		canvas.setVisible(true);
+	//	canvas.setBounds(0,0, gui.getWidth(), gui.getHeight());
 		bs = canvas.getBufferStrategy();
 		System.out.println("hola 22");
 

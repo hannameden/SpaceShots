@@ -235,7 +235,7 @@ public class GUI extends JFrame {
 //		panel.add(btnExit);
 
 		try {
-			backgroundLabel = new JLabel(new ImageIcon(ImageIO.read(new File("assets\\space.jfif"))));
+			backgroundLabel = new JLabel(new ImageIcon(ImageIO.read(new File("assets\\spacemenu.jpg"))));
 			backgroundLabel.setBounds(0, 0, 800, 600);
 			panel.add(backgroundLabel);
 		} catch (IOException e) {
@@ -259,9 +259,17 @@ public class GUI extends JFrame {
 		canvas.setMaximumSize(dimension);
 		canvas.setFocusable(false);
 		canvas.setBackground(Color.BLACK);
+		canvas.setBounds(0, 0, 800, 600);
 
+		canvas.setVisible(true);
 		frame.getContentPane().add(canvas);
 
+	}
+	public JPanel clearFrame() {
+		JPanel panel = new JPanel();
+		frame.setContentPane(panel);
+		
+		return panel;
 	}
 
 	/**
@@ -276,7 +284,7 @@ public class GUI extends JFrame {
 	private void initBackground() {
 
 		System.out.println("init back");
-		// canvas.setVisible(true);
+		canvas.setVisible(true);
 		bs = canvas.getBufferStrategy();
 
 		if (bs == null) {
