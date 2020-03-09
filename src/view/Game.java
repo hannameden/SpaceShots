@@ -82,8 +82,8 @@ public class Game implements Runnable {
 	@Override
 	public void run() {
 
-		System.out.println("run game");
-		int fps = 60;
+		int fps = 100;
+
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
 		long now;
