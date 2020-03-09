@@ -6,13 +6,15 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
+import factory.BulletFactory;
+import factory.EntityFactory;
 import view.GUI;
 
 public class Player extends Entity {
 
 	private double shootDirection = 0f;
-
 	private Point playerFront;
+	private EntityFactory bulletFactory = BulletFactory.getInstance();
 
 	public Player() {
 		radius = 20;
@@ -38,7 +40,7 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		new Bullet(playerFront.x, playerFront.y, (int) shootDirection);
+		bulletFactory.create(playerFront.x, playerFront.y, (int) shootDirection);
 	}
 
 	public void update() {

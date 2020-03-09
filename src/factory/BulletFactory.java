@@ -1,30 +1,23 @@
 package factory;
 
-import model.Entity;
-import view.GUI;
+import model.Bullet;
 
 public class BulletFactory extends EntityFactory {
 
-	private BulletFactory instance;
-	private GUI gui;
+	private static BulletFactory instance;
 
 	private BulletFactory() {
 	}
 
-	public BulletFactory getInstance(GUI gui) {
-		if (instance == null) {
-			this.instance = new BulletFactory();
-			this.gui = gui;
-		}
-
+	public static EntityFactory getInstance() {
+		if (instance == null)
+			instance = new BulletFactory();
 		return instance;
-
 	}
 
 	@Override
-	public Entity create(int x, int y) {
-		// return new Bullet(x, y, movementDirection, this.gui);
-		return null;
+	public Bullet create(int x, int y, int movementDirection) {
+		return new Bullet(x, y, movementDirection);
 	}
 
 }
