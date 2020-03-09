@@ -49,6 +49,8 @@ public abstract class Entity {
 
 			@Override
 			public void run() {
+				// TODO: Randomize size of asteroid that spawns
+				// TODO: Increase the spawn rate as the game progresses
 				new AsteroidDecorator(new AsteroidLarge());
 			}
 		}, 0, 250);
