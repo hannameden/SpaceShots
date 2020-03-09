@@ -56,8 +56,9 @@ public class Bullet extends Entity {
 	public void checkEntityCollisions() {
 		Entity.getEntities().stream().filter(Asteroid.class::isInstance).forEach(e -> {
 			if (this.intersects(e)) {
+				Asteroid asteroid = (Asteroid) e;
+				asteroid.shatter();
 				Entity.removeEntity(this);
-				Entity.removeEntity(e);
 			}
 		});
 	}

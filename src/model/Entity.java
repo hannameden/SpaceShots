@@ -49,7 +49,7 @@ public abstract class Entity {
 
 			@Override
 			public void run() {
-				new Asteroid();
+				new AsteroidDecorator(new AsteroidLarge());
 			}
 		}, 0, 250);
 
