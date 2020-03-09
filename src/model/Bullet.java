@@ -7,11 +7,10 @@ import view.GUI;
 
 public class Bullet extends Entity {
 
-	public Bullet(int x, int y, int movementDirection, GUI gui) {
+	public Bullet(int x, int y, int movementDirection) {
 		this.x = x;
 		this.y = y;
 		this.movementDirection = movementDirection;
-		this.gui = gui;
 		speed = 5;
 		radius = 5;
 		diameter = radius * 2;
@@ -38,14 +37,14 @@ public class Bullet extends Entity {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > gui.getWidth())
+		if (x > GUI.getWidth())
 			Entity.removeEntity(this);
 		else if (x + diameter < 0)
 			Entity.removeEntity(this);
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > gui.getHeight())
+		if (y > GUI.getHeight())
 			Entity.removeEntity(this);
 		else if (y + diameter < 0)
 			Entity.removeEntity(this);

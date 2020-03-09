@@ -14,13 +14,12 @@ public class Player extends Entity {
 
 	private Point playerFront;
 
-	public Player(GUI gui) {
-		this.gui = gui;
+	public Player() {
 		radius = 20;
 		diameter = radius * 2;
 		playerFront = new Point();
-		x = gui.getWidth() / 2 - diameter;
-		y = gui.getHeight() / 2 - diameter;
+		x = GUI.getWidth() / 2 - diameter;
+		y = GUI.getHeight() / 2 - diameter;
 
 	}
 
@@ -39,7 +38,7 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		new Bullet(playerFront.x, playerFront.y, (int) shootDirection, gui);
+		new Bullet(playerFront.x, playerFront.y, (int) shootDirection);
 	}
 
 	public void update() {
@@ -60,17 +59,17 @@ public class Player extends Entity {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > gui.getWidth())
+		if (x > GUI.getWidth())
 			x = -diameter;
 		else if (x + diameter < 0)
-			x = gui.getWidth();
+			x = GUI.getWidth();
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > gui.getHeight())
+		if (y > GUI.getHeight())
 			y = -diameter;
 		else if (y + diameter < 0)
-			y = gui.getHeight();
+			y = GUI.getHeight();
 	}
 
 	public void setMovementDirection(MouseEvent e) {

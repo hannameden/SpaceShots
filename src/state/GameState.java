@@ -16,7 +16,7 @@ public class GameState extends State {
 	private static GameState instance;
 
 	private GameState(GUI gui) {
-		player = new Player(gui);
+		player = new Player();
 		game = new Game(gui, player);
 		this.gui = gui;
 		startGame();

@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import view.GUI;
+
 public class AsteroidSmall extends Entity implements Asteroid {
 
 	private Point asteroidFront;
@@ -49,14 +51,14 @@ public class AsteroidSmall extends Entity implements Asteroid {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > 800)
+		if (x > GUI.getWidth())
 			Entity.removeEntity(this);
 		else if (x + diameter < 0)
 			Entity.removeEntity(this);
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > 600)
+		if (y > GUI.getHeight())
 			Entity.removeEntity(this);
 		else if (y + diameter < 0)
 			Entity.removeEntity(this);
@@ -81,18 +83,18 @@ public class AsteroidSmall extends Entity implements Asteroid {
 			if (random <= 5) {
 				x = 0 - diameter;
 			} else {
-				x = 800 + diameter;
+				x = GUI.getWidth() + diameter;
 			}
-			y = randomWithRange(0 - diameter, 600 + diameter);
+			y = randomWithRange(0 - diameter, GUI.getHeight() + diameter);
 		}
 		// Spawn above or below the screen, vary the x-value.
 		else {
 			if (random <= 15) {
 				y = 0 - diameter;
 			} else {
-				y = 600 + diameter;
+				y = GUI.getHeight() + diameter;
 			}
-			x = randomWithRange(0 - diameter, 800 + diameter);
+			x = randomWithRange(0 - diameter, GUI.getWidth() + diameter);
 		}
 
 	}
@@ -108,8 +110,8 @@ public class AsteroidSmall extends Entity implements Asteroid {
 	}
 
 	private void setRandomDirection() {
-		asteroidFront.x = randomWithRange(0, 800);
-		asteroidFront.y = randomWithRange(0, 600);
+		asteroidFront.x = randomWithRange(0, GUI.getWidth());
+		asteroidFront.y = randomWithRange(0, GUI.getHeight());
 		movementDirection = -Math.toDegrees(Math.atan2(asteroidFront.x - x, asteroidFront.y - y)) + 180;
 	}
 
