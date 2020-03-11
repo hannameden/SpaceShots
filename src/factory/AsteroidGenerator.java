@@ -47,7 +47,7 @@ public class AsteroidGenerator {
 		}
 	}
 
-	public void stop() {
+	public void cancel() {
 		timer.cancel();
 	}
 

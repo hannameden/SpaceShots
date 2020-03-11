@@ -32,7 +32,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);
-		g2d.drawOval(x, y, diameter, diameter);
+		g2d.fillOval(x, y, diameter, diameter);
 	}
 
 	@Override

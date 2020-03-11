@@ -18,7 +18,7 @@ public class Bullet extends Entity {
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
-		g.drawOval(x, y, diameter, diameter);
+		g.fillOval(x, y, diameter, diameter);
 	}
 
 	@Override
