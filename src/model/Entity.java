@@ -29,8 +29,6 @@ public abstract class Entity {
 		entities.add(this);
 	}
 
-	public abstract void update();
-
 	public abstract void render(Graphics g);
 
 	public abstract void checkEdgeCollision();
@@ -38,6 +36,17 @@ public abstract class Entity {
 	public abstract void checkEntityCollisions();
 
 	public abstract void destroy();
+
+	public void update() {
+		updateCoordinates();
+		checkEntityCollisions();
+		checkEdgeCollision();
+	};
+
+	public void updateCoordinates() {
+		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
+		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+	}
 
 	public static void removeEntity(Entity e) {
 		entities.remove(e);

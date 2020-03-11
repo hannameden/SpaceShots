@@ -29,14 +29,6 @@ public class AsteroidSmall extends Entity implements Asteroid {
 	}
 
 	@Override
-	public void update() {
-		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
-		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision();
-		checkEntityCollisions();
-	}
-
-	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);

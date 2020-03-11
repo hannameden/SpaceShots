@@ -42,12 +42,6 @@ public class Player extends Entity {
 		;
 	}
 
-	public void update() {
-		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
-		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision();
-	}
-
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);

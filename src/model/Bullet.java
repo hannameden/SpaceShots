@@ -16,14 +16,6 @@ public class Bullet extends Entity {
 	}
 
 	@Override
-	public void update() {
-		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
-		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision();
-		checkEntityCollisions();
-	}
-
-	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
 		g.drawOval(x, y, diameter, diameter);
