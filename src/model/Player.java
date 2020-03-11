@@ -37,7 +37,9 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		bulletFactory.create(entityFront.x, entityFront.y, (int) shootDirection);
+		// Use type parameter to shot different types of bullets
+		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
+		;
 	}
 
 	public void update() {

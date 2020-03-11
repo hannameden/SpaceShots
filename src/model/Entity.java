@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import factory.AsteroidFactory;
+import factory.EntityFactory;
 import view.GUI;
 
 public abstract class Entity {
@@ -19,6 +21,8 @@ public abstract class Entity {
 	protected double movementDirection = 0f;
 	protected Point entityFront;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
+	private static EntityFactory asteroidFactory = AsteroidFactory.getInstance();
+	private static String[] asteroidSpawnArguments = { "RandomSpawnLocation", "AsteroidMedium" };
 
 	public Entity() {
 		entities.add(this);
@@ -50,7 +54,9 @@ public abstract class Entity {
 			public void run() {
 				// TODO: Randomize size of asteroid that spawns
 				// TODO: Increase the spawn rate as the game progresses
-				new AsteroidLarge();
+				// new AsteroidLarge();
+
+				asteroidFactory.create(0, 0, asteroidSpawnArguments);
 			}
 		}, 0, 250);
 
@@ -62,7 +68,7 @@ public abstract class Entity {
 		return radius > e.radius ? Math.sqrt(dx * dx + dy * dy) < radius : Math.sqrt(dx * dx + dy * dy) < e.radius;
 	}
 
-	protected void setMovementDirection(double movementDirection) {
+	public void setMovementDirection(double movementDirection) {
 		this.movementDirection = movementDirection;
 	}
 

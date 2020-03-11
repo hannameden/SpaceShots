@@ -16,8 +16,8 @@ public class BulletFactory extends EntityFactory {
 	}
 
 	@Override
-	public Bullet create(int x, int y, int movementDirection) {
-		return new Bullet(x, y, movementDirection);
+	public Bullet create(int x, int y, String[] args) {
+		return new Bullet(x, y);
 	}
 
 }

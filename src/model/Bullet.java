@@ -7,10 +7,9 @@ import view.GUI;
 
 public class Bullet extends Entity {
 
-	public Bullet(int x, int y, int movementDirection) {
+	public Bullet(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.movementDirection = movementDirection;
 		speed = 5;
 		radius = 5;
 		diameter = radius * 2;
