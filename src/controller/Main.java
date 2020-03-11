@@ -8,7 +8,15 @@ public class Main {
 	 * 
 	 * TODO:
 	 * 
-	 * Samla alla collision detections på ett ställe, antagligen i Entity
+	 * Fixa Collision detection: Samla alla collision detections på ett ställe,
+	 * antagligen i Entity
+	 * 
+	 * Fixa så att skotten går rakare.
+	 * 
+	 * Grafik istället för cirklar
+	 * 
+	 * 
+	 * 
 	 * 
 	 */
 
