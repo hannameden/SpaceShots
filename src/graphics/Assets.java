@@ -6,6 +6,7 @@ public class Assets {
 
 	private static Assets instance;
 	private static BufferedImage playerImage;
+	private static final int width = 16, height = 16;
 
 	private Assets() {
 
@@ -14,13 +15,14 @@ public class Assets {
 	public static Assets getInstance() {
 		if (instance == null) {
 			instance = new Assets();
-			Assets.init();
+			init();
 		}
 		return instance;
 	}
 
 	private static void init() {
-		// SpriteSheet sheet = new SpriteSheet(ImageLoader.load(path));
+		// SpriteSheet sheet = new SpriteSheet(ImageLoader.load("path"));
+		// playerImage = sheet.crop(0, 0, width, height);
 		playerImage = ImageLoader.load("./assets/player.png");
 	}
 
