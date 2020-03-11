@@ -23,6 +23,7 @@ public abstract class Entity {
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
 	private static EntityFactory asteroidFactory = AsteroidFactory.getInstance();
 	private static String[] asteroidSpawnArguments = { "RandomSpawnLocation", "AsteroidMedium" };
+	private static int randomSizeOfAsteroid;
 
 	public Entity() {
 		entities.add(this);
@@ -52,13 +53,23 @@ public abstract class Entity {
 
 			@Override
 			public void run() {
-				// TODO: Randomize size of asteroid that spawns
-				// TODO: Increase the spawn rate as the game progresses
-				// new AsteroidLarge();
-
+				randomizeAsteroidSize();
 				asteroidFactory.create(0, 0, asteroidSpawnArguments);
 			}
 		}, 0, 250);
+
+	}
+
+	private static void randomizeAsteroidSize() {
+		randomSizeOfAsteroid = randomWithRange(1, 10);
+
+		if (randomSizeOfAsteroid < 5) {
+			asteroidSpawnArguments[1] = "AsteroidSmall";
+		} else if (randomSizeOfAsteroid < 8) {
+			asteroidSpawnArguments[1] = "AsteroidMedium";
+		} else {
+			asteroidSpawnArguments[1] = "AsteroidLarge";
+		}
 
 	}
 
@@ -108,7 +119,7 @@ public abstract class Entity {
 
 	}
 
-	private int randomWithRange(int min, int max) {
+	private static int randomWithRange(int min, int max) {
 		int range = (max - min) + 1;
 		return (int) (Math.random() * range) + min;
 	}
