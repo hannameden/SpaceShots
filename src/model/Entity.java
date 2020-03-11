@@ -28,7 +28,7 @@ public abstract class Entity {
 		entities.add(this);
 	}
 
-	public abstract void update();
+	public void update();
 
 	public abstract void render(Graphics g);
 
