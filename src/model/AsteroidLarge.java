@@ -22,7 +22,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 	}
 
 	private void init() {
-		radius = 50;
+		radius = 40;
 		diameter = radius * 2;
 		speed = 3;
 		entityFront = new Point();

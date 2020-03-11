@@ -5,16 +5,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import factory.BulletFactory;
 import factory.EntityFactory;
+import graphics.Assets;
 import view.GUI;
 
 public class Player extends Entity {
@@ -28,13 +23,7 @@ public class Player extends Entity {
 		diameter = radius * 2;
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, GUI.getHeight() / 2 - diameter);
-
-		try {
-			image = ImageIO.read(new File("./assets/player.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		image = Assets.getInstance().getPlayerImage();
 
 	}
 
@@ -62,17 +51,21 @@ public class Player extends Entity {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
 		g2d.fillOval(x, y, diameter, diameter);
-
 		g2d.fillRect(entityFront.x, entityFront.y, 12, 12);
 
-		double rotationRequired = Math
-				.toRadians(-Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y)) + 180);
-		double locationX = image.getWidth() / 2;
-		double locationY = image.getHeight() / 2;
-		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		g2d.drawImage(image, x, y, diameter, diameter, null);
 
-		g2d.drawImage(op.filter(image, null), x, y, diameter, diameter, null);
+		/*
+		 * double rotationRequired = Math
+		 * .toRadians(-Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y))
+		 * + 180); double locationX = image.getWidth() / 2; double locationY =
+		 * image.getHeight() / 2; AffineTransform tx =
+		 * AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		 * AffineTransformOp op = new AffineTransformOp(tx,
+		 * AffineTransformOp.TYPE_BILINEAR);
+		 * 
+		 * g2d.drawImage(op.filter(image, null), x, y, diameter, diameter, null);
+		 */
 
 	}
 

@@ -10,7 +10,7 @@ public class Bullet extends Entity {
 	public Bullet(int x, int y) {
 		this.x = x;
 		this.y = y;
-		speed = 5;
+		speed = 8;
 		radius = 5;
 		diameter = radius * 2;
 	}
