@@ -7,28 +7,18 @@ import view.GUI;
 
 public class Bullet extends Entity {
 
-	public Bullet(int x, int y, int movementDirection, GUI gui) {
+	public Bullet(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.movementDirection = movementDirection;
-		this.gui = gui;
-		speed = 5;
+		speed = 8;
 		radius = 5;
 		diameter = radius * 2;
 	}
 
 	@Override
-	public void update() {
-		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
-		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision();
-		checkEntityCollisions();
-	}
-
-	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.RED);
-		g.drawOval(x, y, diameter, diameter);
+		g.fillOval(x, y, diameter, diameter);
 	}
 
 	@Override
@@ -38,18 +28,17 @@ public class Bullet extends Entity {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > gui.getWidth())
-			Entity.removeEntity(this);
+		if (x > GUI.getWidth())
+			destroy();
 		else if (x + diameter < 0)
-			Entity.removeEntity(this);
+			destroy();
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > gui.getHeight())
-			Entity.removeEntity(this);
+		if (y > GUI.getHeight())
+			destroy();
 		else if (y + diameter < 0)
-			Entity.removeEntity(this);
-
+			destroy();
 	}
 
 	@Override
@@ -61,6 +50,11 @@ public class Bullet extends Entity {
 				Entity.removeEntity(this);
 			}
 		});
+	}
+
+	@Override
+	public void destroy() {
+		Entity.removeEntity(this);
 	}
 
 }

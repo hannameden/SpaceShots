@@ -157,7 +157,7 @@ public class Game implements Runnable {
 		}
 		g = bs.getDrawGraphics();
 		// Clear screen
-		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
+		g.clearRect(0, 0, GUI.getWidth(), GUI.getHeight());
 		// Draw
 
 //		if (State.getState() != null)

@@ -2,6 +2,6 @@ package model;
 
 public interface Asteroid {
 
-	void shatter();
+	public void shatter();
 
 }

@@ -12,7 +12,11 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
+import factory.BulletFactory;
+import factory.EntityFactory;
+import graphics.Assets;
 import view.GUI;
 
 public class Player extends Entity {
@@ -20,16 +24,14 @@ public class Player extends Entity {
 	private int width = 20, height = 20, x = 0, y = 0;
 	private BufferedImage image = null;
 	private double shootDirection = 0f;
+	private EntityFactory bulletFactory = BulletFactory.getInstance();
 
-	private Point playerFront;
-
-	public Player(GUI gui) {
-		this.gui = gui;
+	public Player() {
 		radius = 20;
 		diameter = radius * 2;
-		playerFront = new Point();
-		x = gui.getWidth() / 2 - diameter;
-		y = gui.getHeight() / 2 - diameter;
+		entityFront = new Point();
+		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, y = GUI.getHeight() / 2 - diameter);
+		image = Assets.getInstance().getPlayerImage();
 
 	}
 
@@ -45,21 +47,17 @@ public class Player extends Entity {
 			speed = 0;
 		else if (speed >= 0)
 			speed--;
+
 	}
 
 	public void shoot() {
-		System.out.println("Shoot");
-		new Bullet(playerFront.x, playerFront.y, (int) shootDirection, gui);
-	}
 
-	public void update() {
-		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
-		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
-		checkEdgeCollision();
+		// Use args parameter to shot different types of bullets
+		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
+		
 	}
 
 	public void render(Graphics g) {
-
 		/*
 		 * try { image = ImageIO.read(new File("assets\\rocket.png")); } catch
 		 * (IOException e) { System.out.println("oupsie"); //e.printStackTrace(); }
@@ -70,7 +68,23 @@ public class Player extends Entity {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
-		g2d.drawOval(x, y, diameter, diameter);
+		g2d.fillOval(x, y, diameter, diameter);
+		g2d.fillRect(entityFront.x, entityFront.y, 12, 12);
+
+		g2d.drawImage(image, x, y, diameter, diameter, null);
+
+		/*
+		 * double rotationRequired = Math
+		 * .toRadians(-Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y))
+		 * + 180); double locationX = image.getWidth() / 2; double locationY =
+		 * image.getHeight() / 2; AffineTransform tx =
+		 * AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		 * AffineTransformOp op = new AffineTransformOp(tx,
+		 * AffineTransformOp.TYPE_BILINEAR);
+		 * 
+		 * g2d.drawImage(op.filter(image, null), x, y, diameter, diameter, null);
+		 */
+
 	}
 
 	public void checkEdgeCollision() {
@@ -79,17 +93,17 @@ public class Player extends Entity {
 	}
 
 	private void checkEdgeCollisionX() {
-		if (x > gui.getWidth())
+		if (x > GUI.getWidth())
 			x = -diameter;
 		else if (x + diameter < 0)
-			x = gui.getWidth();
+			x = GUI.getWidth();
 	}
 
 	private void checkEdgeCollisionY() {
-		if (y > gui.getHeight())
+		if (y > GUI.getHeight())
 			y = -diameter;
 		else if (y + diameter < 0)
-			y = gui.getHeight();
+			y = GUI.getHeight();
 	}
 
 	public void setMovementDirection(MouseEvent e) {
@@ -99,15 +113,14 @@ public class Player extends Entity {
 	public void setShootingDirection(MouseEvent e) {
 		shootDirection = getAngle(e);
 		if (x > e.getX())
-			playerFront.x = x - 10 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x - radius / 2 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 		else
-			playerFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 
 		if (y > e.getY())
-			playerFront.y = y - 10 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y - radius / 2 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 		else
-			playerFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
-
+			entityFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 	}
 
 	public double getAngle(MouseEvent e) {
@@ -126,7 +139,13 @@ public class Player extends Entity {
 
 	}
 	public void pauseGame() {
-		gui.pauseGame();
+		//gui.pauseGame();
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

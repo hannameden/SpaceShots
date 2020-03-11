@@ -44,7 +44,7 @@ public class GUI extends JFrame {
 	private ImagePanel imagePanel;
 	private Canvas canvas;
 	private Dimension dimension;
-	private int width = 800, height = 600;
+	private static int width = 800, height = 600;
 
 	private Game game;
 
@@ -331,12 +331,12 @@ public class GUI extends JFrame {
 
 	}
 
-	public int getWidth() {
-		return this.width;
+	public static int getWidth() {
+		return width;
 	}
 
-	public int getHeight() {
-		return this.height;
+	public static int getHeight() {
+		return height;
 	}
 
 	public JFrame getFrame() {
