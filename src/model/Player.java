@@ -19,9 +19,7 @@ public class Player extends Entity {
 		radius = 20;
 		diameter = radius * 2;
 		entityFront = new Point();
-		x = GUI.getWidth() / 2 - diameter;
-		y = GUI.getHeight() / 2 - diameter;
-
+		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, GUI.getHeight() / 2 - diameter);
 	}
 
 	public void accelerate() {

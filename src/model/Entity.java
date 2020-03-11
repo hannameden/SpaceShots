@@ -77,6 +77,11 @@ public abstract class Entity {
 		movementDirection = -Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y)) + 180;
 	}
 
+	protected void spawnAtLocation(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
 	protected void spawnAtRandomEdgeLocation() {
 
 		int random = randomWithRange(1, 20);

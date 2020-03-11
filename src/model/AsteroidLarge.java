@@ -10,21 +10,22 @@ import view.GUI;
 public class AsteroidLarge extends Entity implements Asteroid {
 
 	public AsteroidLarge() {
-		radius = 50;
-		diameter = radius * 2;
-		speed = 3;
-		entityFront = new Point();
+		init();
 		spawnAtRandomEdgeLocation();
 		setRandomDirection();
 	}
 
 	public AsteroidLarge(int x, int y) {
+		init();
+		spawnAtLocation(x, y);
+		setRandomDirection();
+	}
+
+	private void init() {
 		radius = 50;
 		diameter = radius * 2;
 		speed = 3;
 		entityFront = new Point();
-		spawnAtLocation(x, y);
-		setRandomDirection();
 	}
 
 	@Override
@@ -77,11 +78,6 @@ public class AsteroidLarge extends Entity implements Asteroid {
 		new AsteroidMedium(x, y);
 		new AsteroidMedium(x, y);
 		Entity.removeEntity(this);
-	}
-
-	private void spawnAtLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 
 	@Override

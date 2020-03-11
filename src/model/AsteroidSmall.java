@@ -10,21 +10,22 @@ import view.GUI;
 public class AsteroidSmall extends Entity implements Asteroid {
 
 	public AsteroidSmall() {
-		radius = 12;
-		diameter = radius * 2;
-		speed = 3;
-		entityFront = new Point();
+		init();
 		spawnAtRandomEdgeLocation();
 		setRandomDirection();
 	}
 
 	public AsteroidSmall(int x, int y) {
+		init();
+		spawnAtLocation(x, y);
+		setRandomDirection();
+	}
+
+	private void init() {
 		radius = 12;
 		diameter = radius * 2;
 		speed = 3;
 		entityFront = new Point();
-		spawnAtLocation(x, y);
-		setRandomDirection();
 	}
 
 	@Override
@@ -70,11 +71,6 @@ public class AsteroidSmall extends Entity implements Asteroid {
 				System.out.println("Asteroid collided with Player :)");
 			}
 		});
-	}
-
-	private void spawnAtLocation(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 
 	@Override
