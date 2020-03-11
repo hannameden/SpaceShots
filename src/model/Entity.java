@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -13,16 +12,12 @@ public abstract class Entity {
 
 	protected int x;
 	protected int y;
-	protected int width;
-	protected int height;
-	protected int radius = 25;
+	protected int radius;
 	protected int diameter = radius * 2;
 	protected double maxSpeed = 3;
 	protected double speed = 0;
 	protected double movementDirection = 0f;
 	protected Point entityFront;
-	protected Rectangle2D bounds;
-	protected GUI gui;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
 
 	public Entity() {
