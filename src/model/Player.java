@@ -74,12 +74,12 @@ public class Player extends Entity {
 	public void setShootingDirection(MouseEvent e) {
 		shootDirection = getAngle(e);
 		if (x > e.getX())
-			entityFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x - radius / 2 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 		else
 			entityFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 
 		if (y > e.getY())
-			entityFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y - radius / 2 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 		else
 			entityFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 	}
