@@ -28,7 +28,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Mediator;
 
-public class GUI extends JFrame {
+public class GUI{
 
 	private JFrame frame;
 	private Image background;
@@ -44,6 +44,7 @@ public class GUI extends JFrame {
 	private ImagePanel imagePanel;
 	private Canvas canvas;
 	private Dimension dimension;
+
 	private static int width = 800, height = 600;
 
 	private Game game;
@@ -169,13 +170,15 @@ public class GUI extends JFrame {
 		// setBounds(100, 100, 988, 678);
 		basePanel = new JPanel();
 		basePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(basePanel);
+		
 		basePanel.setLayout(null);
+		basePanel.setBounds(0, 0, width, height);
 
+		frame.add(basePanel);
+		
 		menuPanel = new JPanel();
 		menuPanel.setBounds(0, 0, 800, 600);
 		basePanel.add(menuPanel);
-		menuPanel.setLayout(null);
 
 		title = new JLabel("SPACE SHOOTER");
 		title.setFont(new Font("Monospaced", 1, 58));
@@ -246,15 +249,6 @@ public class GUI extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(521, 11, 441, 361);
-		// contentPane.add(panel_1);
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 383, 952, 246);
-		// contentPane.add(panel_2);
-
 	}
 
 	public void initCanvas() {
@@ -262,20 +256,33 @@ public class GUI extends JFrame {
 		canvas.setPreferredSize(dimension);
 		canvas.setMinimumSize(dimension);
 		canvas.setMaximumSize(dimension);
-		canvas.setFocusable(false);
+		canvas.setFocusable(true);
 		canvas.setBackground(Color.BLACK);
 		canvas.setBounds(0, 0, 800, 600);
 
 		canvas.setVisible(true);
-		frame.getContentPane().add(canvas);
+		
+		frame.add(canvas);
+		//frame.getContentPane().add(canvas);
 
 	}
 
-	public JPanel clearFrame() {
-		JPanel newPanel = new JPanel();
-		frame.setContentPane(newPanel);
+	public void clearFrame() {
+		
+		
+		
+		//menuPanel.setVisible(false);
+		//menuPanel.disable();
+		
+		//frame.removeAll();
+		
+//		JPanel newPanel = new JPanel();
+//		newPanel.add(this.getCanvas());
+//		frame.remove(frame.getContentPane());
+//		frame.add(newPanel);
+//		frame.setContentPane(newPanel);
 
-		return newPanel;
+	//	return newPanel;
 	}
 
 	/**
@@ -303,7 +310,7 @@ public class GUI extends JFrame {
 		}
 		g = bs.getDrawGraphics();
 		// Clear screen
-		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		g.clearRect(0, 0, getWidth(), getHeight());
 		// Draw
 //		if (State.getState() != null)
 		// State.getState().render(g);
@@ -314,7 +321,7 @@ public class GUI extends JFrame {
 			e.printStackTrace();
 		}
 
-		g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+		g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 
 		g.setColor(Color.white);
 		// player.render(g);
@@ -358,6 +365,11 @@ public class GUI extends JFrame {
 }
 
 class ImagePanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private int width = 800, height = 600;
 

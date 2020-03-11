@@ -11,7 +11,6 @@ public class PlayerKeyboardInputController implements KeyListener {
 
 	public PlayerKeyboardInputController(Player player) {
 		this.player = player;
-		System.out.println("hola pk");
 	}
 
 	@Override
@@ -22,7 +21,6 @@ public class PlayerKeyboardInputController implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("hola in here");
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 			player.shoot();

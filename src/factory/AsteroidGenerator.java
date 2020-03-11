@@ -34,7 +34,7 @@ public class AsteroidGenerator {
 			};
 			timer.scheduleAtFixedRate(timerTask, 0, 250);
 		} else {
-			timer.notify();
+			//timer.notify();
 		}
 
 	}

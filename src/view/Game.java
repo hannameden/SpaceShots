@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controller.Mediator;
-import model.Entity;
-import model.Player;
-
 import controller.PlayerKeyboardInputController;
 import controller.PlayerMouseInputController;
+import model.Entity;
+import model.Player;
 
 public class Game implements Runnable {
 
@@ -29,40 +29,26 @@ public class Game implements Runnable {
 	private Player player;
 	private JPanel panel;
 	private Mediator mediator;
+	
+	private JFrame frame;
 	private Canvas canvas;
 	private Image background;
 
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
-				
 		
-		System.out.println("this is fine game");
 		
-		panel = gui.clearFrame();
+		//panel = gui.clearFrame();
 		gui.initCanvas();
-		
-		
-//	
-//		JPanel panel = gui.getPanel();
-//		gui.remove(panel);
-//		gui.removeAll();
-//		panel2 = new JPanel();
-//		gui.getFrame().setContentPane(panel2);
+		gui.clearFrame();
+	
 
 		canvas = gui.getCanvas();
 		initBackground();	
-	
-		
-		
-		
-//		gameState = GameState.getInstance();
-
-		// State.setState(gameState);
-
-		player = new Player(gui);
+		frame = gui.getFrame();
+		player = new Player();
 		initInputListeners(player);
-		Entity.spawnAsteroids();
 		
 		
 		try {
@@ -76,12 +62,12 @@ public class Game implements Runnable {
 	private void initInputListeners(Player player) {
 		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
 		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
-		this.gui.getFrame().addKeyListener(playerKeyboardInputController);
-		this.gui.getCanvas().addKeyListener(playerKeyboardInputController);
-		this.gui.getFrame().addMouseListener(playerMourseInputController);
-		this.gui.getCanvas().addMouseListener(playerMourseInputController);
-		this.gui.getFrame().addMouseMotionListener(playerMourseInputController);
-		this.gui.getCanvas().addMouseMotionListener(playerMourseInputController);
+		frame.addKeyListener(playerKeyboardInputController);
+		canvas.addKeyListener(playerKeyboardInputController);
+		frame.addMouseListener(playerMourseInputController);
+		canvas.addMouseListener(playerMourseInputController);
+		frame.addMouseMotionListener(playerMourseInputController);
+		canvas.addMouseMotionListener(playerMourseInputController);
 
 	}
 
@@ -131,10 +117,10 @@ public class Game implements Runnable {
 		g = bs.getDrawGraphics();
 	
 		// Clear screen
-		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
+		g.clearRect(0, 0, GUI.getWidth(), GUI.getHeight());
 		
 		//Draw background
-		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
+	//	g.drawImage(background, 0, 0, GUI.getWidth(), GUI.getHeight(), null);
 
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
