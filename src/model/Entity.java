@@ -32,9 +32,9 @@ public abstract class Entity {
 	public abstract void destroy();
 
 	public void update() {
-		updateCoordinates();
-		checkEntityCollisions();
 		checkEdgeCollision();
+		checkEntityCollisions();
+		updateCoordinates();
 	};
 
 	public void updateCoordinates() {
