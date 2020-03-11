@@ -23,13 +23,13 @@ public class Game implements Runnable {
 
 	private void initInputListeners(Player player) {
 		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
-		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
+		PlayerMouseInputController playerMouseInputController = new PlayerMouseInputController(player);
 		this.gui.getFrame().addKeyListener(playerKeyboardInputController);
 		this.gui.getCanvas().addKeyListener(playerKeyboardInputController);
-		this.gui.getFrame().addMouseListener(playerMourseInputController);
-		this.gui.getCanvas().addMouseListener(playerMourseInputController);
-		this.gui.getFrame().addMouseMotionListener(playerMourseInputController);
-		this.gui.getCanvas().addMouseMotionListener(playerMourseInputController);
+		this.gui.getFrame().addMouseListener(playerMouseInputController);
+		this.gui.getCanvas().addMouseListener(playerMouseInputController);
+		this.gui.getFrame().addMouseMotionListener(playerMouseInputController);
+		this.gui.getCanvas().addMouseMotionListener(playerMouseInputController);
 	}
 
 	@Override
@@ -64,7 +64,6 @@ public class Game implements Runnable {
 	}
 
 	private void update() {
-
 		if (State.getState() != null)
 			State.getState().update();
 	}

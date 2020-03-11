@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import graphics.Assets;
 import view.GUI;
 
 public class AsteroidMedium extends Entity implements Asteroid {
@@ -26,13 +27,15 @@ public class AsteroidMedium extends Entity implements Asteroid {
 		diameter = radius * 2;
 		speed = 3;
 		entityFront = new Point();
+		image = Assets.getInstance().getMeteorSmallImage();
 	}
 
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);
-		g2d.fillOval(x, y, diameter, diameter);
+		// g2d.fillOval(x, y, diameter, diameter);
+		g2d.drawImage(image, x, y, diameter, diameter, null);
 	}
 
 	@Override

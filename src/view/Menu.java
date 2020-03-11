@@ -31,6 +31,7 @@ public class Menu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				frame.remove(panel);
 				MenuState.getInstance(gui).startGame();
 
 			}

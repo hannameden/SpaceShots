@@ -44,7 +44,7 @@ public class GameState extends State {
 		return player;
 	}
 
-	public void startGame() {
+	private void startGame() {
 		gui.getCanvas().setVisible(true);
 		game.start();
 		// Ska eventuellt flyttas :)

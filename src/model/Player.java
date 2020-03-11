@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 import factory.BulletFactory;
 import factory.EntityFactory;
@@ -16,13 +15,12 @@ public class Player extends Entity {
 
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
-	private BufferedImage image;
 
 	public Player() {
 		radius = 20;
 		diameter = radius * 2;
 		entityFront = new Point();
-		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, GUI.getHeight() / 2 - diameter);
+		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, y = GUI.getHeight() / 2 - diameter);
 		image = Assets.getInstance().getPlayerImage();
 
 	}
