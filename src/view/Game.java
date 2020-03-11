@@ -12,12 +12,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import controller.Mediator;
+import model.Entity;
 import model.Player;
 
 import controller.PlayerKeyboardInputController;
 import controller.PlayerMouseInputController;
-
-
 
 public class Game implements Runnable {
 
@@ -63,7 +62,14 @@ public class Game implements Runnable {
 
 		player = new Player(gui);
 		initInputListeners(player);
+		Entity.spawnAsteroids();
 		
+		
+		try {
+			background = ImageIO.read(new File("assets\\space.jfif"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    
 
 	}
 
@@ -112,12 +118,34 @@ public class Game implements Runnable {
 	}
 
 	private void update() {
+		Entity.getEntities().forEach(e -> e.update());
+	}
+	
+	private void render() {
+		canvas = gui.getCanvas();
+		bs = gui.getCanvas().getBufferStrategy();
+		if (bs == null) {
+			gui.getCanvas().createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
+	
+		// Clear screen
+		g.clearRect(0, 0, gui.getWidth(), gui.getHeight());
+		
+		//Draw background
+		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
 
-		// if (State.getState() != null)
-		// State.getState().update();
+		// Draw game objects
+		Entity.getEntities().forEach(e -> e.render(g));
+		
+		//player.render(g);
+		// End Drawing
+		bs.show();
+		g.dispose();
 	}
 
-	private void render() {
+	private void render2() {
 	//	canvas = gui.getCanvas();
 		canvas.setVisible(true);
 		
@@ -134,6 +162,7 @@ public class Game implements Runnable {
 
 //		if (State.getState() != null)
 		// State.getState().render(g);
+		Entity.getEntities().forEach(e -> e.render(g));
 
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
@@ -175,7 +204,7 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 
-		g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
+	//	g.drawImage(background, 0, 0, gui.getWidth(), gui.getHeight(), null);
 		bs.show();
 
 	}

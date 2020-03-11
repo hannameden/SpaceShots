@@ -26,15 +26,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
-
 import controller.Mediator;
 
 public class GUI extends JFrame {
 
-
 	private JFrame frame;
 	private Image background;
-	private JPanel panel, contentPane;
+	private JPanel menuPanel, basePanel;
 	private JLabel backgroundLabel, title;
 	private JButton btnStart, btnHighscore, btnExit;
 
@@ -49,6 +47,7 @@ public class GUI extends JFrame {
 	private int width = 800, height = 600;
 
 	private Game game;
+
 	Image image = Toolkit.getDefaultToolkit().getImage("assets\\space.jfif");
 
 	public GUI(Mediator mediator) {
@@ -57,15 +56,18 @@ public class GUI extends JFrame {
 		// initNoMenu();
 		// mediator.startGame();
 		// initFrame();
+		initFrame2();
 		initMenu();
-		frame.setVisible(true);
 
-		/*
-		 * try { frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new
-		 * File("assets\\space.jfif"))))); } catch (IOException e) {
-		 * e.printStackTrace(); } frame.setBounds(0, 0, width, height);
-		 * frame.setSize(width, height); frame.pack(); frame.setVisible(true);
-		 */
+//		try {
+//			frame.setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File("assets\\space.jfif")))));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		frame.setBounds(0, 0, width, height);
+//		frame.setSize(width, height);
+//		frame.pack();
+//		frame.setVisible(true);
 
 		// initFrame();
 		// initCanvas();
@@ -109,6 +111,24 @@ public class GUI extends JFrame {
 
 	}
 
+	private void initFrame2() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+
+		frame = new JFrame();
+		dimension = new Dimension(width, height);
+		frame.setTitle("SpaceShots");
+		frame.setSize(dimension);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
 	private void initNoMenu() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -126,57 +146,42 @@ public class GUI extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// setBounds(100, 100, 988, 678);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
+		basePanel = new JPanel();
+		basePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(basePanel);
+		basePanel.setLayout(null);
 
-		panel = new JPanel();
-		panel.setBounds(0, 0, 800, 600);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		menuPanel = new JPanel();
+		menuPanel.setBounds(0, 0, 800, 600);
+		basePanel.add(menuPanel);
+		menuPanel.setLayout(null);
 
 		title = new JLabel("SPACE SHOOTER");
 		title.setFont(new Font("Monospaced", 1, 58));
 		title.setForeground(Color.white);
 		title.setBounds(150, 50, 500, 200);
-		panel.add(title);
+		menuPanel.add(title);
 
 	}
 
 	private void initMenu() {
 
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-
-		frame = new JFrame();
-		dimension = new Dimension(width, height);
-		frame.setTitle("SpaceShots");
-		frame.setSize(dimension);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		// setBounds(100, 100, 988, 678);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.setContentPane(contentPane);
-		contentPane.setLayout(null);
+		basePanel = new JPanel();
+		basePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setContentPane(basePanel);
+		basePanel.setLayout(null);
 
-		panel = new JPanel();
-		panel.setBounds(0, 0, 800, 600);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		menuPanel = new JPanel();
+		menuPanel.setBounds(0, 0, 800, 600);
+		basePanel.add(menuPanel);
+		menuPanel.setLayout(null);
 
 		title = new JLabel("SPACE SHOOTER");
 		title.setFont(new Font("Monospaced", 1, 58));
 		title.setForeground(Color.white);
 		title.setBounds(150, 50, 500, 200);
-		panel.add(title);
+		menuPanel.add(title);
 
 		btnStart = new JButton("Start game");
 //		btnStart.setOpaque(true);
@@ -195,7 +200,7 @@ public class GUI extends JFrame {
 			}
 		});
 
-		panel.add(btnStart);
+		menuPanel.add(btnStart);
 
 		btnHighscore = new JButton("High Score");
 		btnHighscore.setBounds(322, 350, 90, 25);
@@ -207,7 +212,7 @@ public class GUI extends JFrame {
 
 			}
 		});
-		panel.add(btnHighscore);
+		menuPanel.add(btnHighscore);
 
 		btnExit = new JButton("Exit");
 		btnExit.setBounds(322, 400, 90, 25);
@@ -220,7 +225,7 @@ public class GUI extends JFrame {
 				mediator.stop();
 			}
 		});
-		panel.add(btnExit);
+		menuPanel.add(btnExit);
 
 //		btnStart = new JButton("Start");
 //		btnStart.setBounds(322, 300, 89, 23);
@@ -237,7 +242,7 @@ public class GUI extends JFrame {
 		try {
 			backgroundLabel = new JLabel(new ImageIcon(ImageIO.read(new File("assets\\spacemenu.jpg"))));
 			backgroundLabel.setBounds(0, 0, 800, 600);
-			panel.add(backgroundLabel);
+			menuPanel.add(backgroundLabel);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -265,11 +270,12 @@ public class GUI extends JFrame {
 		frame.getContentPane().add(canvas);
 
 	}
+
 	public JPanel clearFrame() {
-		JPanel panel = new JPanel();
-		frame.setContentPane(panel);
-		
-		return panel;
+		JPanel newPanel = new JPanel();
+		frame.setContentPane(newPanel);
+
+		return newPanel;
 	}
 
 	/**
@@ -280,6 +286,10 @@ public class GUI extends JFrame {
 	 * 
 	 * 
 	 */
+
+	public void pauseGame() {
+
+	}
 
 	private void initBackground() {
 
@@ -315,7 +325,6 @@ public class GUI extends JFrame {
 
 	}
 
-
 	private void initGame() {
 		// game = new Game(this);
 		// game.start();
@@ -339,12 +348,13 @@ public class GUI extends JFrame {
 	}
 
 	public JPanel getPanel() {
-		return panel;
+		return menuPanel;
 	}
 
 	public GUI getGUI() {
 		return this;
 	}
+
 }
 
 class ImagePanel extends JPanel {

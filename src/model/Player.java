@@ -48,6 +48,7 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
+		System.out.println("Shoot");
 		new Bullet(playerFront.x, playerFront.y, (int) shootDirection, gui);
 	}
 
@@ -123,6 +124,9 @@ public class Player extends Entity {
 	public boolean intersects(Entity e) {
 		return false;
 
+	}
+	public void pauseGame() {
+		gui.pauseGame();
 	}
 
 }
