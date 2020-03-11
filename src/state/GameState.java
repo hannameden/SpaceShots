@@ -2,6 +2,7 @@ package state;
 
 import java.awt.Graphics;
 
+import factory.AsteroidGenerator;
 import model.Entity;
 import model.Player;
 import view.GUI;
@@ -12,6 +13,7 @@ public class GameState extends State {
 	private Game game;
 	private Player player;
 	private GUI gui;
+	private AsteroidGenerator asteroidGenerator = AsteroidGenerator.getInstance();
 
 	private static GameState instance;
 
@@ -45,7 +47,8 @@ public class GameState extends State {
 	public void startGame() {
 		gui.getCanvas().setVisible(true);
 		game.start();
-		Entity.spawnAsteroids();
+		// Ska eventuellt flyttas :)
+		asteroidGenerator.start();
 	}
 
 }

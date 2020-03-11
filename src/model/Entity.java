@@ -3,11 +3,8 @@ package model;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.List;
-import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import factory.AsteroidFactory;
-import factory.EntityFactory;
 import view.GUI;
 
 public abstract class Entity {
@@ -21,9 +18,6 @@ public abstract class Entity {
 	protected double movementDirection = 0f;
 	protected Point entityFront;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
-	private static EntityFactory asteroidFactory = AsteroidFactory.getInstance();
-	private static String[] asteroidSpawnArguments = { "RandomSpawnLocation", "AsteroidMedium" };
-	private static int randomSizeOfAsteroid;
 
 	public Entity() {
 		entities.add(this);
@@ -54,32 +48,6 @@ public abstract class Entity {
 
 	public static List<Entity> getEntities() {
 		return entities;
-	}
-
-	public static void spawnAsteroids() {
-
-		new java.util.Timer().scheduleAtFixedRate(new TimerTask() {
-
-			@Override
-			public void run() {
-				randomizeAsteroidSize();
-				asteroidFactory.create(0, 0, asteroidSpawnArguments);
-			}
-		}, 0, 250);
-
-	}
-
-	private static void randomizeAsteroidSize() {
-		randomSizeOfAsteroid = randomWithRange(1, 10);
-
-		if (randomSizeOfAsteroid < 5) {
-			asteroidSpawnArguments[1] = "AsteroidSmall";
-		} else if (randomSizeOfAsteroid < 8) {
-			asteroidSpawnArguments[1] = "AsteroidMedium";
-		} else {
-			asteroidSpawnArguments[1] = "AsteroidLarge";
-		}
-
 	}
 
 	protected boolean intersects(Entity e) {
