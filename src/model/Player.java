@@ -13,13 +13,12 @@ import view.GUI;
 public class Player extends Entity {
 
 	private double shootDirection = 0f;
-	private Point playerFront;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
 
 	public Player() {
 		radius = 20;
 		diameter = radius * 2;
-		playerFront = new Point();
+		entityFront = new Point();
 		x = GUI.getWidth() / 2 - diameter;
 		y = GUI.getHeight() / 2 - diameter;
 
@@ -40,7 +39,7 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		bulletFactory.create(playerFront.x, playerFront.y, (int) shootDirection);
+		bulletFactory.create(entityFront.x, entityFront.y, (int) shootDirection);
 	}
 
 	public void update() {
@@ -81,14 +80,14 @@ public class Player extends Entity {
 	public void setShootingDirection(MouseEvent e) {
 		shootDirection = getAngle(e);
 		if (x > e.getX())
-			playerFront.x = x - 10 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x - 10 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 		else
-			playerFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
 
 		if (y > e.getY())
-			playerFront.y = y - 10 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y - 10 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 		else
-			playerFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
 
 	}
 
@@ -105,6 +104,12 @@ public class Player extends Entity {
 	@Override
 	public boolean intersects(Entity e) {
 		return false;
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

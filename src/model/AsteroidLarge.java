@@ -9,13 +9,11 @@ import view.GUI;
 
 public class AsteroidLarge extends Entity implements Asteroid {
 
-	private Point asteroidFront;
-
 	public AsteroidLarge() {
 		radius = 50;
 		diameter = radius * 2;
 		speed = 3;
-		asteroidFront = new Point();
+		entityFront = new Point();
 		spawnAtRandomEdgeLocation();
 		setRandomDirection();
 	}
@@ -24,7 +22,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 		radius = 50;
 		diameter = radius * 2;
 		speed = 3;
-		asteroidFront = new Point();
+		entityFront = new Point();
 		spawnAtLocation(x, y);
 		setRandomDirection();
 	}
@@ -75,35 +73,10 @@ public class AsteroidLarge extends Entity implements Asteroid {
 	}
 
 	@Override
-	public void shatter() {
+	public void destroy() {
 		new AsteroidMedium(x, y);
 		new AsteroidMedium(x, y);
 		Entity.removeEntity(this);
-	}
-
-	private void spawnAtRandomEdgeLocation() {
-
-		int random = randomWithRange(1, 20);
-
-		// Spawn at left or right of screen, vary the y-value.
-		if (random <= 10) {
-			if (random <= 5) {
-				x = 0 - diameter;
-			} else {
-				x = GUI.getWidth() + diameter;
-			}
-			y = randomWithRange(0 - diameter, GUI.getHeight() + diameter);
-		}
-		// Spawn above or below the screen, vary the x-value.
-		else {
-			if (random <= 15) {
-				y = 0 - diameter;
-			} else {
-				y = GUI.getHeight() + diameter;
-			}
-			x = randomWithRange(0 - diameter, GUI.getWidth() + diameter);
-		}
-
 	}
 
 	private void spawnAtLocation(int x, int y) {
@@ -111,15 +84,9 @@ public class AsteroidLarge extends Entity implements Asteroid {
 		this.y = y;
 	}
 
-	private int randomWithRange(int min, int max) {
-		int range = (max - min) + 1;
-		return (int) (Math.random() * range) + min;
-	}
-
-	private void setRandomDirection() {
-		asteroidFront.x = randomWithRange(0, GUI.getWidth());
-		asteroidFront.y = randomWithRange(0, GUI.getHeight());
-		movementDirection = -Math.toDegrees(Math.atan2(asteroidFront.x - x, asteroidFront.y - y)) + 180;
+	@Override
+	public void shatter() {
+		destroy();
 	}
 
 }

@@ -38,17 +38,16 @@ public class Bullet extends Entity {
 
 	private void checkEdgeCollisionX() {
 		if (x > GUI.getWidth())
-			Entity.removeEntity(this);
+			destroy();
 		else if (x + diameter < 0)
-			Entity.removeEntity(this);
+			destroy();
 	}
 
 	private void checkEdgeCollisionY() {
 		if (y > GUI.getHeight())
-			Entity.removeEntity(this);
+			destroy();
 		else if (y + diameter < 0)
-			Entity.removeEntity(this);
-
+			destroy();
 	}
 
 	@Override
@@ -60,6 +59,11 @@ public class Bullet extends Entity {
 				Entity.removeEntity(this);
 			}
 		});
+	}
+
+	@Override
+	public void destroy() {
+		Entity.removeEntity(this);
 	}
 
 }

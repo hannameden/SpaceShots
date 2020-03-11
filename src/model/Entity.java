@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.TimerTask;
@@ -19,6 +20,7 @@ public abstract class Entity {
 	protected double maxSpeed = 3;
 	protected double speed = 0;
 	protected double movementDirection = 0f;
+	protected Point entityFront;
 	protected Rectangle2D bounds;
 	protected GUI gui;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
@@ -34,6 +36,8 @@ public abstract class Entity {
 	public abstract void checkEdgeCollision();
 
 	public abstract void checkEntityCollisions();
+
+	public abstract void destroy();
 
 	public static void removeEntity(Entity e) {
 		entities.remove(e);
@@ -51,7 +55,7 @@ public abstract class Entity {
 			public void run() {
 				// TODO: Randomize size of asteroid that spawns
 				// TODO: Increase the spawn rate as the game progresses
-				new AsteroidDecorator(new AsteroidLarge());
+				new AsteroidLarge();
 			}
 		}, 0, 250);
 
@@ -61,6 +65,46 @@ public abstract class Entity {
 		double dx = this.x - e.x;
 		double dy = this.y - e.y;
 		return radius > e.radius ? Math.sqrt(dx * dx + dy * dy) < radius : Math.sqrt(dx * dx + dy * dy) < e.radius;
+	}
+
+	protected void setMovementDirection(double movementDirection) {
+		this.movementDirection = movementDirection;
+	}
+
+	protected void setRandomDirection() {
+		entityFront.x = randomWithRange(0, GUI.getWidth());
+		entityFront.y = randomWithRange(0, GUI.getHeight());
+		movementDirection = -Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y)) + 180;
+	}
+
+	protected void spawnAtRandomEdgeLocation() {
+
+		int random = randomWithRange(1, 20);
+
+		// Spawn at left or right of screen, vary the y-value.
+		if (random <= 10) {
+			if (random <= 5) {
+				x = 0 - diameter;
+			} else {
+				x = GUI.getWidth() + diameter;
+			}
+			y = randomWithRange(0 - diameter, GUI.getHeight() + diameter);
+		}
+		// Spawn above or below the screen, vary the x-value.
+		else {
+			if (random <= 15) {
+				y = 0 - diameter;
+			} else {
+				y = GUI.getHeight() + diameter;
+			}
+			x = randomWithRange(0 - diameter, GUI.getWidth() + diameter);
+		}
+
+	}
+
+	private int randomWithRange(int min, int max) {
+		int range = (max - min) + 1;
+		return (int) (Math.random() * range) + min;
 	}
 
 }
