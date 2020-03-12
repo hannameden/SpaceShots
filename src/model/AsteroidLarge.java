@@ -24,13 +24,13 @@ public class AsteroidLarge extends Entity implements Asteroid {
 	}
 
 	private void init() {
-		radius = 40;
-		diameter = radius * 2;
-		speed = 3;
+		width = 90;
+		height = 90;
+		speed = 1.5;
 		entityFront = new Point();
 		image = Assets.getInstance().getMeteorSmallImage();
 		// bounds = new Circle(x, y, radius);
-		bounds = new Rectangle(x, y, diameter, diameter);
+		bounds = new Rectangle(x, y, width, height);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);
 		// g2d.fillOval(x, y, diameter, diameter);
-		g2d.drawImage(image, x, y, diameter, diameter, null);
+		g2d.drawImage(image, x, y, width, height, null);
 	}
 
 	@Override
@@ -50,14 +50,14 @@ public class AsteroidLarge extends Entity implements Asteroid {
 	private void checkEdgeCollisionX() {
 		if (x > GUI.getWidth())
 			Entity.removeEntity(this);
-		else if (x + diameter < 0)
+		else if (x + width < 0)
 			Entity.removeEntity(this);
 	}
 
 	private void checkEdgeCollisionY() {
 		if (y > GUI.getHeight())
 			Entity.removeEntity(this);
-		else if (y + diameter < 0)
+		else if (y + height < 0)
 			Entity.removeEntity(this);
 
 	}
@@ -73,8 +73,8 @@ public class AsteroidLarge extends Entity implements Asteroid {
 
 	@Override
 	public void destroy() {
-		new AsteroidMedium(x, y);
-		new AsteroidMedium(x, y);
+		new AsteroidMedium(bounds.getCenter().x, bounds.getCenter().y);
+		new AsteroidMedium(bounds.getCenter().x, bounds.getCenter().y);
 		Entity.removeEntity(this);
 	}
 

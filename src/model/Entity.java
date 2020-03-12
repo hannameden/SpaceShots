@@ -84,20 +84,20 @@ public abstract class Entity {
 		// Spawn at left or right of screen, vary the y-value.
 		if (random <= 10) {
 			if (random <= 5) {
-				x = 0 - diameter;
+				x = 0 - width / 2;
 			} else {
-				x = GUI.getWidth() + diameter;
+				x = GUI.getWidth() + width / 2;
 			}
-			y = randomWithRange(0 - diameter, GUI.getHeight() + diameter);
+			y = randomWithRange(0 - height, GUI.getHeight() + height);
 		}
 		// Spawn above or below the screen, vary the x-value.
 		else {
 			if (random <= 15) {
-				y = 0 - diameter;
+				y = 0 - height / 2;
 			} else {
-				y = GUI.getHeight() + diameter;
+				y = GUI.getHeight() + height / 2;
 			}
-			x = randomWithRange(0 - diameter, GUI.getWidth() + diameter);
+			x = randomWithRange(0 - width, GUI.getWidth() + width);
 		}
 
 	}
