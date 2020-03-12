@@ -58,7 +58,7 @@ public class Bullet extends Entity {
 			if (this.intersects(e)) {
 				Asteroid asteroid = (Asteroid) e;
 				asteroid.shatter();
-				new Explosion(e.bounds.getCenter().x, e.bounds.getCenter().y);
+				new Explosion(e.bounds.getCenter().x - e.width / 2, e.bounds.getCenter().y - e.height / 2);
 				Entity.removeEntity(this);
 			}
 		});
