@@ -48,7 +48,7 @@ public class Player extends Entity {
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
-		g2d.fillOval(x, y, diameter, diameter);
+		// g2d.fillOval(x, y, diameter, diameter);
 		g2d.fillRect(entityFront.x, entityFront.y, 12, 12);
 
 		g2d.drawImage(image, x, y, diameter, diameter, null);

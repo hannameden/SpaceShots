@@ -5,17 +5,18 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
 	private static Assets instance;
-	private static BufferedImage playerImage, meteorSmallImage, meteorLargeImage;
-	private static final int width = 16, height = 16;
+	private static BufferedImage playerImage, meteorSmallImage, meteorLargeImage, lifeImage, laserGreenImage,
+			laserGreenExplosionImage;
+	private static BufferedImage[] numbers = new BufferedImage[10];
+	private static final int width = 96, height = 154;
 
 	private Assets() {
-
+		init();
 	}
 
 	public static Assets getInstance() {
 		if (instance == null) {
 			instance = new Assets();
-			init();
 		}
 		return instance;
 	}
@@ -26,6 +27,22 @@ public class Assets {
 		playerImage = ImageLoader.load("./assets/player.png");
 		meteorSmallImage = ImageLoader.load("./assets/meteorSmall.png");
 		meteorLargeImage = ImageLoader.load("./assets/meteorBig.png");
+		lifeImage = ImageLoader.load("./assets/life.png");
+		laserGreenImage = ImageLoader.load("./assets/laserGreen.png");
+		laserGreenExplosionImage = ImageLoader.load("./assets/laserGreenShot.png");
+
+		SpriteSheet numberSheet = new SpriteSheet(ImageLoader.load("./assets/numberCollection.png"));
+		numbers[0] = numberSheet.crop(1, 1, width, height);
+		numbers[1] = numberSheet.crop(2, 1, width, height);
+		numbers[2] = numberSheet.crop(3, 1, width, height);
+		numbers[3] = numberSheet.crop(4, 1, width, height);
+		numbers[4] = numberSheet.crop(5, 1, width, height);
+		numbers[5] = numberSheet.crop(6, 1, width, height);
+		numbers[6] = numberSheet.crop(7, 1, width, height);
+		numbers[7] = numberSheet.crop(8, 1, width, height);
+		numbers[8] = numberSheet.crop(9, 1, width, height);
+		numbers[9] = numberSheet.crop(10, 1, width, height);
+
 	}
 
 	public BufferedImage getPlayerImage() {
@@ -38,6 +55,18 @@ public class Assets {
 
 	public BufferedImage getMeteorLargeImage() {
 		return meteorLargeImage;
+	}
+
+	public BufferedImage getLifeImage() {
+		return lifeImage;
+	}
+
+	public BufferedImage getLaserGreenImage() {
+		return laserGreenImage;
+	}
+
+	public BufferedImage getLaserGreenExplosionImage() {
+		return laserGreenExplosionImage;
 	}
 
 }

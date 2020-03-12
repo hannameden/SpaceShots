@@ -2,10 +2,18 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
+import graphics.Assets;
 import view.GUI;
 
 public class Bullet extends Entity {
+
+	private Rectangle bounds;
 
 	public Bullet(int x, int y) {
 		this.x = x;
@@ -13,12 +21,32 @@ public class Bullet extends Entity {
 		speed = 8;
 		radius = 5;
 		diameter = radius * 2;
+		image = Assets.getInstance().getLaserGreenImage();
+		bounds = new Rectangle();
+		bounds.setBounds(x, y, image.getWidth(), image.getHeight());
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.RED);
-		g.fillOval(x, y, diameter, diameter);
+		Graphics2D g2d = (Graphics2D) g.create();
+		g2d.setColor(Color.red);
+
+		g2d.drawImage(image, x, y, null);
+		g2d.dispose();
+
+	}
+
+	private BufferedImage rotateImageByDegrees(BufferedImage image, double degrees) {
+		double rotationRequired = Math.toRadians(degrees);
+		double locationX = image.getWidth() / 2;
+		double locationY = image.getHeight() / 2;
+		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+		BufferedImage newImage = null;
+		op.filter(image, newImage);
+
+		return newImage;
 	}
 
 	@Override

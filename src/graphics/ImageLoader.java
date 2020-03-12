@@ -10,7 +10,7 @@ public class ImageLoader {
 
 	public static BufferedImage load(String path) {
 		try {
-			return ImageIO.read(new File("./assets/player.png"));
+			return ImageIO.read(new File(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
