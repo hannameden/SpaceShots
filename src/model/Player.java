@@ -19,16 +19,11 @@ public class Player extends Entity {
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
 
 	public Player() {
-		// radius = 20;
-		// diameter = radius * 2;
 		image = Assets.getInstance().getPlayerImage();
-
 		width = image.getWidth() / 2;
 		height = image.getHeight() / 2;
-
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
-
 		bounds = new EntityBounds(x, y, width, height);
 	}
 
@@ -47,20 +42,17 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		// Use args parameter to shot different types of bullets
 		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
 	}
 
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
-
 		double rotationRequired = Math.toRadians(shootDirection);
 		double locationX = image.getWidth() / 2;
 		double locationY = image.getHeight() / 2;
 		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-		// Drawing the rotated image at the required drawing locations
 		g2d.drawImage(op.filter(image, null), x, y, null);
 	}
 
