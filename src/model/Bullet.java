@@ -3,7 +3,6 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -13,8 +12,6 @@ import view.GUI;
 
 public class Bullet extends Entity {
 
-	private Rectangle bounds;
-
 	public Bullet(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -22,8 +19,6 @@ public class Bullet extends Entity {
 		radius = 5;
 		diameter = radius * 2;
 		image = Assets.getInstance().getLaserGreenImage();
-		bounds = new Rectangle();
-		bounds.setBounds(x, y, image.getWidth(), image.getHeight());
 	}
 
 	@Override
@@ -75,6 +70,7 @@ public class Bullet extends Entity {
 			if (this.intersects(e)) {
 				Asteroid asteroid = (Asteroid) e;
 				asteroid.shatter();
+				new Explosion(x, y);
 				Entity.removeEntity(this);
 			}
 		});
