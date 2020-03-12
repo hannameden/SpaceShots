@@ -27,7 +27,6 @@ public class Game implements Runnable {
 	private GUI gui;
 
 	private Player player;
-	private JPanel panel;
 	private Mediator mediator;
 
 	private JFrame frame;
@@ -41,9 +40,7 @@ public class Game implements Runnable {
 		// sätt en btn på game och prova ta bort canvas för att få meny
 
 		gui.initCanvas();
-
 		canvas = gui.getCanvas();
-		
 		frame = gui.getFrame();
 
 		player = new Player();
@@ -66,7 +63,6 @@ public class Game implements Runnable {
 		canvas.addMouseListener(playerMourseInputController);
 		frame.addMouseMotionListener(playerMourseInputController);
 		canvas.addMouseMotionListener(playerMourseInputController);
-
 	}
 
 	@Override
@@ -103,11 +99,10 @@ public class Game implements Runnable {
 
 	private void update() {
 		Entity.getEntities().forEach(e -> e.update());
-
 	}
 
 	private void render() {
-		canvas = gui.getCanvas();
+		
 		bs = canvas.getBufferStrategy();
 		if (bs == null) {
 			canvas.createBufferStrategy(3);
@@ -119,12 +114,11 @@ public class Game implements Runnable {
 		g.clearRect(0, 0, GUI.getWidth(), GUI.getHeight());
 
 		// Draw background
-		 g.drawImage(background, 0, 0, GUI.getWidth(), GUI.getHeight(), null);
+		g.drawImage(background, 0, 0, GUI.getWidth(), GUI.getHeight(), null);
 
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
 
-		// player.render(g);
 		// End Drawing
 		bs.show();
 		g.dispose();

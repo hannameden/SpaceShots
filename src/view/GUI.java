@@ -56,7 +56,7 @@ public class GUI {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setFocusable(true);
 		frame.setVisible(true);
 	}
 
@@ -118,8 +118,9 @@ public class GUI {
 		canvas.setMaximumSize(dimension);
 		canvas.setFocusable(true);
 		canvas.setBackground(Color.BLACK);
-		canvas.setBounds(0, 0, 800, 600);
+		canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		canvas.setVisible(true);
+		container.setVisible(false);
 		frame.add(canvas);
 	}
 

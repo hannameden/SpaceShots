@@ -20,7 +20,6 @@ import view.GUI;
 
 public class Player extends Entity {
 
-	private int width = 20, height = 20, x = 0, y = 0;
 	private BufferedImage image = null;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
@@ -57,6 +56,7 @@ public class Player extends Entity {
 	}
 
 	public void render(Graphics g) {
+		
 		/*
 		 * try { image = ImageIO.read(new File("assets\\rocket.png")); } catch
 		 * (IOException e) { System.out.println("oupsie"); //e.printStackTrace(); }
