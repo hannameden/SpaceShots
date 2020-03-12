@@ -56,7 +56,7 @@ public abstract class Entity {
 	}
 
 	protected boolean intersects(Entity e) {
-		return (bounds != null) ? bounds.intersects(e.bounds) : false;
+		return (bounds != null && e.bounds != null) ? bounds.intersects(e.bounds) : false;
 	}
 
 	public void setMovementDirection(double movementDirection) {
