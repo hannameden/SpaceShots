@@ -22,7 +22,6 @@ public class Player extends Entity {
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, y = GUI.getHeight() / 2 - diameter);
 		image = Assets.getInstance().getPlayerImage();
-
 	}
 
 	public void accelerate() {
@@ -50,7 +49,11 @@ public class Player extends Entity {
 		// g2d.fillOval(x, y, diameter, diameter);
 		g2d.fillRect(entityFront.x, entityFront.y, 12, 12);
 
-		g2d.drawImage(image, x, y, diameter, diameter, null);
+		// g2d.fillOval(x, y, diameter, diameter);
+		// g2d.drawImage(image, x, y, diameter, diameter, null);
+
+		g2d.setColor(Color.RED);
+		g2d.drawImage(image, entityFront.x + radius, entityFront.y + radius, 15, 15, null);
 
 		/*
 		 * double rotationRequired = Math

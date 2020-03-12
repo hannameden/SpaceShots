@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -24,9 +23,14 @@ public class Bullet extends Entity {
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		g2d.setColor(Color.red);
 
+		/*
+		 * AffineTransform a =
+		 * AffineTransform.getRotateInstance(Math.toRadians(movementDirection), x, y);
+		 * g2d.setTransform(a); a.translate(-x, -y);
+		 */
 		g2d.drawImage(image, x, y, null);
+
 		g2d.dispose();
 
 	}
@@ -39,8 +43,7 @@ public class Bullet extends Entity {
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 
 		BufferedImage newImage = null;
-		op.filter(image, newImage);
-
+		newImage = op.filter(image, null);
 		return newImage;
 	}
 
