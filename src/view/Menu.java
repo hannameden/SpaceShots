@@ -36,7 +36,7 @@ public class Menu {
 
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
-		panel = gui.getPanel();
+		panel = new JPanel();
 
 		JButton btnStart = new JButton("Start");
 		btnStart.setBounds(322, 300, 89, 23);
