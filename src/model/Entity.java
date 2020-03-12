@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import model.shape.Shape;
 import view.GUI;
 
 public abstract class Entity {
@@ -20,6 +21,9 @@ public abstract class Entity {
 	protected Point entityFront;
 	protected BufferedImage image;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
+
+	protected int width, height;
+	protected Shape bounds;
 
 	public Entity() {
 		entities.add(this);
@@ -42,6 +46,8 @@ public abstract class Entity {
 	public void updateCoordinates() {
 		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
 		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+		if (bounds != null)
+			bounds.setLocation(x, y);
 	}
 
 	public static void removeEntity(Entity e) {
@@ -53,9 +59,7 @@ public abstract class Entity {
 	}
 
 	protected boolean intersects(Entity e) {
-		double dx = this.x - e.x;
-		double dy = this.y - e.y;
-		return radius > e.radius ? Math.sqrt(dx * dx + dy * dy) < radius : Math.sqrt(dx * dx + dy * dy) < e.radius;
+		return (bounds != null) ? bounds.intersects(e.bounds) : false;
 	}
 
 	public void setMovementDirection(double movementDirection) {

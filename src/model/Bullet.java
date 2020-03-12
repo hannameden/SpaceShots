@@ -7,6 +7,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import graphics.Assets;
+import model.shape.Rectangle;
 import view.GUI;
 
 public class Bullet extends Entity {
@@ -18,21 +19,19 @@ public class Bullet extends Entity {
 		radius = 5;
 		diameter = radius * 2;
 		image = Assets.getInstance().getLaserGreenImage();
+		bounds = new Rectangle(x, y, diameter, diameter);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-
-		/*
-		 * AffineTransform a =
-		 * AffineTransform.getRotateInstance(Math.toRadians(movementDirection), x, y);
-		 * g2d.setTransform(a); a.translate(-x, -y);
-		 */
-		g2d.drawImage(image, x, y, null);
-
+		double rotationRequired = Math.toRadians(movementDirection);
+		double locationX = image.getWidth() / 2;
+		double locationY = image.getHeight() / 2;
+		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		g2d.drawImage(op.filter(image, null), x, y, null);
 		g2d.dispose();
-
 	}
 
 	private BufferedImage rotateImageByDegrees(BufferedImage image, double degrees) {
