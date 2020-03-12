@@ -95,7 +95,7 @@ public abstract class Entity {
 			if (random <= 15) {
 				y = 0 - height / 2;
 			} else {
-				y = GUI.getHeight() + height / 2;
+				y = GUI.getHeight() - height / 2;
 			}
 			x = randomWithRange(0 - width, GUI.getWidth() + width);
 		}
