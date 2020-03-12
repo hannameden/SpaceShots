@@ -11,7 +11,6 @@ import java.awt.image.AffineTransformOp;
 import factory.BulletFactory;
 import factory.EntityFactory;
 import graphics.Assets;
-import model.shape.Rectangle;
 import view.GUI;
 
 public class Player extends Entity {
@@ -30,7 +29,7 @@ public class Player extends Entity {
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
 
-		bounds = new Rectangle(x, y, width, height);
+		bounds = new EntityBounds(x, y, width, height);
 	}
 
 	public void accelerate() {
@@ -102,7 +101,8 @@ public class Player extends Entity {
 	}
 
 	public double getAngle(MouseEvent e) {
-		return -Math.toDegrees(Math.atan2(e.getPoint().x - x, e.getPoint().y - y)) + 180;
+		return -Math.toDegrees(Math.atan2(e.getPoint().x - bounds.getCenter().x, e.getPoint().y - bounds.getCenter().y))
+				+ 180;
 	}
 
 	@Override

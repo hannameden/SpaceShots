@@ -4,10 +4,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 
 import graphics.Assets;
-import model.shape.Rectangle;
 import view.GUI;
 
 public class Bullet extends Entity {
@@ -16,10 +14,10 @@ public class Bullet extends Entity {
 		this.x = x;
 		this.y = y;
 		speed = 8;
-		radius = 5;
-		diameter = radius * 2;
+		width = 10;
+		height = 10;
 		image = Assets.getInstance().getLaserGreenImage();
-		bounds = new Rectangle(x, y, diameter, diameter);
+		bounds = new EntityBounds(x, y, width, height);
 	}
 
 	@Override
@@ -34,18 +32,6 @@ public class Bullet extends Entity {
 		g2d.dispose();
 	}
 
-	private BufferedImage rotateImageByDegrees(BufferedImage image, double degrees) {
-		double rotationRequired = Math.toRadians(degrees);
-		double locationX = image.getWidth() / 2;
-		double locationY = image.getHeight() / 2;
-		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-
-		BufferedImage newImage = null;
-		newImage = op.filter(image, null);
-		return newImage;
-	}
-
 	@Override
 	public void checkEdgeCollision() {
 		checkEdgeCollisionX();
@@ -55,14 +41,14 @@ public class Bullet extends Entity {
 	private void checkEdgeCollisionX() {
 		if (x > GUI.getWidth())
 			destroy();
-		else if (x + diameter < 0)
+		else if (x + width < 0)
 			destroy();
 	}
 
 	private void checkEdgeCollisionY() {
 		if (y > GUI.getHeight())
 			destroy();
-		else if (y + diameter < 0)
+		else if (y + height < 0)
 			destroy();
 	}
 
@@ -72,7 +58,7 @@ public class Bullet extends Entity {
 			if (this.intersects(e)) {
 				Asteroid asteroid = (Asteroid) e;
 				asteroid.shatter();
-				new Explosion(x, y);
+				new Explosion(e.bounds.getCenter().x, e.bounds.getCenter().y);
 				Entity.removeEntity(this);
 			}
 		});

@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 import graphics.Assets;
-import model.shape.Rectangle;
 import view.GUI;
 
 public class AsteroidLarge extends Entity implements Asteroid {
@@ -30,7 +29,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 		entityFront = new Point();
 		image = Assets.getInstance().getMeteorSmallImage();
 		// bounds = new Circle(x, y, radius);
-		bounds = new Rectangle(x, y, width, height);
+		bounds = new EntityBounds(x, y, width, height);
 	}
 
 	@Override

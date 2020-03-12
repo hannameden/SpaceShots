@@ -6,15 +6,12 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import model.shape.Shape;
 import view.GUI;
 
 public abstract class Entity {
 
 	protected int x;
 	protected int y;
-	protected int radius;
-	protected int diameter = radius * 2;
 	protected double maxSpeed = 3;
 	protected double speed = 0;
 	protected double movementDirection = 0f;
@@ -23,7 +20,7 @@ public abstract class Entity {
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
 
 	protected int width, height;
-	protected Shape bounds;
+	protected EntityBounds bounds;
 
 	public Entity() {
 		entities.add(this);
