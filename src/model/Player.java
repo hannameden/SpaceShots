@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 import factory.BulletFactory;
 import factory.EntityFactory;

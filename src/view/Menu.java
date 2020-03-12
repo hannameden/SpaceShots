@@ -59,9 +59,6 @@ public class Menu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				// MenuState.getInstance().startGame();
-
 				mediator.startGame();
 			}
 		});

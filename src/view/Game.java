@@ -103,6 +103,7 @@ public class Game implements Runnable {
 
 	private void update() {
 		Entity.getEntities().forEach(e -> e.update());
+
 	}
 
 	private void render() {

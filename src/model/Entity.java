@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,6 +18,7 @@ public abstract class Entity {
 	protected double speed = 0;
 	protected double movementDirection = 0f;
 	protected Point entityFront;
+	protected BufferedImage image;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
 
 	public Entity() {
