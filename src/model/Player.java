@@ -51,9 +51,22 @@ public class Player extends Entity {
 		double rotationRequired = Math.toRadians(shootDirection);
 		double locationX = image.getWidth() / 2;
 		double locationY = image.getHeight() / 2;
-		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-		g2d.drawImage(op.filter(image, null), x, y, null);
+		double diff = Math.abs(image.getWidth() - image.getHeight());
+		double unitX = Math.abs(Math.cos(rotationRequired));
+		double unitY = Math.abs(Math.sin(rotationRequired));
+		double correctUx = unitX;
+		double correctUy = unitY;
+		if (image.getWidth() < image.getHeight()) {
+			correctUx = unitY;
+			correctUy = unitX;
+		}
+		int posAffineTransformOpX = x - (int) (correctUx * diff);
+		int posAffineTransformOpY = y - (int) (correctUy * diff);
+		AffineTransform at = new AffineTransform();
+		at.translate(correctUx * diff, correctUy * diff);
+		at.rotate(rotationRequired, locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		g2d.drawImage(op.filter(image, null), posAffineTransformOpX, posAffineTransformOpY, null);
 		g2d.dispose();
 	}
 
