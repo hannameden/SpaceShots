@@ -42,7 +42,7 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
+		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection(shootDirection);
 	}
 
 	public void render(Graphics g) {
@@ -54,6 +54,7 @@ public class Player extends Entity {
 		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 		g2d.drawImage(op.filter(image, null), x, y, null);
+		g2d.dispose();
 	}
 
 	public void checkEdgeCollision() {

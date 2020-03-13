@@ -13,10 +13,10 @@ public class Bullet extends Entity {
 	public Bullet(int x, int y) {
 		this.x = x;
 		this.y = y;
-		speed = 8;
-		width = 10;
-		height = 10;
 		image = Assets.getInstance().getLaserGreenImage();
+		speed = 8;
+		width = image.getWidth() / 2;
+		height = image.getHeight() / 2;
 		bounds = new EntityBounds(x, y, width, height);
 	}
 
