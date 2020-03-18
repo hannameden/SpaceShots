@@ -3,8 +3,7 @@ package model;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
-import graphics.Assets;
+import java.awt.image.BufferedImage;
 
 public class Explosion extends Entity {
 
@@ -12,10 +11,10 @@ public class Explosion extends Entity {
 
 	private float alpha = 0f;
 
-	public Explosion(int x, int y) {
+	public Explosion(BufferedImage image, int x, int y) {
 		this.x = x;
 		this.y = y;
-		image = Assets.getInstance().getLaserGreenExplosionImage();
+		this.image = image;
 	}
 
 	@Override

@@ -28,7 +28,6 @@ public class AsteroidSmall extends Entity implements Asteroid {
 		speed = 2.5;
 		entityFront = new Point();
 		image = Assets.getInstance().getMeteorSmallImage();
-		// bounds = new Circle(x, y, radius);
 		bounds = new EntityBounds(x, y, width, height);
 	}
 
@@ -63,9 +62,9 @@ public class AsteroidSmall extends Entity implements Asteroid {
 
 	@Override
 	public void checkEntityCollisions() {
-		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(e -> {
-			if (this.intersects(e)) {
-				System.out.println("Asteroid collided with Player :)");
+		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
+			if (this.intersects(p)) {
+				p.destroy();
 			}
 		});
 	}

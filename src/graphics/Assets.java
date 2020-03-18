@@ -6,7 +6,7 @@ public class Assets {
 
 	private static Assets instance;
 	private static BufferedImage playerImage, meteorSmallImage, meteorLargeImage, lifeImage, laserGreenImage,
-			laserGreenExplosionImage;
+			laserGreenExplosionImage, laserRedImage, laserRedExplosionImage;
 	private static BufferedImage[] numbers = new BufferedImage[10];
 	private static final int width = 96, height = 154;
 
@@ -22,14 +22,14 @@ public class Assets {
 	}
 
 	private static void init() {
-		// SpriteSheet sheet = new SpriteSheet(ImageLoader.load("path"));
-		// playerImage = sheet.crop(0, 0, width, height);
 		playerImage = ImageLoader.load("./assets/player.png");
 		meteorSmallImage = ImageLoader.load("./assets/meteorSmall.png");
 		meteorLargeImage = ImageLoader.load("./assets/meteorBig.png");
 		lifeImage = ImageLoader.load("./assets/life.png");
 		laserGreenImage = ImageLoader.load("./assets/laserGreen.png");
 		laserGreenExplosionImage = ImageLoader.load("./assets/laserGreenShot.png");
+		laserRedImage = ImageLoader.load("./assets/laserRed.png");
+		laserRedExplosionImage = ImageLoader.load("./assets/laserRedShot.png");
 
 		SpriteSheet numberSheet = new SpriteSheet(ImageLoader.load("./assets/numberCollection.png"));
 		numbers[0] = numberSheet.crop(1, 1, width, height);
@@ -67,6 +67,14 @@ public class Assets {
 
 	public BufferedImage getLaserGreenExplosionImage() {
 		return laserGreenExplosionImage;
+	}
+
+	public BufferedImage getLaserRedImage() {
+		return laserRedImage;
+	}
+
+	public BufferedImage getLaserRedExplosionImage() {
+		return laserRedExplosionImage;
 	}
 
 }

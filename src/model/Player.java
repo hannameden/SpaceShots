@@ -24,7 +24,7 @@ public class Player extends Entity {
 		height = image.getHeight() / 2;
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
-		bounds = new EntityBounds(x, y, width, height);
+		bounds = new EntityBounds(x + width / 2, y + height / 2, width / 2, height / 2);
 	}
 
 	public void accelerate() {
@@ -113,14 +113,20 @@ public class Player extends Entity {
 
 	@Override
 	public void checkEntityCollisions() {
-		// TODO Check asteroid collisions
 
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		new Explosion(Assets.getInstance().getLaserRedExplosionImage(), bounds.getCenter().x - width / 2,
+				bounds.getCenter().y - height / 2);
+		Entity.removeEntity(this);
+		gameOver();
 
+	}
+
+	private void gameOver() {
+		System.out.println("GameOver");
 	}
 
 }
