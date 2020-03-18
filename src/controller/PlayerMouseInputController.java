@@ -33,8 +33,6 @@ public class PlayerMouseInputController implements MouseInputListener {
 		} else if (SwingUtilities.isRightMouseButton(e)) {
 			player.stopAccelerating();
 		}
-		player.update();
-		
 	}
 
 	@Override

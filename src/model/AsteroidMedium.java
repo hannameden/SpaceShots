@@ -48,7 +48,7 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	public void checkEntityCollisions() {
 		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(e -> {
 			if (this.intersects(e)) {
-				System.out.println("Asteroid collided with Player :)");
+				//System.out.println("Asteroid collided with Player :)");
 			}
 		});
 	}
@@ -72,6 +72,7 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	public void destroy() {
 		new AsteroidSmall(x, y);
 		new AsteroidSmall(x, y);
+		Player.addPoint();
 		Entity.removeEntity(this);
 	}
 

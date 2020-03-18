@@ -24,6 +24,19 @@ public class PlayerKeyboardInputController implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 			player.shoot();
 
+		if(e.getKeyCode() == KeyEvent.VK_W) 
+			player.setMovementDirection(1.6);
+		if(e.getKeyCode() == KeyEvent.VK_S)
+			player.setMovementDirection(177);
+		if(e.getKeyCode() == KeyEvent.VK_A)
+			player.setMovementDirection(270);
+		if(e.getKeyCode() == KeyEvent.VK_D)
+			player.setMovementDirection(90);
+		
+		//not working :)
+		if(e.getKeyCode() == KeyEvent.VK_W && e.getKeyCode() == KeyEvent.VK_A) 
+			player.setMovementDirection(314);
+		
 		/*
 		 * if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A)
 		 * player.moveLeft(); if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode()

@@ -6,8 +6,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import controller.Mediator;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -16,15 +19,21 @@ import java.awt.event.MouseEvent;
 import factory.BulletFactory;
 import factory.EntityFactory;
 import graphics.Assets;
+import graphics.ImageLoader;
 import view.GUI;
 
 public class Player extends Entity {
 
-	private BufferedImage image = null;
+	private BufferedImage image = null, image3;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
+	private int lives = 3;
+	static int points = 0;
+	private ArrayList<BufferedImage> scoreList = null;
+	private Score score;
 
 	public Player() {
+		score = new Score();
 		radius = 20;
 		diameter = radius * 2;
 		entityFront = new Point();
@@ -33,8 +42,12 @@ public class Player extends Entity {
 
 	}
 
+	public static void addPoint() {
+		points++;
+	}
+
 	public void accelerate() {
-		if (speed++ > maxSpeed)
+		if (speed++ >= maxSpeed)
 			speed = maxSpeed;
 		else if (speed <= maxSpeed)
 			speed++;
@@ -52,11 +65,12 @@ public class Player extends Entity {
 
 		// Use args parameter to shot different types of bullets
 		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
-		
+
 	}
 
+	@Override
 	public void render(Graphics g) {
-		
+
 		/*
 		 * try { image = ImageIO.read(new File("assets\\rocket.png")); } catch
 		 * (IOException e) { System.out.println("oupsie"); //e.printStackTrace(); }
@@ -72,8 +86,32 @@ public class Player extends Entity {
 
 		g2d.drawImage(image, x, y, diameter, diameter, null);
 
+		scoreList = null;
+		scoreList = score.getScore(points);
+
+		g2d.drawImage(scoreList.get(0), GUI.getWidth() - 40, 2, 20, 30, null);
+
+		if (scoreList.size() > 1) 
+			g2d.drawImage(scoreList.get(1), GUI.getWidth() - 60, 2, 20, 30, null);
+
 		/*
-		 * double rotationRequired = Math
+		 * int x = 40;
+		 * 
+		 * 
+		 * 
+		 * for (int i = 0; i < scoreList.size(); i++) {
+		 * System.out.println(scoreList.size()); g2d.drawImage(scoreList.get(i),
+		 * GUI.getWidth() - x, 2, 20, 30, null); x = x + 20;
+		 * 
+		 * }
+		 * 
+		 * // while(scoreList != null ) { // // g2d.drawImage(scoreList.get(index),
+		 * GUI.getWidth() - x ,2, 20, 30, null); // } // // int x = 40; // for
+		 * (BufferedImage b : scoreList ){ // System.out.println(scoreList.size()); //
+		 * // g2d.drawImage(b, GUI.getWidth() - x ,2, 20, 30, null); // x += 50; //
+		 * //g2d.drawImage(b, 25, 2, 20, 30, null); // } //
+		 * 
+		 * /* double rotationRequired = Math
 		 * .toRadians(-Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y))
 		 * + 180); double locationX = image.getWidth() / 2; double locationY =
 		 * image.getHeight() / 2; AffineTransform tx =
@@ -103,6 +141,10 @@ public class Player extends Entity {
 			y = -diameter;
 		else if (y + diameter < 0)
 			y = GUI.getHeight();
+	}
+
+	public void moveUp() {
+		movementDirection = 10.0;
 	}
 
 	public void setMovementDirection(MouseEvent e) {
@@ -137,8 +179,19 @@ public class Player extends Entity {
 		return false;
 
 	}
+
 	public void pauseGame() {
-		//gui.pauseGame();
+		// gui.pauseGame();
+	}
+
+	public void loseLife() {
+		if (lives > 0)
+			lives--;
+		if (lives == 0)
+			Mediator.gameOver();
+
+		System.out.println("losing life!!!!!!!!!!");
+
 	}
 
 	@Override
@@ -146,5 +199,4 @@ public class Player extends Entity {
 		// TODO Auto-generated method stub
 
 	}
-
 }

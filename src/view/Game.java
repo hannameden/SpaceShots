@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.Mediator;
@@ -85,7 +86,7 @@ public class Game implements Runnable {
 
 			if (delta >= 1) {
 				update();
-				render();
+ 				render();
 
 				delta--;
 			}
@@ -118,72 +119,10 @@ public class Game implements Runnable {
 
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
-
+		
 		// End Drawing
 		bs.show();
 		g.dispose();
-	}
-
-	private void render2() {
-		// canvas = gui.getCanvas();
-		canvas.setVisible(true);
-
-		bs = canvas.getBufferStrategy();
-
-		if (bs == null) {
-			gui.getCanvas().createBufferStrategy(3);
-			return;
-		}
-		g = bs.getDrawGraphics();
-		// Clear screen
-		g.clearRect(0, 0, GUI.getWidth(), GUI.getHeight());
-		// Draw
-
-//		if (State.getState() != null)
-		// State.getState().render(g);
-		Entity.getEntities().forEach(e -> e.render(g));
-
-		try {
-			background = ImageIO.read(new File("assets\\space.jfif"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		g.drawImage(background, 0, 0, GUI.getWidth(), GUI.getHeight(), null);
-
-		g.setColor(Color.white);
-		player.render(g);
-
-		// End Drawing
-		bs.show();
-		g.dispose();
-
-	}
-
-	public void initBackground() {
-
-		canvas = gui.getCanvas();
-		canvas.setVisible(true);
-		canvas.setBounds(0, 0, GUI.getWidth(), GUI.getHeight());
-		bs = canvas.getBufferStrategy();
-
-		if (bs == null) {
-			canvas.createBufferStrategy(3);
-			bs = canvas.getBufferStrategy();
-		}
-
-		g = bs.getDrawGraphics();
-		g.clearRect(0, 0, GUI.getWidth(), GUI.getHeight());
-
-		try {
-			background = ImageIO.read(new File("assets\\space.jfif"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		g.drawImage(background, 0, 0, GUI.getWidth(), GUI.getHeight(), null);
-		bs.show();
-
 	}
 
 	public synchronized void start() {

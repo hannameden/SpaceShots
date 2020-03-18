@@ -47,4 +47,7 @@ public class Mediator {
 	public void startHighscore() {
 		highscore = new Highscore(this, gui);
 	}
+	public static void gameOver() {
+		System.out.println("You lost");
+	}
 }
