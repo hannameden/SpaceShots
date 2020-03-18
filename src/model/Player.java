@@ -15,9 +15,12 @@ import controller.Mediator;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 import factory.BulletFactory;
 import factory.EntityFactory;
+import factory.ExplosionFactory;
 import graphics.Assets;
 import graphics.ImageLoader;
 import view.GUI;
@@ -27,19 +30,22 @@ public class Player extends Entity {
 	private BufferedImage image = null, image3;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
+
 	private int lives = 3;
 	static int points = 0;
 	private ArrayList<BufferedImage> scoreList = null;
 	private Score score;
 
+	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
+
 	public Player() {
 		score = new Score();
-		radius = 20;
-		diameter = radius * 2;
-		entityFront = new Point();
-		spawnAtLocation(x = GUI.getWidth() / 2 - diameter, y = GUI.getHeight() / 2 - diameter);
 		image = Assets.getInstance().getPlayerImage();
-
+		width = image.getWidth() / 2;
+		height = image.getHeight() / 2;
+		entityFront = new Point();
+		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
+		bounds = new EntityBounds(x + width / 2, y + height / 2, width / 2, height / 2);
 	}
 
 	public static void addPoint() {
@@ -63,9 +69,7 @@ public class Player extends Entity {
 
 	public void shoot() {
 
-		// Use args parameter to shot different types of bullets
-		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection((int) shootDirection);
-
+		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection(shootDirection);
 	}
 
 	@Override
@@ -81,11 +85,8 @@ public class Player extends Entity {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
-		g2d.fillOval(x, y, diameter, diameter);
-		g2d.fillRect(entityFront.x, entityFront.y, 12, 12);
 
-		g2d.drawImage(image, x, y, diameter, diameter, null);
-
+	
 		scoreList = null;
 		scoreList = score.getScore(points);
 
@@ -94,33 +95,27 @@ public class Player extends Entity {
 		if (scoreList.size() > 1) 
 			g2d.drawImage(scoreList.get(1), GUI.getWidth() - 60, 2, 20, 30, null);
 
-		/*
-		 * int x = 40;
-		 * 
-		 * 
-		 * 
-		 * for (int i = 0; i < scoreList.size(); i++) {
-		 * System.out.println(scoreList.size()); g2d.drawImage(scoreList.get(i),
-		 * GUI.getWidth() - x, 2, 20, 30, null); x = x + 20;
-		 * 
-		 * }
-		 * 
-		 * // while(scoreList != null ) { // // g2d.drawImage(scoreList.get(index),
-		 * GUI.getWidth() - x ,2, 20, 30, null); // } // // int x = 40; // for
-		 * (BufferedImage b : scoreList ){ // System.out.println(scoreList.size()); //
-		 * // g2d.drawImage(b, GUI.getWidth() - x ,2, 20, 30, null); // x += 50; //
-		 * //g2d.drawImage(b, 25, 2, 20, 30, null); // } //
-		 * 
-		 * /* double rotationRequired = Math
-		 * .toRadians(-Math.toDegrees(Math.atan2(entityFront.x - x, entityFront.y - y))
-		 * + 180); double locationX = image.getWidth() / 2; double locationY =
-		 * image.getHeight() / 2; AffineTransform tx =
-		 * AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-		 * AffineTransformOp op = new AffineTransformOp(tx,
-		 * AffineTransformOp.TYPE_BILINEAR);
-		 * 
-		 * g2d.drawImage(op.filter(image, null), x, y, diameter, diameter, null);
-		 */
+
+		double rotationRequired = Math.toRadians(shootDirection);
+		double locationX = image.getWidth() / 2;
+		double locationY = image.getHeight() / 2;
+		double diff = Math.abs(image.getWidth() - image.getHeight());
+		double unitX = Math.abs(Math.cos(rotationRequired));
+		double unitY = Math.abs(Math.sin(rotationRequired));
+		double correctUx = unitX;
+		double correctUy = unitY;
+		if (image.getWidth() < image.getHeight()) {
+			correctUx = unitY;
+			correctUy = unitX;
+		}
+		int posAffineTransformOpX = x - (int) (correctUx * diff);
+		int posAffineTransformOpY = y - (int) (correctUy * diff);
+		AffineTransform at = new AffineTransform();
+		at.translate(correctUx * diff, correctUy * diff);
+		at.rotate(rotationRequired, locationX, locationY);
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		g2d.drawImage(op.filter(image, null), posAffineTransformOpX, posAffineTransformOpY, null);
+		g2d.dispose();
 
 	}
 
@@ -131,15 +126,15 @@ public class Player extends Entity {
 
 	private void checkEdgeCollisionX() {
 		if (x > GUI.getWidth())
-			x = -diameter;
-		else if (x + diameter < 0)
+			x = -width;
+		else if (x + width < 0)
 			x = GUI.getWidth();
 	}
 
 	private void checkEdgeCollisionY() {
 		if (y > GUI.getHeight())
-			y = -diameter;
-		else if (y + diameter < 0)
+			y = -height;
+		else if (y + height < 0)
 			y = GUI.getHeight();
 	}
 
@@ -154,23 +149,23 @@ public class Player extends Entity {
 	public void setShootingDirection(MouseEvent e) {
 		shootDirection = getAngle(e);
 		if (x > e.getX())
-			entityFront.x = x - radius / 2 + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x - width / 2 + width + (int) (width * Math.sin(Math.toRadians(shootDirection)));
 		else
-			entityFront.x = x + radius + (int) (radius * Math.sin(Math.toRadians(shootDirection)));
+			entityFront.x = x + width + (int) (width * Math.sin(Math.toRadians(shootDirection)));
 
 		if (y > e.getY())
-			entityFront.y = y - radius / 2 + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y - height / 2 + height + (int) -(height * Math.cos(Math.toRadians(shootDirection)));
 		else
-			entityFront.y = y + radius + (int) -(radius * Math.cos(Math.toRadians(shootDirection)));
+			entityFront.y = y + height + (int) -(height * Math.cos(Math.toRadians(shootDirection)));
 	}
 
 	public double getAngle(MouseEvent e) {
-		return -Math.toDegrees(Math.atan2(e.getPoint().x - x, e.getPoint().y - y)) + 180;
+		return -Math.toDegrees(Math.atan2(e.getPoint().x - bounds.getCenter().x, e.getPoint().y - bounds.getCenter().y))
+				+ 180;
 	}
 
 	@Override
 	public void checkEntityCollisions() {
-		// TODO Check asteroid collisions
 
 	}
 
@@ -196,7 +191,13 @@ public class Player extends Entity {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		explosionFactory.create(x, y, new String[] { "RedExplosion" });
+		Entity.removeEntity(this);
+		gameOver();
 
+	}
+
+	private void gameOver() {
+		System.out.println("GameOver");
 	}
 }

@@ -12,14 +12,15 @@ public abstract class Entity {
 
 	protected int x;
 	protected int y;
-	protected int radius;
-	protected int diameter = radius * 2;
 	protected double maxSpeed = 3;
 	protected double speed = 0;
 	protected double movementDirection = 0f;
 	protected Point entityFront;
 	protected BufferedImage image;
 	public static List<Entity> entities = new CopyOnWriteArrayList<Entity>();
+
+	protected int width, height;
+	protected EntityBounds bounds;
 
 	public Entity() {
 		entities.add(this);
@@ -43,6 +44,8 @@ public abstract class Entity {
 	public void updateCoordinates() {
 		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
 		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+		if (bounds != null)
+			bounds.setLocation(x, y);
 	}
 
 	public static void removeEntity(Entity e) {
@@ -54,9 +57,7 @@ public abstract class Entity {
 	}
 
 	protected boolean intersects(Entity e) {
-		double dx = this.x - e.x;
-		double dy = this.y - e.y;
-		return radius > e.radius ? Math.sqrt(dx * dx + dy * dy) < radius : Math.sqrt(dx * dx + dy * dy) < e.radius;
+		return (bounds != null && e.bounds != null) ? bounds.intersects(e.bounds) : false;
 	}
 
 	public void setMovementDirection(double movementDirection) {
@@ -81,20 +82,20 @@ public abstract class Entity {
 		// Spawn at left or right of screen, vary the y-value.
 		if (random <= 10) {
 			if (random <= 5) {
-				x = 0 - diameter;
+				x = 0 - width / 2;
 			} else {
-				x = GUI.getWidth() + diameter;
+				x = GUI.getWidth() + width / 2;
 			}
-			y = randomWithRange(0 - diameter, GUI.getHeight() + diameter);
+			y = randomWithRange(0 - height, GUI.getHeight() + height);
 		}
 		// Spawn above or below the screen, vary the x-value.
 		else {
 			if (random <= 15) {
-				y = 0 - diameter;
+				y = 0 - height / 2;
 			} else {
-				y = GUI.getHeight() + diameter;
+				y = GUI.getHeight() - height / 2;
 			}
-			x = randomWithRange(0 - diameter, GUI.getWidth() + diameter);
+			x = randomWithRange(0 - width, GUI.getWidth() + width);
 		}
 
 	}

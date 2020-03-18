@@ -23,19 +23,19 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	}
 
 	private void init() {
-		radius = 25;
-		diameter = radius * 2;
-		speed = 3;
+		width = 50;
+		height = 50;
+		speed = 2;
 		entityFront = new Point();
 		image = Assets.getInstance().getMeteorSmallImage();
+		bounds = new EntityBounds(x, y, width, height);
 	}
 
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.WHITE);
-		// g2d.fillOval(x, y, diameter, diameter);
-		g2d.drawImage(image, x, y, diameter, diameter, null);
+		g2d.drawImage(image, x, y, width, height, null);
 	}
 
 	@Override
@@ -46,9 +46,11 @@ public class AsteroidMedium extends Entity implements Asteroid {
 
 	@Override
 	public void checkEntityCollisions() {
-		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(e -> {
-			if (this.intersects(e)) {
-				//System.out.println("Asteroid collided with Player :)");
+
+		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
+			if (this.intersects(p)) {
+				p.destroy();
+
 			}
 		});
 	}
@@ -56,23 +58,26 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	private void checkEdgeCollisionX() {
 		if (x > GUI.getWidth())
 			Entity.removeEntity(this);
-		else if (x + diameter < 0)
+		else if (x + width < 0)
 			Entity.removeEntity(this);
 	}
 
 	private void checkEdgeCollisionY() {
 		if (y > GUI.getHeight())
 			Entity.removeEntity(this);
-		else if (y + diameter < 0)
+		else if (y + height < 0)
 			Entity.removeEntity(this);
 
 	}
 
 	@Override
 	public void destroy() {
-		new AsteroidSmall(x, y);
-		new AsteroidSmall(x, y);
+
 		Player.addPoint();
+
+		new AsteroidSmall(bounds.getCenter().x, bounds.getCenter().y);
+		new AsteroidSmall(bounds.getCenter().x, bounds.getCenter().y);
+
 		Entity.removeEntity(this);
 	}
 
