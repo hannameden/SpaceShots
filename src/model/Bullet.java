@@ -5,10 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 
+import factory.EntityFactory;
+import factory.ExplosionFactory;
 import graphics.Assets;
 import view.GUI;
 
 public class Bullet extends Entity {
+
+	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	public Bullet(int x, int y) {
 		this.x = x;
@@ -58,8 +62,8 @@ public class Bullet extends Entity {
 			if (this.intersects(e)) {
 				Asteroid asteroid = (Asteroid) e;
 				asteroid.shatter();
-				new Explosion(Assets.getInstance().getLaserGreenExplosionImage(), e.bounds.getCenter().x - e.width / 2,
-						e.bounds.getCenter().y - e.height / 2);
+				explosionFactory.create(e.bounds.getCenter().x - e.width / 2, e.bounds.getCenter().y - e.height / 2,
+						null);
 				Entity.removeEntity(this);
 			}
 		});

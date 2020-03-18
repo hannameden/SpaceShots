@@ -10,6 +10,7 @@ import java.awt.image.AffineTransformOp;
 
 import factory.BulletFactory;
 import factory.EntityFactory;
+import factory.ExplosionFactory;
 import graphics.Assets;
 import view.GUI;
 
@@ -17,6 +18,7 @@ public class Player extends Entity {
 
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
+	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	public Player() {
 		image = Assets.getInstance().getPlayerImage();
@@ -118,8 +120,7 @@ public class Player extends Entity {
 
 	@Override
 	public void destroy() {
-		new Explosion(Assets.getInstance().getLaserRedExplosionImage(), bounds.getCenter().x - width / 2,
-				bounds.getCenter().y - height / 2);
+		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 		Entity.removeEntity(this);
 		gameOver();
 
