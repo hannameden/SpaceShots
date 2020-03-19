@@ -2,39 +2,29 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import controller.Mediator;
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import controller.Mediator;
 import factory.BulletFactory;
 import factory.EntityFactory;
 import factory.ExplosionFactory;
 import graphics.Assets;
-import graphics.ImageLoader;
 import view.GUI;
 
 public class Player extends Entity {
 
-	private BufferedImage image = null, image3;
+	private BufferedImage image = null;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
 
 	private int lives = 3;
-	static int points = 0;
-	private ArrayList<BufferedImage> scoreList = null;
-	private Score score;
+	private static Score score;
 
 	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
@@ -49,7 +39,7 @@ public class Player extends Entity {
 	}
 
 	public static void addPoint() {
-		points++;
+		score.addPoint();
 	}
 
 	public void accelerate() {
@@ -68,33 +58,23 @@ public class Player extends Entity {
 	}
 
 	public void shoot() {
-
 		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection(shootDirection);
 	}
 
 	@Override
 	public void render(Graphics g) {
 
-		/*
-		 * try { image = ImageIO.read(new File("assets\\rocket.png")); } catch
-		 * (IOException e) { System.out.println("oupsie"); //e.printStackTrace(); }
-		 * 
-		 * //g.setColor(Color.white); g.drawImage(image, x, y, 20, 20 ,null);
-		 * 
-		 */
-
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
+		CopyOnWriteArrayList<BufferedImage> scoreList = new CopyOnWriteArrayList<BufferedImage>();
+		scoreList = score.getScore();
 
-	
-		scoreList = null;
-		scoreList = score.getScore(points);
+		int offsetScore = 2;
 
-		g2d.drawImage(scoreList.get(0), GUI.getWidth() - 40, 2, 20, 30, null);
-
-		if (scoreList.size() > 1) 
-			g2d.drawImage(scoreList.get(1), GUI.getWidth() - 60, 2, 20, 30, null);
-
+		for (BufferedImage digit : scoreList) {
+			g2d.drawImage(digit, offsetScore, 2, 20, 30, null);
+			offsetScore += 20;
+		}
 
 		double rotationRequired = Math.toRadians(shootDirection);
 		double locationX = image.getWidth() / 2;
@@ -182,8 +162,6 @@ public class Player extends Entity {
 	public void loseLife() {
 		if (lives > 0)
 			lives--;
-		if (lives == 0)
-			Mediator.gameOver();
 
 		System.out.println("losing life!!!!!!!!!!");
 
@@ -191,9 +169,10 @@ public class Player extends Entity {
 
 	@Override
 	public void destroy() {
+
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 		Entity.removeEntity(this);
-		gameOver();
+		Mediator.gameOver();
 
 	}
 

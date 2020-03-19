@@ -145,8 +145,8 @@ public class Game implements Runnable {
 	}
 
 	public void stopGame() {
-		if (running)
-			running = false;
-		thread.stop();
+		
+		//stoppa thread
+		
 	}
 }

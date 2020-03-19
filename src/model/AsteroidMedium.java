@@ -50,7 +50,6 @@ public class AsteroidMedium extends Entity implements Asteroid {
 		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
 			if (this.intersects(p)) {
 				p.destroy();
-
 			}
 		});
 	}
@@ -67,7 +66,6 @@ public class AsteroidMedium extends Entity implements Asteroid {
 			Entity.removeEntity(this);
 		else if (y + height < 0)
 			Entity.removeEntity(this);
-
 	}
 
 	@Override
@@ -85,5 +83,4 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	public void shatter() {
 		destroy();
 	}
-
 }

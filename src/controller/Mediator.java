@@ -1,6 +1,7 @@
 package controller;
 
 import factory.AsteroidGenerator;
+import sun.tools.tree.ThisExpression;
 import view.GUI;
 import view.Game;
 import view.Highscore;
@@ -9,16 +10,14 @@ import view.Menu;
 public class Mediator {
 
 	private GUI gui;
-	private Game game;
+	private static Game game;
 	private Menu menu;
 	private Highscore highscore;
 
 	public Mediator() {
 
 		 init();
-		
-		// startGame();
-		// new GUI();
+		 //gameover fr player destroy
 	}
 
 	public void init() {
@@ -48,6 +47,9 @@ public class Mediator {
 		highscore = new Highscore(this, gui);
 	}
 	public static void gameOver() {
-		System.out.println("You lost");
+		game.stopGame();
+		
+		
+		
 	}
 }
