@@ -6,9 +6,14 @@ import java.awt.Rectangle;
 public class EntityBounds {
 
 	private Rectangle bounds;
+	public int width, height, x, y;
 
 	public EntityBounds(int x, int y, int width, int height) {
 		bounds = new Rectangle(x, y, width, height);
+		this.width = width;
+		this.height = height;
+		this.x = bounds.x;
+		this.y = bounds.y;
 	}
 
 	public void setLocation(int x, int y) {
@@ -25,7 +30,7 @@ public class EntityBounds {
 		return bounds.intersects(entityBounds.getBounds());
 	}
 
-	private Rectangle getBounds() {
+	public Rectangle getBounds() {
 		return bounds;
 	}
 

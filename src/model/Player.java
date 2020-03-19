@@ -2,27 +2,19 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
-import controller.Mediator;
-
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import controller.Mediator;
 import factory.BulletFactory;
 import factory.EntityFactory;
 import factory.ExplosionFactory;
 import graphics.Assets;
-import graphics.ImageLoader;
 import view.GUI;
 
 public class Player extends Entity {
@@ -30,13 +22,12 @@ public class Player extends Entity {
 	private BufferedImage image = null, image3;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
+	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	private int lives = 3;
 	static int points = 0;
 	private ArrayList<BufferedImage> scoreList = null;
 	private Score score;
-
-	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	public Player() {
 		score = new Score();
@@ -45,7 +36,7 @@ public class Player extends Entity {
 		height = image.getHeight() / 2;
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
-		bounds = new EntityBounds(x + width / 2, y + height / 2, width / 2, height / 2);
+		bounds = new EntityBounds(x + width, y + height, width, height);
 	}
 
 	public static void addPoint() {
@@ -73,28 +64,26 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void updateCoordinates() {
+		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
+		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+		if (bounds != null)
+			bounds.setLocation(x + width / 2, y + height / 2);
+	}
 
-		/*
-		 * try { image = ImageIO.read(new File("assets\\rocket.png")); } catch
-		 * (IOException e) { System.out.println("oupsie"); //e.printStackTrace(); }
-		 * 
-		 * //g.setColor(Color.white); g.drawImage(image, x, y, 20, 20 ,null);
-		 * 
-		 */
+	@Override
+	public void render(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
 
-	
 		scoreList = null;
 		scoreList = score.getScore(points);
 
 		g2d.drawImage(scoreList.get(0), GUI.getWidth() - 40, 2, 20, 30, null);
 
-		if (scoreList.size() > 1) 
+		if (scoreList.size() > 1)
 			g2d.drawImage(scoreList.get(1), GUI.getWidth() - 60, 2, 20, 30, null);
-
 
 		double rotationRequired = Math.toRadians(shootDirection);
 		double locationX = image.getWidth() / 2;
@@ -166,13 +155,11 @@ public class Player extends Entity {
 
 	@Override
 	public void checkEntityCollisions() {
-
-	}
-
-	@Override
-	public boolean intersects(Entity e) {
-		return false;
-
+		Entity.getEntities().stream().filter(Asteroid.class::isInstance).forEach(e -> {
+			if (this.intersects(e)) {
+				destroy();
+			}
+		});
 	}
 
 	public void pauseGame() {
@@ -192,9 +179,8 @@ public class Player extends Entity {
 	@Override
 	public void destroy() {
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
-		Entity.removeEntity(this);
+		// Entity.removeEntity(this);
 		gameOver();
-
 	}
 
 	private void gameOver() {

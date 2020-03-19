@@ -47,12 +47,6 @@ public class AsteroidMedium extends Entity implements Asteroid {
 	@Override
 	public void checkEntityCollisions() {
 
-		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
-			if (this.intersects(p)) {
-				p.destroy();
-
-			}
-		});
 	}
 
 	private void checkEdgeCollisionX() {
