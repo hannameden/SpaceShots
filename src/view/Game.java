@@ -138,7 +138,7 @@ public class Game implements Runnable {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
-		AsteroidGenerator.getInstance().start();
+		AsteroidGenerator.start();
 	}
 
 	public synchronized void stop() {
