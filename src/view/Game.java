@@ -168,9 +168,9 @@ public class Game implements Runnable {
 		dialog.setLayout(new FlowLayout());
 
 		dialog.add(new JLabel("You lost"));
-		// dialog.setLocationRelativeTo(frame);
 		dialog.setTitle("Game over");
 		dialog.setBounds(500, 400, 300, 200);
+		dialog.setLocationRelativeTo(null);
 
 		JButton startover = new JButton("Restart game");
 		startover.addActionListener(new ActionListener() {
