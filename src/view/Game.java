@@ -165,7 +165,6 @@ public class Game implements Runnable {
 		Entity.getEntities().clear();
 		listenerHandler.clearAll();
 		init();
-
 	}
 
 	public boolean isPaused() {

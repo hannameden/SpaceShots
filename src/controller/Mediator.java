@@ -8,7 +8,6 @@ public class Mediator {
 
 	private GUI gui;
 	private Game game;
-	private Menu menu;
 
 	public Mediator() {
 
@@ -45,7 +44,10 @@ public class Mediator {
 	}
 
 	public void gameOver() {
+		
+		//clear listener handler
 	//	game.stop();
+		
 		gui.gameoverPopup();
 
 	}
