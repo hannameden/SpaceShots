@@ -30,31 +30,21 @@ public class Mediator {
 	}
 
 	public void startGame() {
-		game = new Game(this, gui);
-		game.start();
-	}
-
-	public void stop() {
-		// game.stop();
-		if (game != null)
-			game.stopGame();
-
+		if (game == null) {
+			game = new Game(this, gui);
+			game.start();
+		} else {
+			game.resetGame();
+		}
 	}
 
 	public void startHighscore() {
 		highscore = new Highscore(this, gui);
 	}
 
-	public void gameOver() {
-		game.stop();
-
-		gui.gameoverPopup();
-	}
-
 	public void goToMenu() {
 		gui.getCanvas().setVisible(false);
-		gui.initMenu();
-
+		gui.getContainer().setVisible(true);
 	}
 
 }

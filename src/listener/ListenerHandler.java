@@ -57,4 +57,15 @@ public class ListenerHandler {
 		canvas.removeMouseMotionListener(playerMourseInputController);
 	}
 
+	public void clearAll() {
+		frame.removeKeyListener(playerKeyboardPausedInputController);
+		canvas.removeKeyListener(playerKeyboardPausedInputController);
+		frame.removeKeyListener(playerKeyboardInputController);
+		canvas.removeKeyListener(playerKeyboardInputController);
+		frame.removeMouseListener(playerMourseInputController);
+		canvas.removeMouseListener(playerMourseInputController);
+		frame.removeMouseMotionListener(playerMourseInputController);
+		canvas.removeMouseMotionListener(playerMourseInputController);
+	}
+
 }

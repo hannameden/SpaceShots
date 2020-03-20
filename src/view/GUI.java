@@ -80,6 +80,7 @@ public class GUI {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				initCanvas();
 				mediator.startGame();
 			}
 		});
@@ -102,7 +103,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				mediator.stop();
+				System.exit(0);
 			}
 		});
 		container.add(btnExit);
@@ -111,20 +112,23 @@ public class GUI {
 		frame.setVisible(true);
 	}
 
-	public void initCanvas() {
-		canvas = new Canvas();
-		canvas.setPreferredSize(dimension);
-		canvas.setMinimumSize(dimension);
-		canvas.setMaximumSize(dimension);
-		canvas.setFocusable(true);
-		canvas.setBackground(Color.BLACK);
-		canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+	private void initCanvas() {
+		if (canvas == null) {
+			canvas = new Canvas();
+			canvas.setPreferredSize(dimension);
+			canvas.setMinimumSize(dimension);
+			canvas.setMaximumSize(dimension);
+			canvas.setFocusable(true);
+			canvas.setBackground(Color.BLACK);
+			canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+			frame.add(canvas);
+		}
 		canvas.setVisible(true);
 		container.setVisible(false);
-		frame.add(canvas);
 	}
+
 	public void gameoverPopup() {
-		
+
 	}
 
 	public void pauseGame() {
@@ -145,6 +149,10 @@ public class GUI {
 
 	public Canvas getCanvas() {
 		return this.canvas;
+	}
+
+	public JPanel getContainer() {
+		return container;
 	}
 
 	public GUI getGUI() {

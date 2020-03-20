@@ -48,7 +48,6 @@ public class Game implements Runnable {
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
-		gui.initCanvas();
 		canvas = gui.getCanvas();
 		frame = gui.getFrame();
 		init();
@@ -161,10 +160,6 @@ public class Game implements Runnable {
 		listenerHandler.resume();
 	}
 
-	public void stopGame() {
-		// stoppa thread
-	}
-
 	public void gameOverPopup() {
 
 		// mediator.stopGame();
@@ -182,10 +177,8 @@ public class Game implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				listenerHandler.pause();
-				Entity.getEntities().clear();
-				init();
 				dialog.dispose();
+				resetGame();
 			}
 		});
 
@@ -194,13 +187,19 @@ public class Game implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mediator.goToMenu();
 				dialog.dispose();
+				mediator.goToMenu();
 			}
 		});
 		dialog.add(startover);
 		dialog.add(menu);
 		dialog.setVisible(true);
+	}
+
+	public void resetGame() {
+		Entity.getEntities().clear();
+		listenerHandler.clearAll();
+		init();
 	}
 
 	public boolean isPaused() {
