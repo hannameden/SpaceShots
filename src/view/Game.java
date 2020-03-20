@@ -1,20 +1,14 @@
 package view;
 
 import java.awt.Canvas;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import controller.Mediator;
 import factory.AsteroidGenerator;
@@ -161,40 +155,7 @@ public class Game implements Runnable {
 	}
 
 	public void gameOverPopup() {
-
-		// mediator.stopGame();
-
-		JDialog dialog = new JDialog(frame);
-		dialog.setLayout(new FlowLayout());
-
-		dialog.add(new JLabel("You lost!"));
-		dialog.add(new JLabel("Points: " + Player.getScore()));
-		dialog.setTitle("Game over");
-		dialog.setBounds(500, 400, 300, 200);
-		dialog.setLocationRelativeTo(null);
-
-		JButton startover = new JButton("Restart game");
-		startover.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dialog.dispose();
-				resetGame();
-			}
-		});
-
-		JButton menu = new JButton("Go to menu");
-		menu.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dialog.dispose();
-				mediator.goToMenu();
-			}
-		});
-		dialog.add(startover);
-		dialog.add(menu);
-		dialog.setVisible(true);
+		gui.gameoverPopup();
 	}
 
 	public void resetGame() {

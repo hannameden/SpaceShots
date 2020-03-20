@@ -38,6 +38,10 @@ public class Mediator {
 		}
 	}
 
+	public void resetGame() {
+		game.resetGame();
+	}
+
 	public void startHighscore() {
 		highscore = new Highscore(this, gui);
 	}

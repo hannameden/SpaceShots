@@ -3,6 +3,7 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.Mediator;
+import model.Player;
 
 public class GUI {
 
@@ -128,6 +131,37 @@ public class GUI {
 	}
 
 	public void gameoverPopup() {
+		JDialog dialog = new JDialog(frame);
+		dialog.setLayout(new FlowLayout());
+
+		dialog.add(new JLabel("You lost!"));
+		dialog.add(new JLabel("Points: " + Player.getScore()));
+		dialog.setTitle("Game over");
+		dialog.setBounds(500, 400, 300, 200);
+		dialog.setLocationRelativeTo(null);
+
+		JButton startover = new JButton("Restart game");
+		startover.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+				mediator.resetGame();
+			}
+		});
+
+		JButton menu = new JButton("Go to menu");
+		menu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+				mediator.goToMenu();
+			}
+		});
+		dialog.add(startover);
+		dialog.add(menu);
+		dialog.setVisible(true);
 
 	}
 
