@@ -1,15 +1,15 @@
-package controller;
+package listener;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import model.Player;
 
-public class PlayerKeyboardPausedInputController implements KeyListener {
+public class PlayerKeyboardInputListener implements KeyListener {
 
 	private Player player;
 
-	public PlayerKeyboardPausedInputController(Player player) {
+	public PlayerKeyboardInputListener(Player player) {
 		this.player = player;
 	}
 
@@ -20,6 +20,9 @@ public class PlayerKeyboardPausedInputController implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+			player.shoot();
+
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 			player.togglePause();
 	}

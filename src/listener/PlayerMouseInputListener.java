@@ -1,4 +1,4 @@
-package controller;
+package listener;
 
 import java.awt.event.MouseEvent;
 
@@ -7,11 +7,11 @@ import javax.swing.event.MouseInputListener;
 
 import model.Player;
 
-public class PlayerMouseInputController implements MouseInputListener {
+public class PlayerMouseInputListener implements MouseInputListener {
 
 	private Player player;
 
-	public PlayerMouseInputController(Player player) {
+	public PlayerMouseInputListener(Player player) {
 		this.player = player;
 	}
 

@@ -1,4 +1,4 @@
-package controller;
+package listener;
 
 import java.awt.Canvas;
 
@@ -13,9 +13,9 @@ public class ListenerHandler {
 	private JFrame frame;
 	private Canvas canvas;
 
-	private PlayerKeyboardInputController playerKeyboardInputController;
-	private PlayerKeyboardPausedInputController playerKeyboardPausedInputController;
-	private PlayerMouseInputController playerMourseInputController;
+	private PlayerKeyboardInputListener playerKeyboardInputController;
+	private PlayerKeyboardPausedInputListener playerKeyboardPausedInputController;
+	private PlayerMouseInputListener playerMourseInputController;
 
 	public ListenerHandler(Game game, JFrame frame, Canvas canvas, Player player) {
 		this.game = game;
@@ -25,9 +25,9 @@ public class ListenerHandler {
 	}
 
 	private void initInputListeners(Player player) {
-		playerKeyboardInputController = new PlayerKeyboardInputController(player);
-		playerKeyboardPausedInputController = new PlayerKeyboardPausedInputController(player);
-		playerMourseInputController = new PlayerMouseInputController(player);
+		playerKeyboardInputController = new PlayerKeyboardInputListener(player);
+		playerKeyboardPausedInputController = new PlayerKeyboardPausedInputListener(player);
+		playerMourseInputController = new PlayerMouseInputListener(player);
 		resume();
 	}
 

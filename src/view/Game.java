@@ -17,9 +17,9 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import controller.ListenerHandler;
 import controller.Mediator;
 import factory.AsteroidGenerator;
+import listener.ListenerHandler;
 import model.Entity;
 import model.Player;
 
