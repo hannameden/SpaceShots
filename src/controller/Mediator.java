@@ -8,7 +8,7 @@ import view.Menu;
 public class Mediator {
 
 	private GUI gui;
-	private static Game game;
+	private Game game;
 	private Menu menu;
 	private Highscore highscore;
 
@@ -30,6 +30,7 @@ public class Mediator {
 	}
 
 	public void startGame() {
+		
 		game = new Game(this, gui);
 		game.start();
 	}
@@ -45,7 +46,18 @@ public class Mediator {
 		highscore = new Highscore(this, gui);
 	}
 
-	public static void gameOver() {
-		game.stopGame();
+
+	public void gameOver() {
+		game.stop();
+
+		gui.gameoverPopup();
 	}
+
+	public void goToMenu() {
+		
+		gui.getCanvas().setVisible(false);
+		gui.initMenu();
+
+	}
+
 }
