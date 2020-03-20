@@ -24,19 +24,12 @@ public class Mediator {
 	}
 
 	public void startGame() {
-
 		if (game == null) {
-
 			game = new Game(this);
 			game.start();
-
 		} else {
 			game.resetGame();
 		}
-	}
-
-	public void resetGame() {
-		game.resetGame();
 	}
 
 	public void gameOverPopup() {

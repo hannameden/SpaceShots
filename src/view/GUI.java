@@ -155,7 +155,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dialog.dispose();
-				mediator.resetGame();
+				mediator.startGame();
 			}
 		});
 
