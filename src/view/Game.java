@@ -10,10 +10,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import controller.ListenerHandler;
 import controller.Mediator;
-import controller.PlayerKeyboardInputController;
-import controller.PlayerKeyboardPausedInputController;
-import controller.PlayerMouseInputController;
 import factory.AsteroidGenerator;
 import model.Entity;
 import model.Player;
@@ -34,9 +32,12 @@ public class Game implements Runnable {
 	private Canvas canvas;
 	private Image background;
 
-	private PlayerKeyboardInputController playerKeyboardInputController;
-	private PlayerKeyboardPausedInputController playerKeyboardPausedInputController;
-	private PlayerMouseInputController playerMourseInputController;
+	// private PlayerKeyboardInputController playerKeyboardInputController;
+	// private PlayerKeyboardPausedInputController
+	// playerKeyboardPausedInputController;
+	// private PlayerMouseInputController playerMourseInputController;
+
+	private ListenerHandler listenerHandler;
 
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
@@ -49,7 +50,7 @@ public class Game implements Runnable {
 		frame = gui.getFrame();
 
 		player = new Player(this);
-		initInputListeners(player);
+		listenerHandler = new ListenerHandler(this, frame, canvas, player);
 
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
@@ -59,40 +60,6 @@ public class Game implements Runnable {
 
 		paused = false;
 
-	}
-
-	private void initInputListeners(Player player) {
-		playerKeyboardInputController = new PlayerKeyboardInputController(player);
-		playerKeyboardPausedInputController = new PlayerKeyboardPausedInputController(player);
-		playerMourseInputController = new PlayerMouseInputController(player);
-		addListeners();
-	}
-
-	private void addListeners() {
-		if (!paused) {
-			frame.removeKeyListener(playerKeyboardPausedInputController);
-			canvas.removeKeyListener(playerKeyboardPausedInputController);
-
-		}
-		frame.addKeyListener(playerKeyboardInputController);
-		canvas.addKeyListener(playerKeyboardInputController);
-		frame.addMouseListener(playerMourseInputController);
-		canvas.addMouseListener(playerMourseInputController);
-		frame.addMouseMotionListener(playerMourseInputController);
-		canvas.addMouseMotionListener(playerMourseInputController);
-	}
-
-	private void removeListeners() {
-		if (paused) {
-			frame.addKeyListener(playerKeyboardPausedInputController);
-			canvas.addKeyListener(playerKeyboardPausedInputController);
-		}
-		frame.removeKeyListener(playerKeyboardInputController);
-		canvas.removeKeyListener(playerKeyboardInputController);
-		frame.removeMouseListener(playerMourseInputController);
-		canvas.removeMouseListener(playerMourseInputController);
-		frame.removeMouseMotionListener(playerMourseInputController);
-		canvas.removeMouseMotionListener(playerMourseInputController);
 	}
 
 	@Override
@@ -180,19 +147,17 @@ public class Game implements Runnable {
 	public synchronized void pause() {
 		paused = true;
 		AsteroidGenerator.pause();
-		removeListeners();
+		listenerHandler.pause();
 	}
 
 	public synchronized void resume() {
 		paused = false;
 		AsteroidGenerator.resume();
-		addListeners();
+		listenerHandler.resume();
 	}
 
 	public void stopGame() {
-
 		// stoppa thread
-
 	}
 
 	public boolean isPaused() {
