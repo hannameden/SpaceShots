@@ -21,7 +21,6 @@ public class Menu {
 	private Canvas canvas;
 	private JFrame frame;
 	private JPanel panel;
-	private Image background;
 	private Graphics g;
 	private JButton startBtn, highscoreBtn, exitBtn;
 
@@ -29,28 +28,31 @@ public class Menu {
 		super();
 		this.mediator = mediator;
 		this.gui = gui;
-		// initButtons();
 	}
 
 	public void initButtons() {
 
 		frame = gui.getFrame();
 		canvas = gui.getCanvas();
-		panel = new JPanel();
+		canvas.setVisible(false);
+		frame.setLayout(null);
+		
+	//	panel = new JPanel();
 
-		JButton btnStart = new JButton("Start");
-		btnStart.setBounds(322, 300, 89, 23);
-		panel.add(btnStart);
+		//JButton startBtn = new JButton("Start");
+	/*	
+		panel.add(startBtn);
 
 		JButton btnHighscore = new JButton("Highscore");
-		btnHighscore.setBounds(322, 350, 89, 23);
+		
 		panel.add(btnHighscore);
 
 		JButton btnExit = new JButton("Exit");
-		btnExit.setBounds(322, 400, 89, 23);
+		
 		panel.add(btnExit);
-
+*/
 		startBtn = new JButton("Start game");
+		startBtn.setBounds(322, 300, 89, 23);
 		startBtn.setOpaque(false);
 		startBtn.setContentAreaFilled(false);
 		startBtn.setBorderPainted(true);
@@ -64,6 +66,7 @@ public class Menu {
 		});
 
 		highscoreBtn = new JButton("High Score");
+		highscoreBtn.setBounds(322, 350, 89, 23);
 		highscoreBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -74,6 +77,7 @@ public class Menu {
 		});
 
 		exitBtn = new JButton("Exit");
+		exitBtn.setBounds(322, 400, 89, 23);
 		exitBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -83,7 +87,7 @@ public class Menu {
 			}
 		});
 
-		canvas.setVisible(false);
+		
 		frame.add(startBtn);
 		frame.add(highscoreBtn);
 		frame.add(exitBtn);

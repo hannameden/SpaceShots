@@ -10,12 +10,12 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import controller.Mediator;
 import factory.BulletFactory;
 import factory.EntityFactory;
 import factory.ExplosionFactory;
 import graphics.Assets;
 import view.GUI;
+import view.Game;
 
 public class Player extends Entity {
 
@@ -26,8 +26,10 @@ public class Player extends Entity {
 
 	private int lives = 3;
 	private static Score score;
+	private Game game;
 
-	public Player() {
+	public Player(Game game) {
+		this.game = game;
 		score = new Score();
 		image = Assets.getInstance().getPlayerImage();
 		width = image.getWidth() / 2;
@@ -74,7 +76,7 @@ public class Player extends Entity {
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
 		CopyOnWriteArrayList<BufferedImage> scoreList = new CopyOnWriteArrayList<BufferedImage>();
-		scoreList = score.getScore();
+		scoreList = score.getScoreList();
 
 		int offsetScore = 2;
 
@@ -178,12 +180,14 @@ public class Player extends Entity {
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 
 		Entity.removeEntity(this);
-		Mediator.gameOver();
-		// gameOver();
+		
+		gameOver();
 
 	}
 
 	private void gameOver() {
 		System.out.println("GameOver");
+		
+		game.gameOverPopup();
 	}
 }

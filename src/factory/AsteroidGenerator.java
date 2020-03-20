@@ -34,7 +34,7 @@ public class AsteroidGenerator {
 			};
 			timer.scheduleAtFixedRate(timerTask, 0, 250);
 		} else {
-			//timer.notify();
+			// timer.notify();
 		}
 
 	}
@@ -61,12 +61,10 @@ public class AsteroidGenerator {
 		} else {
 			asteroidSpawnArguments[1] = "AsteroidLarge";
 		}
-
 	}
 
 	private static int randomWithRange(int min, int max) {
 		int range = (max - min) + 1;
 		return (int) (Math.random() * range) + min;
 	}
-
 }

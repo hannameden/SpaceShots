@@ -1,17 +1,20 @@
 package view;
 
 import java.awt.Canvas;
-import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import controller.Mediator;
 import controller.PlayerKeyboardInputController;
@@ -44,7 +47,7 @@ public class Game implements Runnable {
 		canvas = gui.getCanvas();
 		frame = gui.getFrame();
 
-		player = new Player();
+		player = new Player(this);
 		initInputListeners(player);
 
 		try {
@@ -86,7 +89,7 @@ public class Game implements Runnable {
 
 			if (delta >= 1) {
 				update();
- 				render();
+				render();
 
 				delta--;
 			}
@@ -103,7 +106,7 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
-		
+
 		bs = canvas.getBufferStrategy();
 		if (bs == null) {
 			canvas.createBufferStrategy(3);
@@ -119,7 +122,7 @@ public class Game implements Runnable {
 
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
-		
+
 		// End Drawing
 		bs.show();
 		g.dispose();
@@ -145,8 +148,44 @@ public class Game implements Runnable {
 	}
 
 	public void stopGame() {
+
+		// stoppa thread
+
+	}
+
+	public void gameOverPopup() {
+
+		mediator.stopGame();
 		
-		//stoppa thread
-		
+		JDialog dialog = new JDialog(frame);
+		dialog.setLayout(new FlowLayout());
+
+		dialog.add(new JLabel("You lost"));
+		// dialog.setLocationRelativeTo(frame);
+		dialog.setTitle("Game over");
+		dialog.setBounds(500, 400, 300, 200);
+
+		JButton startover = new JButton("Restart game");
+		startover.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.startGame();
+				dialog.dispose();
+			}
+		});
+
+		JButton menu = new JButton("Go to menu");
+		menu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.goToMenu();
+				dialog.dispose();
+			}
+		});
+		dialog.add(startover);
+		dialog.add(menu);
+		dialog.setVisible(true);
 	}
 }

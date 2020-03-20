@@ -11,7 +11,7 @@ import graphics.Assets;
 public class Score {
 
 	private ArrayList<BufferedImage> digitList;
-	private CopyOnWriteArrayList<BufferedImage> coollist;
+	private CopyOnWriteArrayList<BufferedImage> scoreList;
 	private HashMap<String, BufferedImage> hashMap;
 	private String[] listOfStringPoints;
 	private int points;
@@ -39,21 +39,24 @@ public class Score {
 		hashMap.put("9", digitList.get(9));
 	}
 
-	public CopyOnWriteArrayList<BufferedImage> getScore() {
+	public CopyOnWriteArrayList<BufferedImage> getScoreList() {
 
-		coollist = new CopyOnWriteArrayList<BufferedImage>();
+		scoreList = new CopyOnWriteArrayList<BufferedImage>();
 		pointsInString = points + "";
 
 		listOfStringPoints = pointsInString.split("");
 		for (String s : listOfStringPoints) {
-			coollist.add(hashMap.get(s));
+			scoreList.add(hashMap.get(s));
 		}
 
-		return coollist;
+		return scoreList;
 
 	}
 
 	public void addPoint() {
 		points++;
+	}
+	public int getScore() {
+		return points;
 	}
 }

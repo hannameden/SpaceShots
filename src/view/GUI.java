@@ -60,7 +60,7 @@ public class GUI {
 		frame.setVisible(true);
 	}
 
-	private void initMenu() {
+	public void initMenu() {
 
 		backgroundImage = new ImageIcon("assets\\spacemenu.jpg").getImage();
 
@@ -122,6 +122,9 @@ public class GUI {
 		canvas.setVisible(true);
 		container.setVisible(false);
 		frame.add(canvas);
+	}
+	public void gameoverPopup() {
+		
 	}
 
 	public void pauseGame() {
