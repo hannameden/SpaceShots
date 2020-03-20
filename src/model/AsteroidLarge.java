@@ -68,6 +68,7 @@ public class AsteroidLarge extends Entity implements Asteroid {
 				p.destroy();
 			}
 		});
+
 	}
 
 	@Override

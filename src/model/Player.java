@@ -22,11 +22,10 @@ public class Player extends Entity {
 	private BufferedImage image = null;
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
+	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	private int lives = 3;
 	private static Score score;
-
-	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 
 	public Player() {
 		score = new Score();
@@ -35,7 +34,7 @@ public class Player extends Entity {
 		height = image.getHeight() / 2;
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
-		bounds = new EntityBounds(x + width / 2, y + height / 2, width / 2, height / 2);
+		bounds = new EntityBounds(x + width, y + height, width, height);
 	}
 
 	public static void addPoint() {
@@ -59,6 +58,14 @@ public class Player extends Entity {
 
 	public void shoot() {
 		bulletFactory.create(entityFront.x, entityFront.y, null).setMovementDirection(shootDirection);
+	}
+
+	@Override
+	public void updateCoordinates() {
+		x += (int) (speed * Math.sin(Math.toRadians(movementDirection)));
+		y += (int) -(speed * Math.cos(Math.toRadians(movementDirection)));
+		if (bounds != null)
+			bounds.setLocation(x + width / 2, y + height / 2);
 	}
 
 	@Override
@@ -146,13 +153,11 @@ public class Player extends Entity {
 
 	@Override
 	public void checkEntityCollisions() {
-
-	}
-
-	@Override
-	public boolean intersects(Entity e) {
-		return false;
-
+		Entity.getEntities().stream().filter(Asteroid.class::isInstance).forEach(e -> {
+			if (this.intersects(e)) {
+				destroy();
+			}
+		});
 	}
 
 	public void pauseGame() {
@@ -171,8 +176,10 @@ public class Player extends Entity {
 	public void destroy() {
 
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
+
 		Entity.removeEntity(this);
 		Mediator.gameOver();
+		// gameOver();
 
 	}
 

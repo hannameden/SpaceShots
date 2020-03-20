@@ -38,7 +38,6 @@ public abstract class Entity {
 		checkEdgeCollision();
 		checkEntityCollisions();
 		updateCoordinates();
-		
 	};
 
 	public void updateCoordinates() {

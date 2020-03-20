@@ -52,6 +52,7 @@ public class AsteroidMedium extends Entity implements Asteroid {
 				p.destroy();
 			}
 		});
+
 	}
 
 	private void checkEdgeCollisionX() {

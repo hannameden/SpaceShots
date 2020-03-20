@@ -34,8 +34,7 @@ public class AsteroidSmall extends Entity implements Asteroid {
 	@Override
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
-		g2d.setColor(Color.WHITE);
-		// g2d.fillOval(x, y, diameter, diameter);
+		g2d.setColor(Color.RED);
 		g2d.drawImage(image, x, y, width, height, null);
 	}
 
@@ -63,12 +62,6 @@ public class AsteroidSmall extends Entity implements Asteroid {
 	@Override
 	public void checkEntityCollisions() {
 
-		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
-			if (this.intersects(p)) {
-				p.destroy();
-
-			}
-		});
 	}
 
 	@Override
