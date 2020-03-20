@@ -1,7 +1,6 @@
 package controller;
 
 import factory.AsteroidGenerator;
-import sun.tools.tree.ThisExpression;
 import view.GUI;
 import view.Game;
 import view.Highscore;
