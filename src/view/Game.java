@@ -167,7 +167,8 @@ public class Game implements Runnable {
 		JDialog dialog = new JDialog(frame);
 		dialog.setLayout(new FlowLayout());
 
-		dialog.add(new JLabel("You lost"));
+		dialog.add(new JLabel("You lost!"));
+		dialog.add(new JLabel("Points: " + Player.getScore()));
 		dialog.setTitle("Game over");
 		dialog.setBounds(500, 400, 300, 200);
 		dialog.setLocationRelativeTo(null);
