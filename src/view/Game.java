@@ -36,25 +36,20 @@ public class Game implements Runnable {
 	private Canvas canvas;
 	private Image background;
 
-	// private PlayerKeyboardInputController playerKeyboardInputController;
-	// private PlayerKeyboardPausedInputController
-	// playerKeyboardPausedInputController;
-	// private PlayerMouseInputController playerMourseInputController;
-
 	private ListenerHandler listenerHandler;
 
 	public Game(Mediator mediator) {
 		this.mediator = mediator;
-
-		this.gui = mediator.getGui();
-
-		canvas = gui.getCanvas();
-		frame = gui.getFrame();
 		init();
 	}
 
 	private void init() {
+
+		gui = mediator.getGui();
+		canvas = gui.getCanvas();
+		frame = gui.getFrame();
 		player = new Player(this);
+
 		listenerHandler = new ListenerHandler(this, frame, canvas, player);
 
 		try {
@@ -165,14 +160,13 @@ public class Game implements Runnable {
 	}
 
 	public void gameOverPopup() {
-		gui.gameoverPopup();
+		mediator.gameOverPopup();
 	}
 
 	public void resetGame() {
 		Entity.getEntities().clear();
 		listenerHandler.clearAll();
 		init();
-
 	}
 
 	public boolean isPaused() {
@@ -186,6 +180,10 @@ public class Game implements Runnable {
 		int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
 		g.setFont(font);
 		g.drawString(text, x, y);
+	}
+
+	public ListenerHandler getListenerHandler() {
+		return listenerHandler;
 	}
 
 }

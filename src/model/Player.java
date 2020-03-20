@@ -24,7 +24,6 @@ public class Player extends Entity {
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
 	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 	private Game game;
-	private int lives = 3;
 	private static Score score;
 
 	public Player(Game game) {
@@ -176,12 +175,6 @@ public class Player extends Entity {
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 		Entity.removeEntity(this);
 
-		gameOver();
-
-	}
-
-	private void gameOver() {
-
 		game.gameOverPopup();
 
 	}
@@ -189,5 +182,4 @@ public class Player extends Entity {
 	public static int getScore() {
 		return score.getScore();
 	}
-
 }

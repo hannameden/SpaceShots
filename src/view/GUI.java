@@ -3,11 +3,12 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -125,17 +126,26 @@ public class GUI {
 	}
 
 	public void gameoverPopup() {
-		JDialog dialog = new JDialog(frame);
-		dialog.setLayout(new FlowLayout());
 
-		dialog.add(new JLabel("You lost!"));
-		dialog.add(new JLabel("Points: " + Player.getScore()));
+		dialog = new JDialog(frame);
+		dialog.setLayout(new GridBagLayout());
 		dialog.setTitle("Game over");
-		dialog.setSize(100, 75);
+		dialog.setSize(200, 230);
 		dialog.setLocationRelativeTo(null);
 
-		JButton startover = new JButton("Restart game");
-		startover.addActionListener(new ActionListener() {
+		gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		dialog.add(new JLabel("You lost!"), gbc);
+		gbc.gridy++;
+
+		dialog.add(new JLabel("Points: " + Player.getScore()), gbc);
+		gbc.gridy++;
+
+		btnRestart = new JButton("Restart game");
+		btnRestart.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,8 +154,8 @@ public class GUI {
 			}
 		});
 
-		JButton menu = new JButton("Go to menu");
-		menu.addActionListener(new ActionListener() {
+		btnMenu = new JButton("Go to Menu");
+		btnMenu.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,15 +163,12 @@ public class GUI {
 				mediator.goToMenu();
 			}
 		});
-		dialog.add(startover);
-		dialog.add(menu);
+		dialog.add(btnRestart, gbc);
+		gbc.gridy++;
+		dialog.add(btnMenu, gbc);
 		dialog.setUndecorated(true);
 		dialog.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		dialog.setVisible(true);
-
-	}
-
-	public void pauseGame() {
 
 	}
 
