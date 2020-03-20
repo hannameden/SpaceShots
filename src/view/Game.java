@@ -45,9 +45,9 @@ public class Game implements Runnable {
 	private PlayerKeyboardPausedInputController playerKeyboardPausedInputController;
 	private PlayerMouseInputController playerMourseInputController;
 
-	public Game(Mediator mediator, GUI gui) {
+	public Game(Mediator mediator) {
 		this.mediator = mediator;
-		this.gui = gui;
+		this.gui = mediator.getGui();
 
 		// sätt en btn på game och prova ta bort canvas för att få meny
 
@@ -203,40 +203,12 @@ public class Game implements Runnable {
 
 	}
 
-	public void gameOverPopup() {
+	public void gameOverPopup(int score) {
 
+		mediator.gameOver(score);
 		//mediator.stopGame();
 		
-		JDialog dialog = new JDialog(frame);
-		dialog.setLayout(new FlowLayout());
-
-		dialog.add(new JLabel("You lost"));
-		// dialog.setLocationRelativeTo(frame);
-		dialog.setTitle("Game over");
-		dialog.setBounds(500, 400, 300, 200);
-
-		JButton startover = new JButton("Restart game");
-		startover.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mediator.startGame();
-				dialog.dispose();
-			}
-		});
-
-		JButton menu = new JButton("Go to menu");
-		menu.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mediator.goToMenu();
-				dialog.dispose();
-			}
-		});
-		dialog.add(startover);
-		dialog.add(menu);
-		dialog.setVisible(true);
+		
 	}
 
 	public boolean isPaused() {

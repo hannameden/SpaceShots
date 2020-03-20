@@ -5,12 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,12 +29,14 @@ public class GUI {
 	private JFrame frame;
 
 	private JPanel container;
+	private JDialog dialog;
 	private JLabel title;
-	private JButton btnStart, btnHighscore, btnExit;
+	private JButton btnStart, btnExit, btnRestart, btnMenu;
 
 	private Mediator mediator;
 	private Canvas canvas;
 	private Dimension dimension;
+	private GridBagConstraints gbc;
 
 	private static int width = 800, height = 600;
 
@@ -75,7 +81,7 @@ public class GUI {
 		container.add(title);
 
 		btnStart = new JButton("Start game");
-		btnStart.setBounds(322, 300, 90, 25);
+		btnStart.setBounds(322, 350, 90, 25);
 
 		btnStart.addActionListener(new ActionListener() {
 			@Override
@@ -85,16 +91,6 @@ public class GUI {
 		});
 
 		container.add(btnStart);
-
-		btnHighscore = new JButton("High Score");
-		btnHighscore.setBounds(322, 350, 90, 25);
-		btnHighscore.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mediator.startHighscore();
-			}
-		});
-		container.add(btnHighscore);
 
 		btnExit = new JButton("Exit");
 		btnExit.setBounds(322, 400, 90, 25);
@@ -123,8 +119,50 @@ public class GUI {
 		container.setVisible(false);
 		frame.add(canvas);
 	}
-	public void gameoverPopup() {
+
+	public void gameoverPopup(int score) {
+		dialog = new JDialog(frame);
+		dialog.setTitle("Game over");
+		dialog.setResizable(false);
 		
+		dialog.setBounds(500, 400, 250, 250);
+		 dialog.setLocationRelativeTo(frame);
+		dialog.setLayout(new GridBagLayout());
+
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(10, 10, 10, 10);
+
+		dialog.add(new JLabel("You lost..."), gbc);
+		gbc.gridy++;
+		dialog.add(new JLabel("Your score was: " + score), gbc);
+		gbc.gridy++;
+		
+
+		btnRestart = new JButton("Restart game");
+		btnRestart.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.startGame();
+				dialog.dispose();
+			}
+		});
+
+		btnMenu = new JButton("Go to menu");
+		btnMenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mediator.goToMenu();
+				dialog.dispose();
+			}
+		});
+		dialog.add(btnRestart, gbc);
+		gbc.gridy++;
+		dialog.add(btnMenu, gbc);
+		dialog.setVisible(true);
 	}
 
 	public void pauseGame() {

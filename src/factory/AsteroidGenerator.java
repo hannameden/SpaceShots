@@ -24,7 +24,6 @@ public class AsteroidGenerator {
 	public static void start() {
 		if (timer == null && timerTask == null) {
 			resume();
-
 		}
 	}
 

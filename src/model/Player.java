@@ -181,8 +181,7 @@ public class Player extends Entity {
 	}
 
 	private void gameOver() {
-		System.out.println("GameOver");
 		
-		game.gameOverPopup();
+		game.gameOverPopup(score.getScore());
 	}
 }
