@@ -35,7 +35,6 @@ public class ListenerHandler {
 		if (!game.isPaused()) {
 			frame.removeKeyListener(playerKeyboardPausedInputController);
 			canvas.removeKeyListener(playerKeyboardPausedInputController);
-
 		}
 		frame.addKeyListener(playerKeyboardInputController);
 		canvas.addKeyListener(playerKeyboardInputController);
