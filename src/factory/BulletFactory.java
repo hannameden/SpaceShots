@@ -19,5 +19,4 @@ public class BulletFactory extends EntityFactory {
 	public Bullet create(int x, int y, String[] args) {
 		return new Bullet(x, y);
 	}
-
 }

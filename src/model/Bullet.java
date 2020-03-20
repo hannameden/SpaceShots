@@ -87,5 +87,4 @@ public class Bullet extends Entity {
 	public void destroy() {
 		Entity.removeEntity(this);
 	}
-
 }

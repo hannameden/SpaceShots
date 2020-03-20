@@ -6,7 +6,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -128,7 +130,7 @@ public class GUI {
 		dialog = new JDialog(frame);
 		dialog.setLayout(new GridBagLayout());
 		dialog.setTitle("Game over");
-		dialog.setSize(100, 75);
+		dialog.setSize(200, 230);
 		dialog.setLocationRelativeTo(null);
 
 		gbc = new GridBagConstraints();
@@ -167,10 +169,6 @@ public class GUI {
 		dialog.setUndecorated(true);
 		dialog.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		dialog.setVisible(true);
-
-	}
-
-	public void pauseGame() {
 
 	}
 

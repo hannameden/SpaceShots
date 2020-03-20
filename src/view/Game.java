@@ -32,27 +32,22 @@ public class Game implements Runnable {
 	private Canvas canvas;
 	private Image background;
 
-	// private PlayerKeyboardInputController playerKeyboardInputController;
-	// private PlayerKeyboardPausedInputController
-	// playerKeyboardPausedInputController;
-	// private PlayerMouseInputController playerMourseInputController;
-
 	private ListenerHandler listenerHandler;
 
 	public Game(Mediator mediator) {
 		this.mediator = mediator;
-
-		this.gui = mediator.getGui();
-
-		canvas = gui.getCanvas();
-		frame = gui.getFrame();
 		init();
 	}
 
 	private void init() {
+		
+		gui = mediator.getGui();
+		canvas = gui.getCanvas();
+		frame = gui.getFrame();
 		player = new Player(this);
-		listenerHandler = new ListenerHandler(this, frame, canvas, player);
 
+		listenerHandler = new ListenerHandler(this, frame, canvas, player);
+		
 		try {
 			background = ImageIO.read(new File("assets\\space.jfif"));
 		} catch (IOException e) {
@@ -158,7 +153,8 @@ public class Game implements Runnable {
 
 
 	public void gameOverPopup() {
-		gui.gameoverPopup();
+		
+		mediator.gameOverPopup();
 	}
 
 	public void resetGame() {
@@ -170,5 +166,7 @@ public class Game implements Runnable {
 	public boolean isPaused() {
 		return paused;
 	}
-
+	public ListenerHandler getListenerHandler() {
+		return listenerHandler;
+	}
 }

@@ -49,19 +49,6 @@ public class Assets {
 		laserRedImage = ImageLoader.load("./assets/laserRed.png");
 		laserRedExplosionImage = ImageLoader.load("./assets/laserRedShot.png");
 
-		SpriteSheet numberSheet = new SpriteSheet(ImageLoader.load("./assets/numberCollection.png"));
-		numbers[0] = numberSheet.crop(1, 1, width, height);
-		numbers[1] = numberSheet.crop(2, 1, width, height);
-		numbers[2] = numberSheet.crop(3, 1, width, height);
-		numbers[3] = numberSheet.crop(4, 1, width, height);
-		numbers[4] = numberSheet.crop(5, 1, width, height);
-		numbers[5] = numberSheet.crop(6, 1, width, height);
-		numbers[6] = numberSheet.crop(7, 1, width, height);
-		numbers[7] = numberSheet.crop(8, 1, width, height);
-		numbers[8] = numberSheet.crop(9, 1, width, height);
-		numbers[9] = numberSheet.crop(10, 1, width, height);
-
-
 	}
 
 	public BufferedImage getPlayerImage() {

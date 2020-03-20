@@ -175,11 +175,6 @@ public class Player extends Entity {
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 		Entity.removeEntity(this);
 
-		gameOver();
-
-	}
-
-	private void gameOver() {
 		game.gameOverPopup();
 
 	}
