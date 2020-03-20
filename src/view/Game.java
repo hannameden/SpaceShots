@@ -1,8 +1,12 @@
 package view;
 
 import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
@@ -119,6 +123,10 @@ public class Game implements Runnable {
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
 
+		if (paused)
+			drawCenteredString(g, "Game is paused, press ESC to continue.",
+					new Rectangle(GUI.getWidth(), GUI.getHeight()), new Font("SansSerif", Font.BOLD, 24));
+
 		// End Drawing
 		bs.show();
 		g.dispose();
@@ -156,7 +164,6 @@ public class Game implements Runnable {
 		listenerHandler.resume();
 	}
 
-
 	public void gameOverPopup() {
 		gui.gameoverPopup();
 	}
@@ -170,6 +177,15 @@ public class Game implements Runnable {
 
 	public boolean isPaused() {
 		return paused;
+	}
+
+	private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
+		g.setColor(Color.white);
+		FontMetrics metrics = g.getFontMetrics(font);
+		int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+		int y = rect.y + ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
+		g.setFont(font);
+		g.drawString(text, x, y);
 	}
 
 }
