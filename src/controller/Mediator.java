@@ -30,7 +30,6 @@ public class Mediator {
 	}
 
 	public void startGame() {
-		
 		game = new Game(this, gui);
 		game.start();
 	}
@@ -46,7 +45,6 @@ public class Mediator {
 		highscore = new Highscore(this, gui);
 	}
 
-
 	public void gameOver() {
 		game.stop();
 
@@ -54,7 +52,6 @@ public class Mediator {
 	}
 
 	public void goToMenu() {
-		
 		gui.getCanvas().setVisible(false);
 		gui.initMenu();
 

@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Canvas;
 import java.awt.FlowLayout;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -49,13 +48,13 @@ public class Game implements Runnable {
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
-
-		// sätt en btn på game och prova ta bort canvas för att få meny
-
 		gui.initCanvas();
 		canvas = gui.getCanvas();
 		frame = gui.getFrame();
+		init();
+	}
 
+	private void init() {
 		player = new Player(this);
 		listenerHandler = new ListenerHandler(this, frame, canvas, player);
 
@@ -66,7 +65,6 @@ public class Game implements Runnable {
 		}
 
 		paused = false;
-
 	}
 
 	@Override
@@ -91,7 +89,6 @@ public class Game implements Runnable {
 
 				if (!paused)
 					update();
-
 
 				render();
 
@@ -170,8 +167,8 @@ public class Game implements Runnable {
 
 	public void gameOverPopup() {
 
-		//mediator.stopGame();
-		
+		// mediator.stopGame();
+
 		JDialog dialog = new JDialog(frame);
 		dialog.setLayout(new FlowLayout());
 
@@ -185,14 +182,16 @@ public class Game implements Runnable {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mediator.startGame();
+				listenerHandler.pause();
+				Entity.getEntities().clear();
+				init();
 				dialog.dispose();
 			}
 		});
 
 		JButton menu = new JButton("Go to menu");
 		menu.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mediator.goToMenu();
