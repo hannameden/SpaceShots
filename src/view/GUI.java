@@ -3,6 +3,7 @@ package view;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -18,11 +19,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.Mediator;
-import model.Entity;
+
+import model.Player;
+
 
 public class GUI {
 
@@ -87,6 +91,7 @@ public class GUI {
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				initCanvas();
 				mediator.startGame();
 			}
 		});
@@ -99,7 +104,7 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				mediator.stop();
+				System.exit(0);
 			}
 		});
 		container.add(btnExit);
@@ -108,63 +113,56 @@ public class GUI {
 		frame.setVisible(true);
 	}
 
-	public void initCanvas() {
-		canvas = new Canvas();
-		canvas.setPreferredSize(dimension);
-		canvas.setMinimumSize(dimension);
-		canvas.setMaximumSize(dimension);
-		canvas.setFocusable(true);
-		canvas.setBackground(Color.BLACK);
-		canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+	private void initCanvas() {
+		if (canvas == null) {
+			canvas = new Canvas();
+			canvas.setPreferredSize(dimension);
+			canvas.setMinimumSize(dimension);
+			canvas.setMaximumSize(dimension);
+			canvas.setFocusable(true);
+			canvas.setBackground(Color.BLACK);
+			canvas.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+			frame.add(canvas);
+		}
 		canvas.setVisible(true);
 		container.setVisible(false);
-		frame.add(canvas);
 	}
 
-	public void gameoverPopup(int score) {
-		dialog = new JDialog(frame);
+	public void gameoverPopup() {
+		JDialog dialog = new JDialog(frame);
+		dialog.setLayout(new FlowLayout());
+
+		dialog.add(new JLabel("You lost!"));
+		dialog.add(new JLabel("Points: " + Player.getScore()));
 		dialog.setTitle("Game over");
-		dialog.setResizable(false);
-		dialog.setUndecorated(true);
+		dialog.setBounds(500, 400, 300, 200);
+		dialog.setLocationRelativeTo(null);
 
-		dialog.setBounds(500, 400, 250, 250);
-		dialog.setLocationRelativeTo(frame);
-		dialog.setLayout(new GridBagLayout());
-
-		gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(10, 10, 10, 10);
-
-		dialog.add(new JLabel("You lost..."), gbc);
-		gbc.gridy++;
-		dialog.add(new JLabel("Your score was: " + score), gbc);
-		gbc.gridy++;
-
-		btnRestart = new JButton("Restart game");
-		btnRestart.addActionListener(new ActionListener() {
+		JButton startover = new JButton("Restart game");
+		startover.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				mediator.restartGame();
 				dialog.dispose();
+				mediator.resetGame();
 			}
 		});
 
-		btnMenu = new JButton("Go to menu");
-		btnMenu.addActionListener(new ActionListener() {
+		JButton menu = new JButton("Go to menu");
+		menu.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
 				mediator.goToMenu();
-				dialog.dispose();
 			}
 		});
-		dialog.add(btnRestart, gbc);
-		gbc.gridy++;
-		dialog.add(btnMenu, gbc);
+		dialog.add(startover);
+		dialog.add(menu);
+		dialog.setUndecorated(true);
+		dialog.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		dialog.setVisible(true);
+
 	}
 
 	public void pauseGame() {
@@ -185,6 +183,10 @@ public class GUI {
 
 	public Canvas getCanvas() {
 		return this.canvas;
+	}
+
+	public JPanel getContainer() {
+		return container;
 	}
 
 	public GUI getGUI() {

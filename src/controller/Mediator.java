@@ -1,6 +1,5 @@
 package controller;
 
-import model.Entity;
 import view.GUI;
 import view.Game;
 import view.Menu;
@@ -28,35 +27,33 @@ public class Mediator {
 	}
 */
 	public void startGame() {
-		
-		game = new Game(this);
 
-		
-		game.start();
+		if (game == null) {
+			game = new Game(this);
+			game.start();
+		} else {
+			game.resetGame();
+		}
+
 	}
 	public void restartGame() {
-		game.restartGame();
 		startGame();
 	}
 
-	public void stop() {
-		// game.stop();
-		if (game != null)
-			game.stopGame();
-
+	public void resetGame() {
+		game.resetGame();
 	}
 
-	public void gameOver(int score) {
+	public void gameOver() {
 	//	game.stop();
-
-		gui.gameoverPopup(score);
+		gui.gameoverPopup();
 
 	}
+
 
 	public void goToMenu() {
 		gui.getCanvas().setVisible(false);
-		gui.initMenu();
-
+		gui.getContainer().setVisible(true);
 	}
 	public GUI getGui() {
 		return gui;

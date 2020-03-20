@@ -182,7 +182,12 @@ public class Player extends Entity {
 
 	private void gameOver() {
 
-		game.gameOverPopup(score.getScore());
+		game.gameOverPopup();
 
 	}
+
+	public static int getScore() {
+		return score.getScore();
+	}
+
 }

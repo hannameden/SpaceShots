@@ -1,20 +1,14 @@
 package view;
 
 import java.awt.Canvas;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import controller.Mediator;
 import factory.AsteroidGenerator;
@@ -50,7 +44,6 @@ public class Game implements Runnable {
 
 		this.gui = mediator.getGui();
 
-		gui.initCanvas();
 		canvas = gui.getCanvas();
 		frame = gui.getFrame();
 		init();
@@ -163,20 +156,16 @@ public class Game implements Runnable {
 		listenerHandler.resume();
 	}
 
-	public void stopGame() {
-		// stoppa thread
+
+	public void gameOverPopup() {
+		gui.gameoverPopup();
 	}
 
-	public void restartGame() {
-		listenerHandler.pause();
+	public void resetGame() {
 		Entity.getEntities().clear();
+		listenerHandler.clearAll();
 		init();
-	}
 
-	public void gameOverPopup(int score) {
-
-		mediator.gameOver(score);
-		// mediator.stopGame();
 	}
 
 	public boolean isPaused() {
