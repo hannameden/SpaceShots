@@ -174,9 +174,7 @@ public class Player extends Entity {
 	public void destroy() {
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
 		Entity.removeEntity(this);
-
 		game.gameOverPopup();
-
 	}
 
 	public static int getScore() {

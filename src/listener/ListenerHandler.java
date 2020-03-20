@@ -15,7 +15,7 @@ public class ListenerHandler {
 
 	private PlayerKeyboardInputListener playerKeyboardInputController;
 	private PlayerKeyboardPausedInputListener playerKeyboardPausedInputController;
-	private PlayerMouseInputListener playerMourseInputController;
+	private PlayerMouseInputListener playerMouseInputController;
 
 	public ListenerHandler(Game game, JFrame frame, Canvas canvas, Player player) {
 		this.game = game;
@@ -27,7 +27,7 @@ public class ListenerHandler {
 	private void initInputListeners(Player player) {
 		playerKeyboardInputController = new PlayerKeyboardInputListener(player);
 		playerKeyboardPausedInputController = new PlayerKeyboardPausedInputListener(player);
-		playerMourseInputController = new PlayerMouseInputListener(player);
+		playerMouseInputController = new PlayerMouseInputListener(player);
 		resume();
 	}
 
@@ -38,10 +38,10 @@ public class ListenerHandler {
 		}
 		frame.addKeyListener(playerKeyboardInputController);
 		canvas.addKeyListener(playerKeyboardInputController);
-		frame.addMouseListener(playerMourseInputController);
-		canvas.addMouseListener(playerMourseInputController);
-		frame.addMouseMotionListener(playerMourseInputController);
-		canvas.addMouseMotionListener(playerMourseInputController);
+		frame.addMouseListener(playerMouseInputController);
+		canvas.addMouseListener(playerMouseInputController);
+		frame.addMouseMotionListener(playerMouseInputController);
+		canvas.addMouseMotionListener(playerMouseInputController);
 	}
 
 	public void pause() {
@@ -51,10 +51,10 @@ public class ListenerHandler {
 		}
 		frame.removeKeyListener(playerKeyboardInputController);
 		canvas.removeKeyListener(playerKeyboardInputController);
-		frame.removeMouseListener(playerMourseInputController);
-		canvas.removeMouseListener(playerMourseInputController);
-		frame.removeMouseMotionListener(playerMourseInputController);
-		canvas.removeMouseMotionListener(playerMourseInputController);
+		frame.removeMouseListener(playerMouseInputController);
+		canvas.removeMouseListener(playerMouseInputController);
+		frame.removeMouseMotionListener(playerMouseInputController);
+		canvas.removeMouseMotionListener(playerMouseInputController);
 	}
 
 	public void clearAll() {
@@ -62,10 +62,10 @@ public class ListenerHandler {
 		canvas.removeKeyListener(playerKeyboardPausedInputController);
 		frame.removeKeyListener(playerKeyboardInputController);
 		canvas.removeKeyListener(playerKeyboardInputController);
-		frame.removeMouseListener(playerMourseInputController);
-		canvas.removeMouseListener(playerMourseInputController);
-		frame.removeMouseMotionListener(playerMourseInputController);
-		canvas.removeMouseMotionListener(playerMourseInputController);
+		frame.removeMouseListener(playerMouseInputController);
+		canvas.removeMouseListener(playerMouseInputController);
+		frame.removeMouseMotionListener(playerMouseInputController);
+		canvas.removeMouseMotionListener(playerMouseInputController);
 	}
 
 }
