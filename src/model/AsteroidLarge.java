@@ -64,7 +64,6 @@ public class AsteroidLarge extends Entity implements Asteroid {
 
 		Entity.getEntities().stream().filter(Player.class::isInstance).forEach(p -> {
 			if (this.intersects(p)) {
-				System.out.println("desotry");
 				p.destroy();
 			}
 		});
