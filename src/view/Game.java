@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Canvas;
 import java.awt.FlowLayout;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,9 @@ import javax.swing.JLabel;
 
 import controller.Mediator;
 import controller.PlayerKeyboardInputController;
+import controller.PlayerKeyboardPausedInputController;
 import controller.PlayerMouseInputController;
+import factory.AsteroidGenerator;
 import model.Entity;
 import model.Player;
 
@@ -26,6 +29,7 @@ public class Game implements Runnable {
 
 	private Thread thread;
 	private boolean running;
+	private boolean paused;
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
@@ -36,6 +40,10 @@ public class Game implements Runnable {
 	private JFrame frame;
 	private Canvas canvas;
 	private Image background;
+
+	private PlayerKeyboardInputController playerKeyboardInputController;
+	private PlayerKeyboardPausedInputController playerKeyboardPausedInputController;
+	private PlayerMouseInputController playerMourseInputController;
 
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
@@ -56,17 +64,42 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 
+		paused = false;
+
 	}
 
 	private void initInputListeners(Player player) {
-		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
-		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
+		playerKeyboardInputController = new PlayerKeyboardInputController(player);
+		playerKeyboardPausedInputController = new PlayerKeyboardPausedInputController(player);
+		playerMourseInputController = new PlayerMouseInputController(player);
+		addListeners();
+	}
+
+	private void addListeners() {
+		if (!paused) {
+			frame.removeKeyListener(playerKeyboardPausedInputController);
+			canvas.removeKeyListener(playerKeyboardPausedInputController);
+
+		}
 		frame.addKeyListener(playerKeyboardInputController);
 		canvas.addKeyListener(playerKeyboardInputController);
 		frame.addMouseListener(playerMourseInputController);
 		canvas.addMouseListener(playerMourseInputController);
 		frame.addMouseMotionListener(playerMourseInputController);
 		canvas.addMouseMotionListener(playerMourseInputController);
+	}
+
+	private void removeListeners() {
+		if (paused) {
+			frame.addKeyListener(playerKeyboardPausedInputController);
+			canvas.addKeyListener(playerKeyboardPausedInputController);
+		}
+		frame.removeKeyListener(playerKeyboardInputController);
+		canvas.removeKeyListener(playerKeyboardInputController);
+		frame.removeMouseListener(playerMourseInputController);
+		canvas.removeMouseListener(playerMourseInputController);
+		frame.removeMouseMotionListener(playerMourseInputController);
+		canvas.removeMouseMotionListener(playerMourseInputController);
 	}
 
 	@Override
@@ -88,7 +121,11 @@ public class Game implements Runnable {
 			lastTime = now;
 
 			if (delta >= 1) {
-				update();
+
+				if (!paused)
+					update();
+
+
 				render();
 
 				delta--;
@@ -134,6 +171,7 @@ public class Game implements Runnable {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
+		AsteroidGenerator.start();
 	}
 
 	public synchronized void stop() {
@@ -147,6 +185,18 @@ public class Game implements Runnable {
 		}
 	}
 
+	public synchronized void pause() {
+		paused = true;
+		AsteroidGenerator.pause();
+		removeListeners();
+	}
+
+	public synchronized void resume() {
+		paused = false;
+		AsteroidGenerator.resume();
+		addListeners();
+	}
+
 	public void stopGame() {
 
 		// stoppa thread
@@ -155,7 +205,7 @@ public class Game implements Runnable {
 
 	public void gameOverPopup() {
 
-		mediator.stopGame();
+		//mediator.stopGame();
 		
 		JDialog dialog = new JDialog(frame);
 		dialog.setLayout(new FlowLayout());
@@ -188,4 +238,9 @@ public class Game implements Runnable {
 		dialog.add(menu);
 		dialog.setVisible(true);
 	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
 }

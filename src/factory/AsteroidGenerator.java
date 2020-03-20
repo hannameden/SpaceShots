@@ -21,34 +21,28 @@ public class AsteroidGenerator {
 		return instance;
 	}
 
-	public void start() {
+	public static void start() {
 		if (timer == null && timerTask == null) {
-			timer = new Timer();
-			timerTask = new TimerTask() {
+			resume();
 
-				@Override
-				public void run() {
-					randomizeAsteroidSize();
-					asteroidFactory.create(0, 0, asteroidSpawnArguments);
-				}
-			};
-			timer.scheduleAtFixedRate(timerTask, 0, 250);
-		} else {
-			// timer.notify();
-		}
-
-	}
-
-	public void pause() {
-		try {
-			timer.wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 	}
 
-	public void cancel() {
+	public static void pause() {
 		timer.cancel();
+	}
+
+	public static void resume() {
+		timer = new Timer();
+		timerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				randomizeAsteroidSize();
+				asteroidFactory.create(0, 0, asteroidSpawnArguments);
+			}
+		};
+		timer.scheduleAtFixedRate(timerTask, 0, 250);
 	}
 
 	private static void randomizeAsteroidSize() {

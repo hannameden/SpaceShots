@@ -1,6 +1,5 @@
 package controller;
 
-import factory.AsteroidGenerator;
 import view.GUI;
 import view.Game;
 import view.Highscore;
@@ -34,7 +33,6 @@ public class Mediator {
 		
 		game = new Game(this, gui);
 		game.start();
-		AsteroidGenerator.getInstance().start();
 	}
 
 	public void stop() {
@@ -47,6 +45,7 @@ public class Mediator {
 	public void startHighscore() {
 		highscore = new Highscore(this, gui);
 	}
+
 
 	public void gameOver() {
 		game.stop();
@@ -61,11 +60,4 @@ public class Mediator {
 
 	}
 
-	public void stopGame() {
-
-	}
-
-	public void newGame() {
-
-	}
 }

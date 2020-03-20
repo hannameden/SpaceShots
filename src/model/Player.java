@@ -23,13 +23,14 @@ public class Player extends Entity {
 	private double shootDirection = 0f;
 	private EntityFactory bulletFactory = BulletFactory.getInstance();
 	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
-
+	private Game game;
 	private int lives = 3;
 	private static Score score;
-	private Game game;
 
 	public Player(Game game) {
+
 		this.game = game;
+
 		score = new Score();
 		image = Assets.getInstance().getPlayerImage();
 		width = image.getWidth() / 2;
@@ -37,6 +38,7 @@ public class Player extends Entity {
 		entityFront = new Point();
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
 		bounds = new EntityBounds(x + width, y + height, width, height);
+		this.game = game;
 	}
 
 	public static void addPoint() {
@@ -162,23 +164,16 @@ public class Player extends Entity {
 		});
 	}
 
-	public void pauseGame() {
-		// gui.pauseGame();
-	}
-
-	public void loseLife() {
-		if (lives > 0)
-			lives--;
-
-		System.out.println("losing life!!!!!!!!!!");
-
+	public void togglePause() {
+		if (game.isPaused())
+			game.resume();
+		else
+			game.pause();
 	}
 
 	@Override
 	public void destroy() {
-
 		explosionFactory.create(x, y, new String[] { "RedExplosion" });
-
 		Entity.removeEntity(this);
 		
 		gameOver();
