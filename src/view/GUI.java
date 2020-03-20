@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -161,6 +162,8 @@ public class GUI {
 		});
 		dialog.add(startover);
 		dialog.add(menu);
+		dialog.setUndecorated(true);
+		dialog.getRootPane().setWindowDecorationStyle(JRootPane.PLAIN_DIALOG);
 		dialog.setVisible(true);
 
 	}
