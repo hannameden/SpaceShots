@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferStrategy;
@@ -10,12 +9,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import controller.Mediator;
 import controller.PlayerKeyboardInputController;
 import controller.PlayerMouseInputController;
+import factory.AsteroidGenerator;
 import model.Entity;
 import model.Player;
 
@@ -23,6 +21,7 @@ public class Game implements Runnable {
 
 	private Thread thread;
 	private boolean running;
+	private boolean paused;
 	private BufferStrategy bs;
 	private Graphics g;
 	private GUI gui;
@@ -34,6 +33,9 @@ public class Game implements Runnable {
 	private Canvas canvas;
 	private Image background;
 
+	PlayerKeyboardInputController playerKeyboardInputController;
+	PlayerMouseInputController playerMourseInputController;
+
 	public Game(Mediator mediator, GUI gui) {
 		this.mediator = mediator;
 		this.gui = gui;
@@ -44,7 +46,7 @@ public class Game implements Runnable {
 		canvas = gui.getCanvas();
 		frame = gui.getFrame();
 
-		player = new Player();
+		player = new Player(this);
 		initInputListeners(player);
 
 		try {
@@ -53,11 +55,13 @@ public class Game implements Runnable {
 			e.printStackTrace();
 		}
 
+		paused = false;
+
 	}
 
 	private void initInputListeners(Player player) {
-		PlayerKeyboardInputController playerKeyboardInputController = new PlayerKeyboardInputController(player);
-		PlayerMouseInputController playerMourseInputController = new PlayerMouseInputController(player);
+		playerKeyboardInputController = new PlayerKeyboardInputController(player);
+		playerMourseInputController = new PlayerMouseInputController(player);
 		frame.addKeyListener(playerKeyboardInputController);
 		canvas.addKeyListener(playerKeyboardInputController);
 		frame.addMouseListener(playerMourseInputController);
@@ -85,8 +89,11 @@ public class Game implements Runnable {
 			lastTime = now;
 
 			if (delta >= 1) {
-				update();
- 				render();
+
+				if (!paused)
+					update();
+
+				render();
 
 				delta--;
 			}
@@ -103,7 +110,7 @@ public class Game implements Runnable {
 	}
 
 	private void render() {
-		
+
 		bs = canvas.getBufferStrategy();
 		if (bs == null) {
 			canvas.createBufferStrategy(3);
@@ -119,7 +126,7 @@ public class Game implements Runnable {
 
 		// Draw game objects
 		Entity.getEntities().forEach(e -> e.render(g));
-		
+
 		// End Drawing
 		bs.show();
 		g.dispose();
@@ -131,6 +138,7 @@ public class Game implements Runnable {
 		running = true;
 		thread = new Thread(this);
 		thread.start();
+		AsteroidGenerator.getInstance().start();
 	}
 
 	public synchronized void stop() {
@@ -144,9 +152,36 @@ public class Game implements Runnable {
 		}
 	}
 
-	public void stopGame() {
-		
-		//stoppa thread
-		
+	public synchronized void pause() {
+		paused = true;
+		AsteroidGenerator.pause();
+		frame.removeKeyListener(playerKeyboardInputController);
+		canvas.removeKeyListener(playerKeyboardInputController);
+		frame.removeMouseListener(playerMourseInputController);
+		canvas.removeMouseListener(playerMourseInputController);
+		frame.removeMouseMotionListener(playerMourseInputController);
+		canvas.removeMouseMotionListener(playerMourseInputController);
 	}
+
+	public synchronized void resume() {
+		paused = false;
+		AsteroidGenerator.resume();
+		frame.addKeyListener(playerKeyboardInputController);
+		canvas.addKeyListener(playerKeyboardInputController);
+		frame.addMouseListener(playerMourseInputController);
+		canvas.addMouseListener(playerMourseInputController);
+		frame.addMouseMotionListener(playerMourseInputController);
+		canvas.addMouseMotionListener(playerMourseInputController);
+	}
+
+	public void stopGame() {
+
+		// stoppa thread
+
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
 }
