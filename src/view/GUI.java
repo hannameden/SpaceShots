@@ -7,9 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,9 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.Mediator;
-
 import model.Player;
-
 
 public class GUI {
 
@@ -135,7 +131,7 @@ public class GUI {
 		dialog.add(new JLabel("You lost!"));
 		dialog.add(new JLabel("Points: " + Player.getScore()));
 		dialog.setTitle("Game over");
-		dialog.setBounds(500, 400, 300, 200);
+		dialog.setSize(100, 75);
 		dialog.setLocationRelativeTo(null);
 
 		JButton startover = new JButton("Restart game");
