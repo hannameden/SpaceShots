@@ -131,6 +131,7 @@ public class GUI {
 		dialog.setLayout(new GridBagLayout());
 		dialog.setTitle("Game over");
 		dialog.setSize(200, 230);
+
 		dialog.setLocationRelativeTo(null);
 
 		gbc = new GridBagConstraints();
@@ -138,10 +139,14 @@ public class GUI {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		dialog.add(new JLabel("You lost!"), gbc);
+		JLabel lostLabel = new JLabel("You lost!");
+		lostLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+		dialog.add(lostLabel, gbc);
 		gbc.gridy++;
 
-		dialog.add(new JLabel("Points: " + Player.getScore()), gbc);
+		JLabel scoreLabel = new JLabel("Points: " + Player.getScore());
+		scoreLabel.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		dialog.add(scoreLabel, gbc);
 		gbc.gridy++;
 
 		btnRestart = new JButton("Restart game");
