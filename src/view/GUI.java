@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import controller.Mediator;
+import model.Entity;
 
 public class GUI {
 
@@ -124,9 +125,10 @@ public class GUI {
 		dialog = new JDialog(frame);
 		dialog.setTitle("Game over");
 		dialog.setResizable(false);
-		
+		dialog.setUndecorated(true);
+
 		dialog.setBounds(500, 400, 250, 250);
-		 dialog.setLocationRelativeTo(frame);
+		dialog.setLocationRelativeTo(frame);
 		dialog.setLayout(new GridBagLayout());
 
 		gbc = new GridBagConstraints();
@@ -138,14 +140,14 @@ public class GUI {
 		gbc.gridy++;
 		dialog.add(new JLabel("Your score was: " + score), gbc);
 		gbc.gridy++;
-		
 
 		btnRestart = new JButton("Restart game");
 		btnRestart.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				mediator.startGame();
+
+				mediator.restartGame();
 				dialog.dispose();
 			}
 		});

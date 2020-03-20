@@ -36,21 +36,7 @@ public class Menu {
 		canvas = gui.getCanvas();
 		canvas.setVisible(false);
 		frame.setLayout(null);
-		
-	//	panel = new JPanel();
 
-		//JButton startBtn = new JButton("Start");
-	/*	
-		panel.add(startBtn);
-
-		JButton btnHighscore = new JButton("Highscore");
-		
-		panel.add(btnHighscore);
-
-		JButton btnExit = new JButton("Exit");
-		
-		panel.add(btnExit);
-*/
 		startBtn = new JButton("Start game");
 		startBtn.setBounds(322, 300, 89, 23);
 		startBtn.setOpaque(false);
@@ -82,7 +68,6 @@ public class Menu {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// HighscoreState set state kankse?
 				frame.dispose();
 			}
 		});

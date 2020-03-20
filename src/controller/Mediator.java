@@ -14,26 +14,29 @@ public class Mediator {
 	public Mediator() {
 
 		init();
-		// gameover fr player destroy
 	}
 
 	public void init() {
 
 		gui = new GUI(this);
 	}
-
+/*
 	public void initButtons() {
 
 		menu = new Menu(this, gui);
 		menu.initButtons();
 	}
-
+*/
 	public void startGame() {
 		
 		game = new Game(this);
 
-		game.restartGame();
+		
 		game.start();
+	}
+	public void restartGame() {
+		game.restartGame();
+		startGame();
 	}
 
 	public void stop() {
