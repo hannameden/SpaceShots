@@ -23,6 +23,7 @@ public class ScoreView extends Entity implements Observer {
 		digitList = Assets.getInstance().getDigitList();
 		scoreList = new CopyOnWriteArrayList<BufferedImage>();
 		initHashmap();
+		scoreList.add(hashMap.get("0"));
 	}
 
 	private void initHashmap() {
