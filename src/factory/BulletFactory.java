@@ -1,6 +1,7 @@
 package factory;
 
 import model.Bullet;
+import model.Entity;
 
 public class BulletFactory extends EntityFactory {
 
@@ -16,7 +17,7 @@ public class BulletFactory extends EntityFactory {
 	}
 
 	@Override
-	public Bullet create(int x, int y, String[] args) {
+	public Entity create(int x, int y, String[] args) {
 		return new Bullet(x, y);
 	}
 }

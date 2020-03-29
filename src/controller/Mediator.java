@@ -35,7 +35,6 @@ public class Mediator {
 	public void gameOverPopup() {
 		game.getListenerHandler().clearAll();
 		gui.gameoverPopup();
-
 	}
 
 	public void goToMenu() {
