@@ -13,14 +13,11 @@ public class Mediator {
 	private Game game;
 
 	public Mediator() {
-
 		init();
 	}
 
 	public void init() {
-
 		gui = new GUI(this);
-
 	}
 
 	public void startGame() {
