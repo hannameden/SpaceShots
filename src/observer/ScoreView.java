@@ -26,6 +26,28 @@ public class ScoreView extends Entity implements Observer {
 		scoreList.add(hashMap.get("0"));
 	}
 
+	@Override
+	public void render(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g.create();
+		int offsetScore = 2;
+		for (BufferedImage digit : scoreList) {
+			g2d.drawImage(digit, offsetScore, 2, 20, 30, null);
+			offsetScore += 20;
+		}
+	}
+
+	@Override
+	public void updateObserver() {
+		scoreList.clear();
+		String scoreString = score.getScoreAsString();
+
+		listOfStringPoints = scoreString.split("");
+		for (String s : listOfStringPoints) {
+			scoreList.add(hashMap.get(s));
+		}
+
+	}
+
 	private void initHashmap() {
 		hashMap = new HashMap<String, BufferedImage>();
 		hashMap.put("0", digitList.get(0));
@@ -41,16 +63,6 @@ public class ScoreView extends Entity implements Observer {
 	}
 
 	@Override
-	public void render(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g.create();
-		int offsetScore = 2;
-		for (BufferedImage digit : scoreList) {
-			g2d.drawImage(digit, offsetScore, 2, 20, 30, null);
-			offsetScore += 20;
-		}
-	}
-
-	@Override
 	public void checkEdgeCollision() {
 
 	}
@@ -62,18 +74,6 @@ public class ScoreView extends Entity implements Observer {
 
 	@Override
 	public void destroy() {
-
-	}
-
-	@Override
-	public void updateObserver() {
-		scoreList.clear();
-		String scoreString = score.getScoreAsString();
-
-		listOfStringPoints = scoreString.split("");
-		for (String s : listOfStringPoints) {
-			scoreList.add(hashMap.get(s));
-		}
 
 	}
 
