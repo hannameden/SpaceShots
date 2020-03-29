@@ -6,14 +6,11 @@ import java.util.ArrayList;
 public class Assets {
 
 	private static Assets instance;
-	
+
 	private static ArrayList<BufferedImage> digitList;
 
 	private static BufferedImage playerImage, meteorSmallImage, meteorLargeImage, lifeImage, laserGreenImage,
 			laserGreenExplosionImage, laserRedImage, laserRedExplosionImage;
-	private static BufferedImage[] numbers = new BufferedImage[10];
-	private static final int width = 96, height = 154;
-
 
 	private Assets() {
 		init();
@@ -65,7 +62,8 @@ public class Assets {
 
 	public ArrayList<BufferedImage> getDigitList() {
 		return digitList;
-}
+	}
+
 	public BufferedImage getLifeImage() {
 		return lifeImage;
 	}
