@@ -8,12 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import factory.BulletFactory;
 import factory.EntityFactory;
 import factory.ExplosionFactory;
 import graphics.Assets;
+import observer.Score;
+import observer.ScoreView;
 import view.GUI;
 import view.Game;
 
@@ -25,6 +26,7 @@ public class Player extends Entity {
 	private EntityFactory explosionFactory = ExplosionFactory.getInstance();
 	private Game game;
 	private static Score score;
+	private ScoreView scoreView;
 
 	public Player(Game game) {
 
@@ -38,6 +40,15 @@ public class Player extends Entity {
 		spawnAtLocation(x = GUI.getWidth() / 2 - width, y = GUI.getHeight() / 2 - height);
 		bounds = new EntityBounds(x + width, y + height, width, height);
 		this.game = game;
+
+		initScore();
+	}
+
+	private void initScore() {
+		score = new Score();
+		scoreView = new ScoreView(score);
+		score.add(scoreView);
+
 	}
 
 	public static void addPoint() {
@@ -76,15 +87,6 @@ public class Player extends Entity {
 
 		Graphics2D g2d = (Graphics2D) g.create();
 		g2d.setColor(Color.GREEN);
-		CopyOnWriteArrayList<BufferedImage> scoreList = new CopyOnWriteArrayList<BufferedImage>();
-		scoreList = score.getScoreList();
-
-		int offsetScore = 2;
-
-		for (BufferedImage digit : scoreList) {
-			g2d.drawImage(digit, offsetScore, 2, 20, 30, null);
-			offsetScore += 20;
-		}
 
 		double rotationRequired = Math.toRadians(shootDirection);
 		double locationX = image.getWidth() / 2;
