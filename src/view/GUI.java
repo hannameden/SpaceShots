@@ -129,7 +129,6 @@ public class GUI {
 
 		dialog = new JDialog(frame);
 		dialog.setLayout(new GridBagLayout());
-		dialog.setTitle("Game over");
 		dialog.setSize(200, 230);
 		dialog.setLocationRelativeTo(null);
 
@@ -138,7 +137,7 @@ public class GUI {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		dialog.add(new JLabel("You lost!"), gbc);
+		dialog.add(new JLabel("Game over"), gbc);
 		gbc.gridy++;
 
 		dialog.add(new JLabel("Points: " + Player.getScore()), gbc);
